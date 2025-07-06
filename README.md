@@ -1,116 +1,99 @@
 <h1 align="center">🚗 DriverHub</h1>
-<p align="center">💡 Micro SaaS para motoristas de aplicativo com foco em controle financeiro diário.</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/versão-.NET%208.0-blueviolet?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/postgresql-rodando%20local-blue?style=for-the-badge"/>
+  <strong>Micro SaaS</strong> para motoristas de aplicativos como Uber, 99 e similares.  
+  Este projeto também serve como um <strong>laboratório de estudo e aprendizado prático</strong> com tecnologias modernas no ecossistema .NET e ferramentas Google AI.
 </p>
 
 ---
 
-## 📦 Tecnologias Utilizadas
+### 🧭 Objetivo do Projeto
 
-- ⚙️ **Back-end**: ASP.NET Core 8 + DDD + JWT
-- 🗃️ **Banco de Dados**: PostgreSQL (instalado localmente)
-- 🎨 **Front-end**: HTML/CSS (mobile first)
-- 🧠 **IA auxiliar**: OpenAI CLI (via terminal)
-- 🐘 **ORM**: Entity Framework Core
-- 🐙 **Versionamento**: Git + GitHub
-- 🐳 **Docker**: Usado apenas para simulação de produção
-- 📊 **Dashboard**: Web para administrador
+Desenvolver uma aplicação SaaS que permita aos motoristas de aplicativo:
+- Gerenciar corridas por plataforma (sem registrar cada corrida individual).
+- Acompanhar dados diários como quilometragem, lucro e desempenho.
+- Visualizar relatórios otimizados para dispositivos móveis.
 
----
-
-## ✅ Etapas Concluídas
-
-- [x] Instalação do VS Code compatível com macOS Catalina
-- [x] Instalação do Git + geração de chave SSH + push para GitHub
-- [x] Criação da estrutura inicial da pasta `~/Projetos/DriverHub`
-- [x] PostgreSQL instalado localmente
-- [x] Node.js, Python 3.8, pip e OpenAI CLI instalados
-- [x] Docker instalado (CLI apenas)
-- [x] Configuração do ambiente local concluída 🎉
+Ao mesmo tempo, permitirá:
+- Estudo prático de Clean Architecture, DDD e boas práticas de versionamento.
+- Deploy com Docker em ambiente VPS para simulação de produção real.
+- Explorar ferramentas avançadas de AI e desenvolvimento com Google Gemini CLI, AI Studio e Firebase Studio.
 
 ---
 
-## 🗺️ Plano de Desenvolvimento
+### 🧰 Tecnologias Utilizadas
 
-### 🔧 Etapa 1 — Criação da solução
-
-- [ ] Criar a solution `DriverHub.sln`
-- [ ] Criar projetos:
-  - [ ] `DriverHub.API` — Web API
-  - [ ] `DriverHub.Application` — Casos de uso
-  - [ ] `DriverHub.Domain` — Entidades e interfaces
-  - [ ] `DriverHub.Infrastructure` — Repositórios e contexto
-
-### 🛢️ Etapa 2 — Banco de Dados
-
-- [x] PostgreSQL instalado no macOS
-- [ ] Criar migrations e aplicar com EF Core
-- [ ] Criar `DbContext` e entidades
-
-### 🔐 Etapa 3 — Autenticação
-
-- [ ] Implementar autenticação com JWT
-- [ ] Criar endpoints de login e registro
-
-### 📈 Etapa 4 — Funcionalidades
-
-- [ ] Registro de corridas por dia e plataforma
-- [ ] Cálculo de:
-  - Quilometragem
-  - Faturamento bruto
-  - Custos operacionais
-  - Lucro líquido
-  - R$/km e R$/hora
-
-### 📊 Etapa 5 — Dashboard Admin
-
-- [ ] Visualização de dados agregados
-- [ ] Exibir métricas de todos os motoristas (sem dados sensíveis)
-
-### 🖥️ Etapa 6 — Front-end
-
-- [ ] Interface responsiva (HTML/CSS mobile first)
-- [ ] Tela de entrada de dados
-- [ ] Tela de relatórios
-
-### 🚀 Etapa 7 — Deploy
-
-- [ ] Preparar ambiente Docker para simulação de produção
-- [ ] Configurar VPS (Hostinger) com docker-compose
-- [ ] Publicar versão funcional
+| Categoria                | Tecnologias e Ferramentas                             |
+|-------------------------|------------------------------------------------------|
+| **Back-End**            | `ASP.NET Core 8 LTS`, `C#`                            |
+| **Banco de Dados**      | `PostgreSQL`, `Entity Framework Core`                 |
+| **Autenticação**        | `JWT (JSON Web Token)`                                |
+| **Arquitetura**         | `DDD`, `Clean Architecture`, `Repository Pattern`   |
+| **Frontend Web**        | `Razor Pages` (foco inicial), possível migração para `Blazor` |
+| **Frontend Mobile**     | `Mobile First`, possível uso futuro de `MAUI` ou `Flutter` |
+| **DevOps**              | `Docker`, `Docker Compose`, `Git`, `GitHub`, `Multipass` (simulação) |
+| **Google AI & Cloud**   | `Gemini CLI (Google)`, `Google AI Studio`, `Google Firebase Studio` |
+| **Editor**              | `VS Code` (configurado no macOS Catalina)             |
+| **Auxiliares**          | `OpenAI CLI`, `Azure Data Studio`, `Node.js (CLI tooling)` |
 
 ---
 
-## 🧱 Estrutura Esperada
+### 📦 Estrutura do Projeto (inicial)
 
-```shell
-DriverHub/
+~/Projetos/DriverHub
 ├── DriverHub.sln
-├── README.md
-├── docker/
-│   └── docker-compose.yml
 ├── src/
-│   ├── DriverHub.API/
-│   ├── DriverHub.Application/
-│   ├── DriverHub.Domain/
-│   └── DriverHub.Infrastructure/
+│ ├── DriverHub.API/
+│ ├── DriverHub.Application/
+│ ├── DriverHub.Domain/
+│ └── DriverHub.Infrastructure/
+├── docker/
+│ └── docker-compose.yml
+└── README.md
 
-🔐 Segurança e Privacidade
-✅ Dados individuais dos motoristas não são acessíveis por administradores.
+---
 
-✅ O sistema calcula e exibe somente dados agregados e estatísticos.
+### 🚀 Funcionalidades (em desenvolvimento)
 
-✅ JWT protege a autenticação e os endpoints.
+- [x] Criação da estrutura de pastas
+- [x] Configuração do ambiente com VS Code e Docker
+- [x] Integração com GitHub
+- [ ] Criação da solução .NET com Clean Architecture
+- [ ] Conexão com banco de dados PostgreSQL
+- [ ] Criação do painel para motoristas
+- [ ] Criação do painel para administradores
+- [ ] Explorar Gemini CLI e AI Studio para integração AI
+- [ ] Deploy em ambiente VPS (Hostinger)
 
-👨‍💻 Autor
-Marco Guelfi
-Desenvolvedor independente e criador do DriverHub.
-Este projeto é um experimento real de automação para motoristas de aplicativo.
+---
 
-🌱 Contribuições
-Contribuições serão bem-vindas após o MVP.
-Foco atual: arquitetura, testes e automações.
+### 👨‍💻 Status do Projeto
+
+> 🟡 **Em desenvolvimento ativo (foco em aprendizado prático)**  
+> 🔄 Atualizado continuamente com base na evolução do ambiente local, decisões técnicas e integração com ferramentas Google AI.
+
+---
+
+### 💡 Ideias Futuras
+
+- Exportação de relatórios em PDF
+- Integração com API da Uber/99
+- Modo offline (Progressive Web App)
+- Notificações para administradores
+- Uso avançado do Google AI Studio e Firebase Studio para automações e analytics
+
+---
+
+### 📚 Finalidade Educacional
+
+Este projeto é parte de um processo de **aprendizado prático e aprofundado em desenvolvimento moderno**, usando tecnologias **viáveis mesmo em equipamentos mais antigos**, como o macOS Catalina, e ferramentas modernas de AI do Google.
+
+---
+
+### 📬 Contribuições e Contato
+
+Este projeto é pessoal, mas aberto a sugestões, ideias e discussões para fins didáticos.
+
+---
+
+### 🧠 Powered by Estudo + Café ☕ + Google AI 🚀
