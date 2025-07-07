@@ -23,33 +23,35 @@ Ao mesmo tempo, permitirá:
 
 ### 🧰 Tecnologias Utilizadas
 
-| Categoria                | Tecnologias e Ferramentas                             |
-|-------------------------|------------------------------------------------------|
-| **Back-End**            | `ASP.NET Core 8 LTS`, `C#`                            |
-| **Banco de Dados**      | `PostgreSQL`, `Entity Framework Core`                 |
-| **Autenticação**        | `JWT (JSON Web Token)`                                |
-| **Arquitetura**         | `DDD`, `Clean Architecture`, `Repository Pattern`   |
-| **Frontend Web**        | `Razor Pages` (foco inicial), possível migração para `Blazor` |
-| **Frontend Mobile**     | `Mobile First`, possível uso futuro de `MAUI` ou `Flutter` |
-| **DevOps**              | `Docker`, `Docker Compose`, `Git`, `GitHub`, `Multipass` (simulação) |
-| **Google AI & Cloud**   | `Gemini CLI (Google)`, `Google AI Studio`, `Google Firebase Studio` |
-| **Editor**              | `VS Code` (configurado no macOS Catalina)             |
-| **Auxiliares**          | `OpenAI CLI`, `Azure Data Studio`, `Node.js (CLI tooling)` |
+| Categoria                | Tecnologias e Ferramentas                                  |
+|-------------------------|------------------------------------------------------------|
+| **Back-End** | `ASP.NET Core 8 LTS`, `C#`                                 |
+| **Banco de Dados** | `PostgreSQL`, `Entity Framework Core`                      |
+| **Autenticação** | `JWT (JSON Web Token)`                                     |
+| **Arquitetura** | `DDD`, `Clean Architecture`, `Repository Pattern`          |
+| **Frontend Web** | `Razor Pages` (foco inicial), possível migração para `Blazor Server` |
+| **Frontend Mobile** | `React Native` (Mobile First)                              |
+| **DevOps** | `Docker`, `Docker Compose`, `Git`, `GitHub`, `Multipass` (simulação) |
+| **Google AI & Cloud** | `Gemini CLI (Google)`, `Google AI Studio`, `Google Firebase Studio` |
+| **Editor** | `VS Code` (configurado no macOS Catalina)                  |
+| **Auxiliares** | `OpenAI CLI`, `Azure Data Studio`, `Node.js (CLI tooling)` |
 
 ---
 
 ### 📦 Estrutura do Projeto (inicial)
 
+<pre><code>
 ~/Projetos/DriverHub
 ├── DriverHub.sln
 ├── src/
-│ ├── DriverHub.API/
-│ ├── DriverHub.Application/
-│ ├── DriverHub.Domain/
-│ └── DriverHub.Infrastructure/
+│   ├── DriverHub.API/
+│   ├── DriverHub.Application/
+│   ├── DriverHub.Domain/
+│   └── DriverHub.Infrastructure/
 ├── docker/
-│ └── docker-compose.yml
+│   └── docker-compose.yml
 └── README.md
+</code></pre>
 
 ---
 
@@ -69,8 +71,7 @@ Ao mesmo tempo, permitirá:
 
 ### 👨‍💻 Status do Projeto
 
-> 🟡 **Em desenvolvimento ativo (foco em aprendizado prático)**  
-> 🔄 Atualizado continuamente com base na evolução do ambiente local, decisões técnicas e integração com ferramentas Google AI.
+> 🟡 **Em desenvolvimento ativo (foco em aprendizado prático)** > 🔄 Atualizado continuamente com base na evolução do ambiente local, decisões técnicas e integração com ferramentas Google AI.
 
 ---
 
@@ -92,7 +93,7 @@ Este projeto é parte de um processo de **aprendizado prático e aprofundado em 
 
 ### 📬 Contribuições e Contato
 
-Este projeto é pessoal, mas aberto a sugestões, ideias e discussões para fins didáticos.
+Este projeto é pessoal, mas aberto a sugestões, ideias e discussões para fins didáticas.
 
 ---
 
