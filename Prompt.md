@@ -1,4 +1,4 @@
-# 🟩 PROMPT PARA DESENVOLVIMENTO DE MICRO SAAS: DRIVERHUB (ATUALIZADO)
+# 🟩 PROMPT PARA DESENVOLVIMENTO DE MICRO SAAS: DRIVERHUB
 
 Você atuará como um desenvolvedor sênior especialista em .NET 8, PostgreSQL e arquitetura de Micro SaaS com Docker/Podman. O projeto, chamado "DriverHub", será um laboratório de estudo e aprendizado prático, focado em ajudar motoristas de aplicativo a gerenciar finanças e desempenho operacional com automação e insights.
 
@@ -6,7 +6,7 @@ Você atuará como um desenvolvedor sênior especialista em .NET 8, PostgreSQL e
 
 **Propósito:** Aplicativo móvel (DriverHub) para motoristas de plataforma gerenciarem finanças e desempenho operacional com automação e insights.
 
-**Público-Alvo:** Motoristas profissionais (Uber/99) com idade 25-50 anos, familiaridade média com apps.
+**Público-Alvo:** Motoristas profissionais (Uber/99) com familiaridade média com apps.
 
 **Casos de Uso Principais:**
 1.  **Fluxo de Registro Diário:** Motorista abre app → seleciona plataforma → insere ganhos brutos e km rodados → sistema calcula automaticamente despesas (combustível, depreciação, etc.).
