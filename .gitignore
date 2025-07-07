@@ -1,2 +1,3 @@
-eval "$(ssh-agent -s)"
-eval "$(ssh-agent -s)".pub
+*.pub
+*ssh-agent*
+id_*
