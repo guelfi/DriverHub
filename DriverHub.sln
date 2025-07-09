@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3E3254F0-D34F-4DF6-BF71-B74AC7B055D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverHub.Domain", "src\DriverHub.Domain\DriverHub.Domain.csproj", "{C031BAF4-4EB0-42AC-88E6-37BFA221F240}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverHub.Application", "src\DriverHub.Application\DriverHub.Application.csproj", "{1EEBB870-E53D-4E6F-B6FA-795B93DF9682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverHub.Infrastructure", "src\DriverHub.Infrastructure\DriverHub.Infrastructure.csproj", "{1E234D6E-0F09-4AB6-BD94-33F8DD8A8DCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverHub.API", "src\DriverHub.API\DriverHub.API.csproj", "{E8980CD5-3860-40C2-A908-560A632D0B56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C031BAF4-4EB0-42AC-88E6-37BFA221F240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C031BAF4-4EB0-42AC-88E6-37BFA221F240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C031BAF4-4EB0-42AC-88E6-37BFA221F240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C031BAF4-4EB0-42AC-88E6-37BFA221F240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EEBB870-E53D-4E6F-B6FA-795B93DF9682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EEBB870-E53D-4E6F-B6FA-795B93DF9682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EEBB870-E53D-4E6F-B6FA-795B93DF9682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EEBB870-E53D-4E6F-B6FA-795B93DF9682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E234D6E-0F09-4AB6-BD94-33F8DD8A8DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E234D6E-0F09-4AB6-BD94-33F8DD8A8DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E234D6E-0F09-4AB6-BD94-33F8DD8A8DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E234D6E-0F09-4AB6-BD94-33F8DD8A8DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8980CD5-3860-40C2-A908-560A632D0B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8980CD5-3860-40C2-A908-560A632D0B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8980CD5-3860-40C2-A908-560A632D0B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8980CD5-3860-40C2-A908-560A632D0B56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C031BAF4-4EB0-42AC-88E6-37BFA221F240} = {3E3254F0-D34F-4DF6-BF71-B74AC7B055D3}
+		{1EEBB870-E53D-4E6F-B6FA-795B93DF9682} = {3E3254F0-D34F-4DF6-BF71-B74AC7B055D3}
+		{1E234D6E-0F09-4AB6-BD94-33F8DD8A8DCB} = {3E3254F0-D34F-4DF6-BF71-B74AC7B055D3}
+		{E8980CD5-3860-40C2-A908-560A632D0B56} = {3E3254F0-D34F-4DF6-BF71-B74AC7B055D3}
+	EndGlobalSection
+EndGlobal

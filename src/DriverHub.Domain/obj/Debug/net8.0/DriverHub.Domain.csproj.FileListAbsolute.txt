@@ -1,0 +1,12 @@
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/bin/Debug/net8.0/DriverHub.Domain.deps.json
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/bin/Debug/net8.0/DriverHub.Domain.dll
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/bin/Debug/net8.0/DriverHub.Domain.pdb
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/DriverHub.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/DriverHub.Domain.AssemblyInfoInputs.cache
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/DriverHub.Domain.AssemblyInfo.cs
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/DriverHub.Domain.csproj.CoreCompileInputs.cache
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/DriverHub.Domain.sourcelink.json
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/DriverHub.Domain.dll
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/refint/DriverHub.Domain.dll
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/DriverHub.Domain.pdb
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/Debug/net8.0/ref/DriverHub.Domain.dll
