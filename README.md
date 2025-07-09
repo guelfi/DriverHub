@@ -1,7 +1,7 @@
 <h1 align="center">🚗 DriverHub</h1>
 
 <p align="center">
-  <strong>Micro SaaS DriverHub</strong> para motoristas de aplicativos como Uber, 99 e similares.  
+  <strong>Micro SaaS</strong> para motoristas de aplicativos como Uber, 99 e similares.  
   Este projeto também serve como um <strong>laboratório de estudo e aprendizado prático</strong> com tecnologias modernas no ecossistema .NET e ferramentas Google AI.
 </p>
 
