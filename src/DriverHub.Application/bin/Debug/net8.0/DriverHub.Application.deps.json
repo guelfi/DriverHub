@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "DriverHub.Application/1.0.0": {
+        "dependencies": {
+          "DriverHub.Domain": "1.0.0"
+        },
+        "runtime": {
+          "DriverHub.Application.dll": {}
+        }
+      },
+      "DriverHub.Domain/1.0.0": {
+        "runtime": {
+          "DriverHub.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DriverHub.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DriverHub.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
