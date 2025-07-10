@@ -1,0 +1,387 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/guelfi/Projetos/DriverHub/tests/DriverHub.Tests/DriverHub.Tests.csproj": {}
+  },
+  "projects": {
+    "/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/DriverHub.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/DriverHub.API.csproj",
+        "projectName": "DriverHub.API",
+        "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/DriverHub.API.csproj",
+        "packagesPath": "/Users/guelfi/.nuget/packages/",
+        "outputPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/guelfi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj"
+              },
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj"
+              },
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj",
+        "projectName": "DriverHub.Application",
+        "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj",
+        "packagesPath": "/Users/guelfi/.nuget/packages/",
+        "outputPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/guelfi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj",
+        "projectName": "DriverHub.Domain",
+        "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj",
+        "packagesPath": "/Users/guelfi/.nuget/packages/",
+        "outputPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/guelfi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj",
+        "projectName": "DriverHub.Infrastructure",
+        "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj",
+        "packagesPath": "/Users/guelfi/.nuget/packages/",
+        "outputPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/guelfi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj"
+              },
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Domain/DriverHub.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/guelfi/Projetos/DriverHub/tests/DriverHub.Tests/DriverHub.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/guelfi/Projetos/DriverHub/tests/DriverHub.Tests/DriverHub.Tests.csproj",
+        "projectName": "DriverHub.Tests",
+        "projectPath": "/Users/guelfi/Projetos/DriverHub/tests/DriverHub.Tests/DriverHub.Tests.csproj",
+        "packagesPath": "/Users/guelfi/.nuget/packages/",
+        "outputPath": "/Users/guelfi/Projetos/DriverHub/tests/DriverHub.Tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/guelfi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/DriverHub.API.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/DriverHub.API.csproj"
+              },
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj"
+              },
+              "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj": {
+                "projectPath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.8.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.70, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

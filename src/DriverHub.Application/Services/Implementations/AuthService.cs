@@ -17,7 +17,7 @@ namespace DriverHub.Application.Services.Implementations
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<string> RegisterMotoristaAsync(string nome, string email, string senha, string numeroCelular, decimal aluguelSemanalVeiculo, int diasTrabalhadosPorSemana, decimal autonomiaVeiculoKmPorLitro)
+        public async Task RegisterAsync(string email, string password, string nome)
         {
             var existingMotorista = await _motoristaRepository.GetByEmailAsync(email);
             if (existingMotorista != null)
@@ -25,7 +25,7 @@ namespace DriverHub.Application.Services.Implementations
                 throw new ArgumentException("Email já está em uso.");
             }
 
-            var hashedPassword = _passwordHasher.HashPassword(senha);
+            var hashedPassword = _passwordHasher.HashPassword(password);
             var parts = hashedPassword.Split(':');
             var hash = parts[0];
             var salt = parts[1];
@@ -37,33 +37,31 @@ namespace DriverHub.Application.Services.Implementations
                 Email = email,
                 SenhaHash = hash,
                 Sal = salt,
-                NumeroCelular = numeroCelular,
-                AluguelSemanalVeiculo = aluguelSemanalVeiculo,
-                DiasTrabalhadosPorSemana = diasTrabalhadosPorSemana,
-                AutonomiaVeiculoKmPorLitro = autonomiaVeiculoKmPorLitro,
+                NumeroCelular = string.Empty,
+                AluguelSemanalVeiculo = 0,
+                DiasTrabalhadosPorSemana = 0,
+                AutonomiaVeiculoKmPorLitro = 0,
                 DataCadastro = DateTimeOffset.UtcNow,
                 Role = Role.Motorista
             };
 
             await _motoristaRepository.AddAsync(motorista);
-
-            return motorista.Id.ToString();
         }
 
-        public async Task<string> LoginMotoristaAsync(string email, string senha)
+        public async Task<string?> LoginAsync(string email, string password)
         {
             var motorista = await _motoristaRepository.GetByEmailAsync(email);
             if (motorista == null)
             {
-                throw new ArgumentException("Credenciais inválidas.");
+                return null;
             }
 
-            if (!_passwordHasher.VerifyPassword(senha, motorista.SenhaHash, motorista.Sal))
+            if (!_passwordHasher.VerifyPassword(password, motorista.SenhaHash, motorista.Sal))
             {
-                throw new ArgumentException("Credenciais inválidas.");
+                return null;
             }
 
-            return motorista.Id.ToString();
+            return motorista.Id.ToString(); // This should be a JWT token in a real application
         }
     }
 }
