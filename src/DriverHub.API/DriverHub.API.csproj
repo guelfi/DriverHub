@@ -8,7 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DriverHub.Application\DriverHub.Application.csproj" />
+    <ProjectReference Include="..\DriverHub.Domain\DriverHub.Domain.csproj" />
+    <ProjectReference Include="..\DriverHub.Infrastructure\DriverHub.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

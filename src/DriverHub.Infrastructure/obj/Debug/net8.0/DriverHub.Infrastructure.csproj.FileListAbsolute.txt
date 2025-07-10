@@ -10,3 +10,9 @@
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/refint/DriverHub.Infrastructure.dll
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/DriverHub.Infrastructure.pdb
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/ref/DriverHub.Infrastructure.dll
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/DriverHub.Infrastructure.csproj.AssemblyReference.cache
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/bin/Debug/net8.0/DriverHub.Domain.dll
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/bin/Debug/net8.0/DriverHub.Domain.pdb
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/DriverHu.B8A26838.Up2Date
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/bin/Debug/net8.0/DriverHub.Application.dll
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/bin/Debug/net8.0/DriverHub.Application.pdb

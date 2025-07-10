@@ -1,0 +1,341 @@
+total 56
+-rw-r--r--  1 guelfi  staff   3093  9 Jul 12:51 DriverHub.sln
+-rw-r--r--  1 guelfi  staff  10407  6 Jul 22:32 Prompt.md
+-rw-r--r--  1 guelfi  staff   3797  6 Jul 23:41 README.md
+-rwxr-xr-x  1 guelfi  staff    870  9 Jul 10:35 clean_project.sh
+drwxr-xr-x  2 guelfi  staff     64  6 Jul 23:12 docker
+-rw-r--r--  1 guelfi  staff      0  9 Jul 22:03 result
+drwxr-xr-x  6 guelfi  staff    192  9 Jul 12:51 src
+-rwxr-xr-x  1 guelfi  staff   1302  9 Jul 12:55 update-github.sh
+
+./docker:
+
+./src:
+total 0
+drwxr-xr-x  11 guelfi  staff  352  9 Jul 21:40 DriverHub.API
+drwxr-xr-x   6 guelfi  staff  192  9 Jul 21:23 DriverHub.Application
+drwxr-xr-x   8 guelfi  staff  256  9 Jul 21:15 DriverHub.Domain
+drwxr-xr-x   8 guelfi  staff  256  9 Jul 21:39 DriverHub.Infrastructure
+
+./src/DriverHub.API:
+total 40
+drwxr-xr-x  3 guelfi  staff    96  9 Jul 21:40 Controllers
+-rw-r--r--  1 guelfi  staff   794  9 Jul 21:40 DriverHub.API.csproj
+-rw-r--r--  1 guelfi  staff   139  9 Jul 12:51 DriverHub.API.http
+-rw-r--r--  1 guelfi  staff  1830  9 Jul 21:58 Program.cs
+drwxr-xr-x  3 guelfi  staff    96  9 Jul 12:51 Properties
+-rw-r--r--  1 guelfi  staff   127  9 Jul 12:51 appsettings.Development.json
+-rw-r--r--  1 guelfi  staff   151  9 Jul 12:51 appsettings.json
+drwxr-xr-x  3 guelfi  staff    96  9 Jul 12:52 bin
+drwxr-xr-x  8 guelfi  staff   256  9 Jul 21:40 obj
+
+./src/DriverHub.API/Controllers:
+total 8
+-rw-r--r--  1 guelfi  staff  2158  9 Jul 22:01 AuthController.cs
+
+./src/DriverHub.API/Properties:
+total 8
+-rw-r--r--  1 guelfi  staff  1125  9 Jul 12:51 launchSettings.json
+
+./src/DriverHub.API/bin:
+total 0
+drwxr-xr-x  3 guelfi  staff  96  9 Jul 12:52 Debug
+
+./src/DriverHub.API/bin/Debug:
+total 0
+drwxr-xr-x  34 guelfi  staff  1088  9 Jul 22:02 net8.0
+
+./src/DriverHub.API/bin/Debug/net8.0:
+total 19352
+-rwxr-xr-x  1 guelfi  staff   124032  9 Jul 22:02 DriverHub.API
+-rw-r--r--  1 guelfi  staff    17099  9 Jul 21:40 DriverHub.API.deps.json
+-rw-r--r--  1 guelfi  staff    17920  9 Jul 22:02 DriverHub.API.dll
+-rw-r--r--  1 guelfi  staff    23348  9 Jul 22:02 DriverHub.API.pdb
+-rw-r--r--  1 guelfi  staff      466  9 Jul 21:40 DriverHub.API.runtimeconfig.json
+-rw-r--r--  1 guelfi  staff     9728  9 Jul 21:54 DriverHub.Application.dll
+-rw-r--r--  1 guelfi  staff    12324  9 Jul 21:54 DriverHub.Application.pdb
+-rw-r--r--  1 guelfi  staff     8704  9 Jul 21:35 DriverHub.Domain.dll
+-rw-r--r--  1 guelfi  staff    12216  9 Jul 21:35 DriverHub.Domain.pdb
+-rw-r--r--  1 guelfi  staff    15872  9 Jul 21:54 DriverHub.Infrastructure.dll
+-rw-r--r--  1 guelfi  staff    13380  9 Jul 21:54 DriverHub.Infrastructure.pdb
+-rwxr--r--  1 guelfi  staff    65800 14 Jun  2024 Microsoft.AspNetCore.OpenApi.dll
+-rwxr--r--  1 guelfi  staff    34888 16 Jun 22:37 Microsoft.EntityFrameworkCore.Abstractions.dll
+-rwxr--r--  1 guelfi  staff   234536 16 Jun 22:38 Microsoft.EntityFrameworkCore.InMemory.dll
+-rwxr--r--  1 guelfi  staff  2142240 16 Jun 22:38 Microsoft.EntityFrameworkCore.Relational.dll
+-rwxr--r--  1 guelfi  staff  2692152 16 Jun 22:37 Microsoft.EntityFrameworkCore.dll
+-rwxr--r--  1 guelfi  staff    36648 16 Jun 15:52 Microsoft.Extensions.Caching.Abstractions.dll
+-rwxr--r--  1 guelfi  staff    47368 16 Jun 15:53 Microsoft.Extensions.Caching.Memory.dll
+-rwxr--r--  1 guelfi  staff    28464 16 Jun 15:50 Microsoft.Extensions.Configuration.Abstractions.dll
+-rwxr--r--  1 guelfi  staff    65288 16 Jun 15:49 Microsoft.Extensions.DependencyInjection.Abstractions.dll
+-rwxr--r--  1 guelfi  staff    92456 16 Jun 15:56 Microsoft.Extensions.DependencyInjection.dll
+-rwxr--r--  1 guelfi  staff    66320 16 Jun 15:53 Microsoft.Extensions.Logging.Abstractions.dll
+-rwxr--r--  1 guelfi  staff    51496 16 Jun 15:58 Microsoft.Extensions.Logging.dll
+-rwxr--r--  1 guelfi  staff    65288 16 Jun 15:51 Microsoft.Extensions.Options.dll
+-rwxr--r--  1 guelfi  staff    44296 16 Jun 15:49 Microsoft.Extensions.Primitives.dll
+-rwxr--r--  1 guelfi  staff   211344 26 Set  2022 Microsoft.OpenApi.dll
+-rwxr--r--  1 guelfi  staff    15360 19 Jul  2022 Swashbuckle.AspNetCore.Swagger.dll
+-rwxr--r--  1 guelfi  staff    96768 19 Jul  2022 Swashbuckle.AspNetCore.SwaggerGen.dll
+-rwxr--r--  1 guelfi  staff  3416576 19 Jul  2022 Swashbuckle.AspNetCore.SwaggerUI.dll
+-rwxr--r--  1 guelfi  staff   173320 16 Jun 15:49 System.Diagnostics.DiagnosticSource.dll
+-rw-r--r--  1 guelfi  staff      127  9 Jul 12:51 appsettings.Development.json
+-rw-r--r--  1 guelfi  staff      151  9 Jul 12:51 appsettings.json
+
+./src/DriverHub.API/obj:
+total 168
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 12:52 Debug
+-rw-r--r--  1 guelfi  staff  10026  9 Jul 21:40 DriverHub.API.csproj.nuget.dgspec.json
+-rw-r--r--  1 guelfi  staff   2335  9 Jul 21:40 DriverHub.API.csproj.nuget.g.props
+-rw-r--r--  1 guelfi  staff   1148  9 Jul 21:40 DriverHub.API.csproj.nuget.g.targets
+-rw-r--r--  1 guelfi  staff  58030  9 Jul 21:40 project.assets.json
+-rw-r--r--  1 guelfi  staff   3161  9 Jul 21:40 project.nuget.cache
+
+./src/DriverHub.API/obj/Debug:
+total 0
+drwxr-xr-x  23 guelfi  staff  736  9 Jul 22:02 net8.0
+
+./src/DriverHub.API/obj/Debug/net8.0:
+total 480
+-rw-r--r--  1 guelfi  staff       0  9 Jul 21:54 DriverHu.ECDD9E26.Up2Date
+-rw-r--r--  1 guelfi  staff     990  9 Jul 21:17 DriverHub.API.AssemblyInfo.cs
+-rw-r--r--  1 guelfi  staff      65  9 Jul 21:17 DriverHub.API.AssemblyInfoInputs.cache
+-rw-r--r--  1 guelfi  staff     926  9 Jul 12:52 DriverHub.API.GeneratedMSBuildEditorConfig.editorconfig
+-rw-r--r--  1 guelfi  staff     753  9 Jul 12:52 DriverHub.API.GlobalUsings.g.cs
+-rw-r--r--  1 guelfi  staff       0  9 Jul 21:40 DriverHub.API.MvcApplicationPartsAssemblyInfo.cache
+-rw-r--r--  1 guelfi  staff     679  9 Jul 21:40 DriverHub.API.MvcApplicationPartsAssemblyInfo.cs
+-rw-r--r--  1 guelfi  staff   14178  9 Jul 21:40 DriverHub.API.assets.cache
+-rw-r--r--  1 guelfi  staff   11403  9 Jul 21:54 DriverHub.API.csproj.AssemblyReference.cache
+-rw-r--r--  1 guelfi  staff      65  9 Jul 21:41 DriverHub.API.csproj.CoreCompileInputs.cache
+-rw-r--r--  1 guelfi  staff    5615  9 Jul 21:40 DriverHub.API.csproj.FileListAbsolute.txt
+-rw-r--r--  1 guelfi  staff   17920  9 Jul 22:02 DriverHub.API.dll
+-rw-r--r--  1 guelfi  staff      65  9 Jul 21:40 DriverHub.API.genruntimeconfig.cache
+-rw-r--r--  1 guelfi  staff   23348  9 Jul 22:02 DriverHub.API.pdb
+-rw-r--r--  1 guelfi  staff     148  9 Jul 21:17 DriverHub.API.sourcelink.json
+-rwxr-xr-x  1 guelfi  staff  124032  9 Jul 22:02 apphost
+drwxr-xr-x  3 guelfi  staff      96  9 Jul 22:02 ref
+drwxr-xr-x  3 guelfi  staff      96  9 Jul 12:52 refint
+drwxr-xr-x  5 guelfi  staff     160  9 Jul 12:52 staticwebassets
+-rw-r--r--  1 guelfi  staff     277  9 Jul 12:52 staticwebassets.build.json
+
+./src/DriverHub.API/obj/Debug/net8.0/ref:
+total 24
+-rw-r--r--  1 guelfi  staff  9216  9 Jul 22:02 DriverHub.API.dll
+
+./src/DriverHub.API/obj/Debug/net8.0/refint:
+total 24
+-rw-r--r--  1 guelfi  staff  9216  9 Jul 22:02 DriverHub.API.dll
+
+./src/DriverHub.API/obj/Debug/net8.0/staticwebassets:
+total 24
+-rw-r--r--  1 guelfi  staff  89  9 Jul 12:52 msbuild.build.DriverHub.API.props
+-rw-r--r--  1 guelfi  staff  75  9 Jul 12:52 msbuild.buildMultiTargeting.DriverHub.API.props
+-rw-r--r--  1 guelfi  staff  89  9 Jul 12:52 msbuild.buildTransitive.DriverHub.API.props
+
+./src/DriverHub.Application:
+total 8
+-rw-r--r--  1 guelfi  staff  329  9 Jul 21:29 DriverHub.Application.csproj
+drwxr-xr-x  5 guelfi  staff  160  9 Jul 21:28 Services
+drwxr-xr-x  3 guelfi  staff   96  9 Jul 12:52 bin
+drwxr-xr-x  8 guelfi  staff  256  9 Jul 21:29 obj
+
+./src/DriverHub.Application/Services:
+total 16
+-rw-r--r--  1 guelfi  staff  396  9 Jul 21:23 IAuthService.cs
+-rw-r--r--  1 guelfi  staff  223  9 Jul 21:26 IPasswordHasher.cs
+drwxr-xr-x  4 guelfi  staff  128  9 Jul 21:53 Implementations
+
+./src/DriverHub.Application/Services/Implementations:
+total 16
+-rw-r--r--  1 guelfi  staff  2511  9 Jul 21:28 AuthService.cs
+-rw-r--r--  1 guelfi  staff  1489  9 Jul 21:54 PasswordHasher.cs
+
+./src/DriverHub.Application/bin:
+total 0
+drwxr-xr-x  3 guelfi  staff  96  9 Jul 12:52 Debug
+
+./src/DriverHub.Application/bin/Debug:
+total 0
+drwxr-xr-x  7 guelfi  staff  224  9 Jul 21:54 net8.0
+
+./src/DriverHub.Application/bin/Debug/net8.0:
+total 112
+-rw-r--r--  1 guelfi  staff    730  9 Jul 21:29 DriverHub.Application.deps.json
+-rw-r--r--  1 guelfi  staff   9728  9 Jul 21:54 DriverHub.Application.dll
+-rw-r--r--  1 guelfi  staff  12324  9 Jul 21:54 DriverHub.Application.pdb
+-rw-r--r--  1 guelfi  staff   8704  9 Jul 21:35 DriverHub.Domain.dll
+-rw-r--r--  1 guelfi  staff  12216  9 Jul 21:35 DriverHub.Domain.pdb
+
+./src/DriverHub.Application/obj:
+total 48
+drwxr-xr-x  3 guelfi  staff    96  9 Jul 12:52 Debug
+-rw-r--r--  1 guelfi  staff  4178  9 Jul 21:29 DriverHub.Application.csproj.nuget.dgspec.json
+-rw-r--r--  1 guelfi  staff  1119  9 Jul 12:50 DriverHub.Application.csproj.nuget.g.props
+-rw-r--r--  1 guelfi  staff   149  9 Jul 12:50 DriverHub.Application.csproj.nuget.g.targets
+-rw-r--r--  1 guelfi  staff  2671  9 Jul 21:29 project.assets.json
+-rw-r--r--  1 guelfi  staff   225  9 Jul 21:29 project.nuget.cache
+
+./src/DriverHub.Application/obj/Debug:
+total 0
+drwxr-xr-x  17 guelfi  staff  544  9 Jul 21:35 net8.0
+
+./src/DriverHub.Application/obj/Debug/net8.0:
+total 128
+-rw-r--r--  1 guelfi  staff      0  9 Jul 21:35 DriverHu.3E549ED8.Up2Date
+-rw-r--r--  1 guelfi  staff   1014  9 Jul 21:17 DriverHub.Application.AssemblyInfo.cs
+-rw-r--r--  1 guelfi  staff     65  9 Jul 21:17 DriverHub.Application.AssemblyInfoInputs.cache
+-rw-r--r--  1 guelfi  staff    605  9 Jul 12:52 DriverHub.Application.GeneratedMSBuildEditorConfig.editorconfig
+-rw-r--r--  1 guelfi  staff    287  9 Jul 12:52 DriverHub.Application.GlobalUsings.g.cs
+-rw-r--r--  1 guelfi  staff    151  9 Jul 21:29 DriverHub.Application.assets.cache
+-rw-r--r--  1 guelfi  staff    458  9 Jul 21:35 DriverHub.Application.csproj.AssemblyReference.cache
+-rw-r--r--  1 guelfi  staff     65  9 Jul 21:54 DriverHub.Application.csproj.CoreCompileInputs.cache
+-rw-r--r--  1 guelfi  staff   1776  9 Jul 21:29 DriverHub.Application.csproj.FileListAbsolute.txt
+-rw-r--r--  1 guelfi  staff   9728  9 Jul 21:54 DriverHub.Application.dll
+-rw-r--r--  1 guelfi  staff  12324  9 Jul 21:54 DriverHub.Application.pdb
+-rw-r--r--  1 guelfi  staff    148  9 Jul 21:17 DriverHub.Application.sourcelink.json
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 21:54 ref
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 12:52 refint
+
+./src/DriverHub.Application/obj/Debug/net8.0/ref:
+total 16
+-rw-r--r--  1 guelfi  staff  6656  9 Jul 21:54 DriverHub.Application.dll
+
+./src/DriverHub.Application/obj/Debug/net8.0/refint:
+total 16
+-rw-r--r--  1 guelfi  staff  6656  9 Jul 21:54 DriverHub.Application.dll
+
+./src/DriverHub.Domain:
+total 24
+-rw-r--r--  1 guelfi  staff   218  9 Jul 12:50 DriverHub.Domain.csproj
+-rw-r--r--  1 guelfi  staff  1012  9 Jul 20:26 Motorista.cs
+drwxr-xr-x  3 guelfi  staff    96  9 Jul 21:15 Repositories
+-rw-r--r--  1 guelfi  staff   653  9 Jul 21:35 Viagem.cs
+drwxr-xr-x  3 guelfi  staff    96  9 Jul 12:52 bin
+drwxr-xr-x  8 guelfi  staff   256  9 Jul 12:52 obj
+
+./src/DriverHub.Domain/Repositories:
+total 8
+-rw-r--r--  1 guelfi  staff  405  9 Jul 21:19 IMotoristaRepository.cs
+
+./src/DriverHub.Domain/bin:
+total 0
+drwxr-xr-x  3 guelfi  staff  96  9 Jul 12:52 Debug
+
+./src/DriverHub.Domain/bin/Debug:
+total 0
+drwxr-xr-x  5 guelfi  staff  160  9 Jul 21:35 net8.0
+
+./src/DriverHub.Domain/bin/Debug/net8.0:
+total 56
+-rw-r--r--  1 guelfi  staff    418  9 Jul 12:52 DriverHub.Domain.deps.json
+-rw-r--r--  1 guelfi  staff   8704  9 Jul 21:35 DriverHub.Domain.dll
+-rw-r--r--  1 guelfi  staff  12216  9 Jul 21:35 DriverHub.Domain.pdb
+
+./src/DriverHub.Domain/obj:
+total 40
+drwxr-xr-x  3 guelfi  staff    96  9 Jul 12:52 Debug
+-rw-r--r--  1 guelfi  staff  2018  9 Jul 12:50 DriverHub.Domain.csproj.nuget.dgspec.json
+-rw-r--r--  1 guelfi  staff  1119  9 Jul 12:50 DriverHub.Domain.csproj.nuget.g.props
+-rw-r--r--  1 guelfi  staff   149  9 Jul 12:50 DriverHub.Domain.csproj.nuget.g.targets
+-rw-r--r--  1 guelfi  staff  1884  9 Jul 12:50 project.assets.json
+-rw-r--r--  1 guelfi  staff   215  9 Jul 12:50 project.nuget.cache
+
+./src/DriverHub.Domain/obj/Debug:
+total 0
+drwxr-xr-x  15 guelfi  staff  480  9 Jul 12:52 net8.0
+
+./src/DriverHub.Domain/obj/Debug/net8.0:
+total 112
+-rw-r--r--  1 guelfi  staff    999  9 Jul 21:17 DriverHub.Domain.AssemblyInfo.cs
+-rw-r--r--  1 guelfi  staff     65  9 Jul 21:17 DriverHub.Domain.AssemblyInfoInputs.cache
+-rw-r--r--  1 guelfi  staff    595  9 Jul 12:52 DriverHub.Domain.GeneratedMSBuildEditorConfig.editorconfig
+-rw-r--r--  1 guelfi  staff    287  9 Jul 12:52 DriverHub.Domain.GlobalUsings.g.cs
+-rw-r--r--  1 guelfi  staff    151  9 Jul 12:52 DriverHub.Domain.assets.cache
+-rw-r--r--  1 guelfi  staff     65  9 Jul 21:17 DriverHub.Domain.csproj.CoreCompileInputs.cache
+-rw-r--r--  1 guelfi  staff   1231  9 Jul 12:52 DriverHub.Domain.csproj.FileListAbsolute.txt
+-rw-r--r--  1 guelfi  staff   8704  9 Jul 21:35 DriverHub.Domain.dll
+-rw-r--r--  1 guelfi  staff  12216  9 Jul 21:35 DriverHub.Domain.pdb
+-rw-r--r--  1 guelfi  staff    148  9 Jul 21:17 DriverHub.Domain.sourcelink.json
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 21:35 ref
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 12:52 refint
+
+./src/DriverHub.Domain/obj/Debug/net8.0/ref:
+total 16
+-rw-r--r--  1 guelfi  staff  7680  9 Jul 21:35 DriverHub.Domain.dll
+
+./src/DriverHub.Domain/obj/Debug/net8.0/refint:
+total 16
+-rw-r--r--  1 guelfi  staff  7680  9 Jul 21:35 DriverHub.Domain.dll
+
+./src/DriverHub.Infrastructure:
+total 8
+drwxr-xr-x  3 guelfi  staff   96  9 Jul 21:34 Data
+-rw-r--r--  1 guelfi  staff  623  9 Jul 21:39 DriverHub.Infrastructure.csproj
+drwxr-xr-x  3 guelfi  staff   96  9 Jul 21:33 Repositories
+drwxr-xr-x  2 guelfi  staff   64  9 Jul 21:53 Services
+drwxr-xr-x  3 guelfi  staff   96  9 Jul 12:52 bin
+drwxr-xr-x  8 guelfi  staff  256  9 Jul 21:39 obj
+
+./src/DriverHub.Infrastructure/Data:
+total 8
+-rw-r--r--  1 guelfi  staff  2360  9 Jul 21:36 ApplicationDbContext.cs
+
+./src/DriverHub.Infrastructure/Repositories:
+total 8
+-rw-r--r--  1 guelfi  staff  1493  9 Jul 21:34 MotoristaRepository.cs
+
+./src/DriverHub.Infrastructure/Services:
+
+./src/DriverHub.Infrastructure/bin:
+total 0
+drwxr-xr-x  3 guelfi  staff  96  9 Jul 12:52 Debug
+
+./src/DriverHub.Infrastructure/bin/Debug:
+total 0
+drwxr-xr-x  9 guelfi  staff  288  9 Jul 21:54 net8.0
+
+./src/DriverHub.Infrastructure/bin/Debug/net8.0:
+total 192
+-rw-r--r--  1 guelfi  staff   9728  9 Jul 21:54 DriverHub.Application.dll
+-rw-r--r--  1 guelfi  staff  12324  9 Jul 21:54 DriverHub.Application.pdb
+-rw-r--r--  1 guelfi  staff   8704  9 Jul 21:35 DriverHub.Domain.dll
+-rw-r--r--  1 guelfi  staff  12216  9 Jul 21:35 DriverHub.Domain.pdb
+-rw-r--r--  1 guelfi  staff  11536  9 Jul 21:39 DriverHub.Infrastructure.deps.json
+-rw-r--r--  1 guelfi  staff  15872  9 Jul 21:54 DriverHub.Infrastructure.dll
+-rw-r--r--  1 guelfi  staff  13380  9 Jul 21:54 DriverHub.Infrastructure.pdb
+
+./src/DriverHub.Infrastructure/obj:
+total 112
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 12:52 Debug
+-rw-r--r--  1 guelfi  staff   6922  9 Jul 21:39 DriverHub.Infrastructure.csproj.nuget.dgspec.json
+-rw-r--r--  1 guelfi  staff   1485  9 Jul 21:33 DriverHub.Infrastructure.csproj.nuget.g.props
+-rw-r--r--  1 guelfi  staff    851  9 Jul 21:33 DriverHub.Infrastructure.csproj.nuget.g.targets
+-rw-r--r--  1 guelfi  staff  34380  9 Jul 21:39 project.assets.json
+-rw-r--r--  1 guelfi  staff   2187  9 Jul 21:39 project.nuget.cache
+
+./src/DriverHub.Infrastructure/obj/Debug:
+total 0
+drwxr-xr-x  17 guelfi  staff  544  9 Jul 21:54 net8.0
+
+./src/DriverHub.Infrastructure/obj/Debug/net8.0:
+total 160
+-rw-r--r--  1 guelfi  staff      0  9 Jul 21:54 DriverHu.B8A26838.Up2Date
+-rw-r--r--  1 guelfi  staff   1023  9 Jul 21:17 DriverHub.Infrastructure.AssemblyInfo.cs
+-rw-r--r--  1 guelfi  staff     65  9 Jul 21:17 DriverHub.Infrastructure.AssemblyInfoInputs.cache
+-rw-r--r--  1 guelfi  staff    611  9 Jul 12:52 DriverHub.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+-rw-r--r--  1 guelfi  staff    287  9 Jul 12:52 DriverHub.Infrastructure.GlobalUsings.g.cs
+-rw-r--r--  1 guelfi  staff   9853  9 Jul 21:39 DriverHub.Infrastructure.assets.cache
+-rw-r--r--  1 guelfi  staff   7726  9 Jul 21:54 DriverHub.Infrastructure.csproj.AssemblyReference.cache
+-rw-r--r--  1 guelfi  staff     65  9 Jul 21:54 DriverHub.Infrastructure.csproj.CoreCompileInputs.cache
+-rw-r--r--  1 guelfi  staff   2073  9 Jul 21:39 DriverHub.Infrastructure.csproj.FileListAbsolute.txt
+-rw-r--r--  1 guelfi  staff  15872  9 Jul 21:54 DriverHub.Infrastructure.dll
+-rw-r--r--  1 guelfi  staff  13380  9 Jul 21:54 DriverHub.Infrastructure.pdb
+-rw-r--r--  1 guelfi  staff    148  9 Jul 21:17 DriverHub.Infrastructure.sourcelink.json
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 21:54 ref
+drwxr-xr-x  3 guelfi  staff     96  9 Jul 12:52 refint
+
+./src/DriverHub.Infrastructure/obj/Debug/net8.0/ref:
+total 24
+-rw-r--r--  1 guelfi  staff  8704  9 Jul 21:54 DriverHub.Infrastructure.dll
+
+./src/DriverHub.Infrastructure/obj/Debug/net8.0/refint:
+total 24
+-rw-r--r--  1 guelfi  staff  8704  9 Jul 21:54 DriverHub.Infrastructure.dll

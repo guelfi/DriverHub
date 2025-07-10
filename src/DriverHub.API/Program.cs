@@ -1,7 +1,27 @@
+using DriverHub.Application.Services;
+using DriverHub.Application.Services.Implementations;
+using DriverHub.Domain.Repositories;
+using DriverHub.Infrastructure.Data;
+using DriverHub.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Configure DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseInMemoryDatabase("DriverHubDb")); // Using in-memory for now
+
+// Register repositories
+builder.Services.AddScoped<IMotoristaRepository, MotoristaRepository>();
+
+// Register services
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

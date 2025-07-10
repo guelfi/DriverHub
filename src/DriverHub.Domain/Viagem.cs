@@ -8,11 +8,12 @@ namespace DriverHub.Domain.Entities
         public Guid Id { get; set; }
         public Guid MotoristaId { get; set; }
         public DateTimeOffset DataViagem { get; set; }
-        public decimal QuilometragemInicial { get; set; }
-        public decimal QuilometragemFinal { get; set; }
+        public string Origem { get; set; } = null!;
+        public string Destino { get; set; } = null!;
+        public decimal DistanciaKm { get; set; }
         public decimal ValorRecebido { get; set; }
-        public decimal GastoCombustivel { get; set; }
-        public decimal ValorLiquido => ValorRecebido - GastoCombustivel;
+        public decimal CustoCombustivel { get; set; }
+        public decimal Lucro { get; set; }
 
         // Propriedade de navegação
         public Motorista? Motorista { get; set; }
