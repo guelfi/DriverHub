@@ -60,7 +60,7 @@ Ao mesmo tempo, permitirá:
 - [x] Criação da estrutura de pastas
 - [x] Configuração do ambiente com VS Code e Docker
 - [x] Integração com GitHub
-- [ ] Criação da solução .NET com Clean Architecture
+- [x] Criação da solução .NET com Clean Architecture
 - [ ] Conexão com banco de dados PostgreSQL
 - [ ] Criação do painel para motoristas
 - [ ] Criação do painel para administradores
