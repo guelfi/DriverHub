@@ -63,6 +63,7 @@ Ao mesmo tempo, permitirá:
 - [x] Criação da solução .NET com Clean Architecture
 - [x] Efetuar testes dos EndPoint de Cadastro e Login de Motoristas do DriverHub.API
 - [x] Implementar Rotina de Testes Unitários até essa Etapa do Projeto
+- [ ] Implementar JWT ao Projeto visando torna-lo mais seguro 
 - [ ] Conexão com banco de dados PostgreSQL
 - [ ] Criação do painel para motoristas
 - [ ] Criação do painel para administradores
