@@ -24,6 +24,6 @@ namespace DriverHub.Domain.Entities
         public Role Role { get; set; }
 
         // Relacionamentos (mantido comentado por enquanto)
-        // public ICollection<Viagem> Viagens { get; set; } = new List<Viagem>();
+        public ICollection<Viagem> Viagens { get; set; } = new List<Viagem>();
     }
 }
