@@ -2318,6 +2318,7 @@
       "Microsoft.AspNetCore.OpenApi >= 8.0.7",
       "Microsoft.EntityFrameworkCore.InMemory >= 9.0.7",
       "Serilog.AspNetCore >= 9.0.0",
+      "Serilog.Sinks.File >= 6.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -2389,6 +2390,10 @@
           "Serilog.AspNetCore": {
             "target": "Package",
             "version": "[9.0.0, )"
+          },
+          "Serilog.Sinks.File": {
+            "target": "Package",
+            "version": "[6.0.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

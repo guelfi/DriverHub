@@ -1,4 +1,3 @@
-
 using DriverHub.Application.Services;
 using DriverHub.Application.Services.Implementations;
 using DriverHub.Domain.Repositories;
@@ -13,8 +12,17 @@ using Serilog;
 using Serilog.AspNetCore;
 using DriverHub.API.Middleware;
 using Microsoft.Extensions.Logging;
+using Serilog.Sinks.File;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.Debug()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -105,4 +113,3 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
-
