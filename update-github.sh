@@ -1,11 +1,20 @@
 #!/bin/bash
 
 # Este script automatiza os comandos git add, git commit e git push.
-# Ele solicita uma mensagem de commit ao usuário.
+# Ele recebe a mensagem de commit como um argumento.
+
+# 1. Verificar se a mensagem de commit foi fornecida
+if [ -z "$1" ]; then
+    echo "Erro: Nenhuma mensagem de commit fornecida."
+    echo "Uso: $0 \"Sua mensagem de commit\""
+    exit 1
+fi
+
+commit_message=$1
 
 echo "--- Atualizando GitHub ---"
 
-# 1. Adicionar todas as mudanças para o stage
+# 2. Adicionar todas as mudanças para o stage
 echo "Adicionando todas as mudanças..."
 git add .
 if [ $? -ne 0 ]; then
@@ -13,15 +22,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 echo "Mudanças adicionadas com sucesso."
-
-# 2. Solicitar a mensagem de commit
-read -p "Digite a mensagem para o commit: " commit_message
-
-# Verificar se a mensagem de commit não está vazia
-if [ -z "$commit_message" ]; then
-    echo "Mensagem de commit não pode ser vazia. Operação cancelada."
-    exit 1
-fi
 
 # 3. Criar o commit
 echo "Criando commit com a mensagem: \"$commit_message\""

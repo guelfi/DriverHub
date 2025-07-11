@@ -1,11 +1,3 @@
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.csproj.AssemblyReference.cache
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.GeneratedMSBuildEditorConfig.editorconfig
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.AssemblyInfoInputs.cache
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.AssemblyInfo.cs
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.csproj.CoreCompileInputs.cache
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.MvcApplicationPartsAssemblyInfo.cs
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.MvcApplicationPartsAssemblyInfo.cache
-/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.sourcelink.json
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/bin/Debug/net8.0/appsettings.Development.json
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/bin/Debug/net8.0/appsettings.json
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/bin/Debug/net8.0/DriverHub.API
@@ -56,6 +48,14 @@
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/bin/Debug/net8.0/DriverHub.Application.pdb
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/bin/Debug/net8.0/DriverHub.Domain.pdb
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/bin/Debug/net8.0/DriverHub.Infrastructure.pdb
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.csproj.AssemblyReference.cache
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.GeneratedMSBuildEditorConfig.editorconfig
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.AssemblyInfoInputs.cache
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.AssemblyInfo.cs
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.csproj.CoreCompileInputs.cache
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.MvcApplicationPartsAssemblyInfo.cs
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.MvcApplicationPartsAssemblyInfo.cache
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/DriverHub.API.sourcelink.json
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/staticwebassets.build.json
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/staticwebassets.development.json
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.API/obj/Debug/net8.0/staticwebassets/msbuild.DriverHub.API.Microsoft.AspNetCore.StaticWebAssets.props

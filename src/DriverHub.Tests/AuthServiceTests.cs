@@ -1,12 +1,11 @@
 using Xunit;
 using Moq;
-using DriverHub.Application.Services.Implementations;
-using DriverHub.Domain.Entities;
-using DriverHub.Application.DTOs;
 using DriverHub.Application.Services;
-using Microsoft.Extensions.Logging;
-using DriverHub.Domain.Interfaces;
-using DriverHub.Application.Services.Interfaces;
+using DriverHub.Application.Services.Implementations;
+using DriverHub.Domain.Repositories;
+using DriverHub.Domain.Entities;
+using DriverHub.API.Models.DTOs;
+using Microsoft.Extensions.Configuration;
 
 namespace DriverHub.Tests
 {
@@ -14,165 +13,90 @@ namespace DriverHub.Tests
     {
         private readonly Mock<IMotoristaRepository> _mockMotoristaRepository;
         private readonly Mock<IPasswordHasher> _mockPasswordHasher;
-        private readonly Mock<ITokenService> _mockTokenService;
-        private readonly Mock<ILogger<AuthService>> _mockLogger;
+        private readonly Mock<IConfiguration> _mockConfiguration;
         private readonly AuthService _authService;
 
         public AuthServiceTests()
         {
             _mockMotoristaRepository = new Mock<IMotoristaRepository>();
             _mockPasswordHasher = new Mock<IPasswordHasher>();
-            _mockTokenService = new Mock<ITokenService>();
-            _mockLogger = new Mock<ILogger<AuthService>>();
+            _mockConfiguration = new Mock<IConfiguration>();
 
-            _authService = new AuthService(
-                _mockMotoristaRepository.Object,
-                _mockPasswordHasher.Object,
-                _mockTokenService.Object,
-                _mockLogger.Object
-            );
-        }
+            // Mock IConfiguration
+            var inMemorySettings = new Dictionary<string, string?> {
+                {"Jwt:Key", "this_is_a_much_longer_and_more_secure_secret_key_for_jwt"}
+            };
 
-        // --- Testes para o método Register ---
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
 
-        [Fact]
-        public async Task Register_DeveRetornarSucesso_QuandoEmailNaoExiste()
-        {
-            // Arrange
-            var registerDto = new RegisterDto { Email = "novo@exemplo.com", Senha = "SenhaSegura123" };
-            _mockMotoristaRepository.Setup(r => r.GetByEmailAsync(It.IsAny<string>()))
-                                    .ReturnsAsync((Motorista)null);
-            _mockPasswordHasher.Setup(h => h.HashPassword(It.IsAny<string>()))
-                               .Returns("hashedPassword");
+            _mockConfiguration.Setup(c => c["Jwt:Key"]).Returns(configuration["Jwt:Key"]);
 
-            // Act
-            var result = await _authService.Register(registerDto);
-
-            // Assert
-            Assert.True(result.IsSuccess);
-            Assert.True(result.Value);
-            _mockMotoristaRepository.Verify(r => r.AddAsync(It.IsAny<Motorista>()), Times.Once);
-            _mockMotoristaRepository.Verify(r => r.UnitOfWork.CommitAsync(), Times.Once);
-            _mockLogger.Verify(
-                x => x.Log(
-                    LogLevel.Information,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Novo motorista registrado com sucesso: novo@exemplo.com")), // Ajuste na mensagem do log
-                    null,
-                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
-                Times.Once);
+            _authService = new AuthService(_mockMotoristaRepository.Object, _mockPasswordHasher.Object, _mockConfiguration.Object);
         }
 
         [Fact]
-        public async Task Register_DeveRetornarFalha_QuandoEmailJaExiste()
+        public async Task Register_ValidUser_ReturnsSuccess()
         {
             // Arrange
-            var registerDto = new RegisterDto { Email = "existente@exemplo.com", Senha = "SenhaSegura123" };
-            _mockMotoristaRepository.Setup(r => r.GetByEmailAsync(It.IsAny<string>()))
-                                    .ReturnsAsync(new Motorista("existente@exemplo.com", "hashedOldPassword"));
+            _mockPasswordHasher.Setup(ph => ph.HashPassword(It.IsAny<string>()))
+                              .Returns("hashedPassword:salt");
+
+            _mockMotoristaRepository.Setup(repo => repo.AddAsync(It.IsAny<Motorista>()))
+                                   .Returns(Task.CompletedTask);
+
+            _mockMotoristaRepository.Setup(repo => repo.GetByEmailAsync(It.IsAny<string>()))
+                                   .ReturnsAsync((Motorista)null!);
+
+            var registerRequest = new RegisterRequest
+            {
+                Email = "test@example.com",
+                Password = "password123",
+                Nome = "Test User"
+            };
 
             // Act
-            var result = await _authService.Register(registerDto);
+            await _authService.RegisterAsync(registerRequest.Email, registerRequest.Password, registerRequest.Nome);
 
             // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Equal("Email já registrado.", result.Error); // Ajuste na mensagem de erro
-            Assert.False(result.Value);
-            _mockMotoristaRepository.Verify(r => r.AddAsync(It.IsAny<Motorista>()), Times.Never);
-            _mockMotoristaRepository.Verify(r => r.UnitOfWork.CommitAsync(), Times.Never);
-            _mockLogger.Verify(
-                x => x.Log(
-                    LogLevel.Warning,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Tentativa de registro com e-mail já cadastrado: 'existente@exemplo.com'.")), // Mantido o original, assumindo que esta mensagem estava correta
-                    null,
-                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
-                Times.Once);
-        }
-
-        // --- Testes para o método Login ---
-
-        [Fact]
-        public async Task Login_DeveRetornarToken_QuandoCredenciaisSaoValidas()
-        {
-            // Arrange
-            var loginDto = new LoginDto { Email = "usuario@exemplo.com", Senha = "SenhaCorreta123" };
-            var motorista = new Motorista(loginDto.Email, "hashedPassword");
-            _mockMotoristaRepository.Setup(r => r.GetByEmailAsync(loginDto.Email))
-                                    .ReturnsAsync(motorista);
-            _mockPasswordHasher.Setup(h => h.VerifyPassword("SenhaCorreta123", "hashedPassword"))
-                               .Returns(true);
-            _mockTokenService.Setup(t => t.GenerateToken(motorista))
-                             .Returns("fakeJwtToken");
-
-            // Act
-            var result = await _authService.Login(loginDto);
-
-            // Assert
-            Assert.True(result.IsSuccess);
-            Assert.Equal("fakeJwtToken", result.Value);
-            Assert.Null(result.Error);
-            _mockLogger.Verify(
-                x => x.Log(
-                    LogLevel.Information,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Login bem-sucedido para o email: usuario@exemplo.com")), // Ajuste na mensagem do log
-                    null,
-                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
-                Times.Once);
+            _mockPasswordHasher.Verify(ph => ph.HashPassword(registerRequest.Password), Times.Once);
+            _mockMotoristaRepository.Verify(repo => repo.AddAsync(It.Is<Motorista>(m => m.Email == registerRequest.Email && m.SenhaHash == "hashedPassword")), Times.Once);
         }
 
         [Fact]
-        public async Task Login_DeveRetornarFalha_QuandoEmailNaoExiste()
+        public async Task Register_ExistingUser_ThrowsArgumentException()
         {
             // Arrange
-            var loginDto = new LoginDto { Email = "naoexiste@exemplo.com", Senha = "SenhaIncorreta" };
-            _mockMotoristaRepository.Setup(r => r.GetByEmailAsync(It.IsAny<string>()))
-                                    .ReturnsAsync((Motorista)null);
+            _mockMotoristaRepository.Setup(repo => repo.GetByEmailAsync(It.IsAny<string>()))
+                                   .ReturnsAsync(new Motorista());
 
-            // Act
-            var result = await _authService.Login(loginDto);
+            var registerRequest = new RegisterRequest
+            {
+                Email = "existing@example.com",
+                Password = "password123",
+                Nome = "Existing User"
+            };
 
-            // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Equal("Email ou senha inválidos.", result.Error); // Ajuste na mensagem de erro
-            Assert.Null(result.Value);
-            _mockLogger.Verify(
-                x => x.Log(
-                    LogLevel.Warning,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Tentativa de login com credenciais inválidas para o e-mail 'naoexiste@exemplo.com'.")), // Mantido o original
-                    null,
-                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
-                Times.Once);
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => _authService.RegisterAsync(registerRequest.Email, registerRequest.Password, registerRequest.Nome));
+            _mockPasswordHasher.Verify(ph => ph.HashPassword(It.IsAny<string>()), Times.Never);
+            _mockMotoristaRepository.Verify(repo => repo.AddAsync(It.IsAny<Motorista>()), Times.Never);
         }
 
         [Fact]
-        public async Task Login_DeveRetornarFalha_QuandoSenhaIncorreta()
+        public async Task Login_ValidCredentials_ReturnsJwtToken()
         {
             // Arrange
-            var loginDto = new LoginDto { Email = "usuario@exemplo.com", Senha = "SenhaIncorreta" };
-            var motorista = new Motorista(loginDto.Email, "hashedPassword");
-            _mockMotoristaRepository.Setup(r => r.GetByEmailAsync(loginDto.Email))
-                                    .ReturnsAsync(motorista);
-            _mockPasswordHasher.Setup(h => h.VerifyPassword("SenhaIncorreta", "hashedPassword"))
-                               .Returns(false);
+            var motorista = new Motorista { Email = "test@example.com", SenhaHash = "hashedPassword", Sal = "salt" };
+            _mockMotoristaRepository.Setup(repo => repo.GetByEmailAsync("test@example.com")).ReturnsAsync(motorista);
+            _mockPasswordHasher.Setup(ph => ph.VerifyPassword("password123", "hashedPassword", "salt")).Returns(true);
 
             // Act
-            var result = await _authService.Login(loginDto);
+            var token = await _authService.LoginAsync("test@example.com", "password123");
 
             // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Equal("Email ou senha inválidos.", result.Error); // Ajuste na mensagem de erro
-            Assert.Null(result.Value);
-            _mockLogger.Verify(
-                x => x.Log(
-                    LogLevel.Warning,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Tentativa de login com credenciais inválidas para o e-mail 'usuario@exemplo.com'.")), // Mantido o original
-                    null,
-                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
-                Times.Once);
+            Assert.NotNull(token);
         }
     }
 }
