@@ -48,11 +48,10 @@ Ao mesmo tempo, permitirá:
 │   ├── DriverHub.API/             # Camada de apresentação (controladores, middleware)
 │   ├── DriverHub.Application/     # Lógica de negócio, serviços de aplicação, DTOs
 │   ├── DriverHub.Domain/          # Entidades de domínio, interfaces de repositório
-│   └── DriverHub.Infrastructure/  # Implementações de repositório, contexto de DB
+│   ├── DriverHub.Infrastructure/  # Implementações de repositório, contexto de DB
+│   └── DriverHub.Tests/           # Projeto de testes unitários
 ├── docker/
 │   └── docker-compose.yml         # Configuração Docker Compose para serviços
-├── tests/
-│   └── DriverHub.Tests/           # Projeto de testes unitários
 └── README.md
 </code></pre>
 
