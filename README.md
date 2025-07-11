@@ -63,20 +63,21 @@ Ao mesmo tempo, permitirá:
 - [x] Configuração do ambiente com VS Code e Docker.
 - [x] Integração com GitHub.
 - [x] Criação da solução .NET com Clean Architecture.
-- [x] Módulo de Autenticação JWT com suporte a roles (Motorista, Admin).
+- [x] Módulo de Autenticação JWT com suporte a roles (Motorista, Admin), incluindo registro e login com `Nome` e `Sobrenome`.
 - [x] Implementação de `AuthService`, `TokenService` e `PasswordHasher` com injeção de dependência.
-- [x] Definição das entidades `Motorista` e `Viagem` no domínio.
+- [x] Definição das entidades `Motorista` (agora com `Sobrenome`) e `Viagem` no domínio.
 - [x] Implementação de `IMotoristaRepository` e `MotoristaRepository` (com DB em memória).
 - [x] Tratamento de exceções global via `ExceptionHandlingMiddleware`.
 - [x] Configuração e uso de Serilog para logging centralizado.
-- [x] Testes unitários iniciais para `AuthService` (`AuthServiceTests.cs`).
+- [x] Testes unitários iniciais para `AuthService` (`AuthServiceTests.cs`), atualizados para incluir o parâmetro `sobrenome`.
+- [x] Frontend Mobile (`DriverHub.MobileApp`): Implementação das telas de Login e Registro com validação de formulário, funcionalidade de mostrar/ocultar senha, alternância de tema (claro/escuro) e exibição de mensagens de erro/sucesso amigáveis. Fluxo de login redireciona para uma `HomeScreen` que exibe o nome e sobrenome do usuário.
 
 ### 🚧 Próximos Passos
 
 - [ ] Implementar Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`.
 - [ ] Desenvolver a lógica de negócio para cálculos financeiros e análises de desempenho.
 - [ ] Definir e implementar queries/lógica para relatórios agregados do administrador.
-- [ ] Esboçar e integrar o frontend React Native.
+- [ ] Continuar o esboço e integração do frontend React Native (desenvolver as demais telas e funcionalidades).
 - [ ] Desenvolver o frontend administrativo (Razor Pages ou Blazor Server).
 - [ ] Migrar o banco de dados de memória para PostgreSQL.
 - [ ] Explorar e integrar ferramentas Google AI (Gemini CLI, AI Studio, Firebase Studio).
