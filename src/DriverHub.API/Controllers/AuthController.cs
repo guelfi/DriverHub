@@ -1,5 +1,6 @@
 using DriverHub.Application.Services;
 using DriverHub.API.Models.DTOs;
+using DriverHub.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,10 +12,12 @@ namespace DriverHub.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly IMotoristaRepository _motoristaRepository;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IMotoristaRepository motoristaRepository)
         {
             _authService = authService;
+            _motoristaRepository = motoristaRepository;
         }
 
         [HttpPost("register")]
@@ -22,7 +25,7 @@ namespace DriverHub.API.Controllers
         {
             try
             {
-                await _authService.RegisterAsync(request.Email!, request.Password!, request.Nome!);
+                await _authService.RegisterAsync(request.Email!, request.Password!, request.Nome!, request.Sobrenome!);
                 return Ok("Usuário registrado com sucesso.");
             }
             catch (ArgumentException ex)
@@ -37,9 +40,17 @@ namespace DriverHub.API.Controllers
             var token = await _authService.LoginAsync(request.Email!, request.Password!);
             if (string.IsNullOrEmpty(token))
             {
-                return Unauthorized("Credenciais inválidas.");
+                return Unauthorized(new { message = "Credenciais inválidas." });
             }
-            return Ok(new { Token = token });
+
+            var motorista = await _motoristaRepository.GetByEmailAsync(request.Email!);
+            if (motorista == null)
+            {
+                // Isso não deveria acontecer se o login foi bem-sucedido, mas é uma verificação de segurança
+                return Unauthorized(new { message = "Usuário não encontrado após login bem-sucedido." });
+            }
+
+            return Ok(new { Token = token, Nome = motorista.Nome, Sobrenome = motorista.Sobrenome });
         }
 
         [HttpGet("ProtectedData")]

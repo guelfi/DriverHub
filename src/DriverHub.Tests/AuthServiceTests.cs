@@ -44,7 +44,7 @@ namespace DriverHub.Tests
                                    .ReturnsAsync((Motorista)null!);
 
             // Act
-            await _authService.RegisterAsync("test@example.com", "password123", "Test User");
+            await _authService.RegisterAsync("test@example.com", "password123", "Test User", "Test Sobrenome");
 
             // Assert
             _mockPasswordHasher.Verify(ph => ph.HashPassword("password123"), Times.Once);
@@ -59,7 +59,7 @@ namespace DriverHub.Tests
                                    .ReturnsAsync(new Motorista());
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => _authService.RegisterAsync("existing@example.com", "password123", "Existing User"));
+            await Assert.ThrowsAsync<ArgumentException>(() => _authService.RegisterAsync("existing@example.com", "password123", "Existing User", "Existing Sobrenome"));
             _mockPasswordHasher.Verify(ph => ph.HashPassword(It.IsAny<string>()), Times.Never);
             _mockMotoristaRepository.Verify(repo => repo.AddAsync(It.IsAny<Motorista>()), Times.Never);
         }

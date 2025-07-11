@@ -13,6 +13,7 @@ namespace DriverHub.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Nome { get; set; } = null!; // Adicione = null!
+        public string Sobrenome { get; set; } = null!; // Adicione = null!
         public string Email { get; set; } = null!; // Adicione = null!
         public string SenhaHash { get; set; } = null!; // Adicione = null!
         public string Sal { get; set; } = null!; // Adicione = null!

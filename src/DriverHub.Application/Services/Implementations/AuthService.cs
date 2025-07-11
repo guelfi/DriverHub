@@ -27,7 +27,7 @@ namespace DriverHub.Application.Services.Implementations
             _logger = logger;
         }
 
-        public async Task RegisterAsync(string email, string password, string nome)
+        public async Task RegisterAsync(string email, string password, string nome, string sobrenome)
         {
             var existingMotorista = await _motoristaRepository.GetByEmailAsync(email);
             if (existingMotorista != null)
@@ -44,6 +44,7 @@ namespace DriverHub.Application.Services.Implementations
             {
                 Id = Guid.NewGuid(),
                 Nome = nome,
+                Sobrenome = sobrenome,
                 Email = email,
                 SenhaHash = hash,
                 Sal = salt,
