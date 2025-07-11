@@ -23,7 +23,7 @@ namespace DriverHub.Tests
             _mockConfiguration = new Mock<IConfiguration>();
 
             // Mock IConfiguration
-            var inMemorySettings = new Dictionary<string, string> {
+            var inMemorySettings = new Dictionary<string, string?> {
                 {"Jwt:Key", "this_is_a_much_longer_and_more_secure_secret_key_for_jwt"}
             };
 
