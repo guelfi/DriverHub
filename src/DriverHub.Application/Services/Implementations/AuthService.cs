@@ -2,6 +2,7 @@ using DriverHub.Domain.Entities;
 using DriverHub.Domain.Repositories;
 using DriverHub.Application.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,13 +16,15 @@ namespace DriverHub.Application.Services.Implementations
     {
         private readonly IMotoristaRepository _motoristaRepository;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly IConfiguration _configuration;
+        private readonly ITokenService _tokenService;
+        private readonly ILogger<AuthService> _logger;
 
-        public AuthService(IMotoristaRepository motoristaRepository, IPasswordHasher passwordHasher, IConfiguration configuration)
+        public AuthService(IMotoristaRepository motoristaRepository, IPasswordHasher passwordHasher, ITokenService tokenService, ILogger<AuthService> logger)
         {
             _motoristaRepository = motoristaRepository;
             _passwordHasher = passwordHasher;
-            _configuration = configuration;
+            _tokenService = tokenService;
+            _logger = logger;
         }
 
         public async Task RegisterAsync(string email, string password, string nome)
@@ -68,17 +71,7 @@ namespace DriverHub.Application.Services.Implementations
                 return null;
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not configured.");
-            var key = Encoding.ASCII.GetBytes(jwtKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("email", motorista.Email) }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return _tokenService.GenerateToken(motorista);
         }
     }
 }

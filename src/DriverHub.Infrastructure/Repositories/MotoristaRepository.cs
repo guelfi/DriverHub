@@ -1,6 +1,7 @@
 using DriverHub.Domain.Entities;
 using DriverHub.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +13,12 @@ namespace DriverHub.Infrastructure.Repositories
     public class MotoristaRepository : IMotoristaRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<MotoristaRepository> _logger;
 
-        public MotoristaRepository(ApplicationDbContext context)
+        public MotoristaRepository(ApplicationDbContext context, ILogger<MotoristaRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Motorista?> GetByIdAsync(Guid id)
@@ -47,6 +50,7 @@ namespace DriverHub.Infrastructure.Repositories
             {
                 _context.Motoristas.Remove(motorista);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Motorista excluído: {MotoristaId}", id);
             }
         }
     }

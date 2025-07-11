@@ -4,8 +4,7 @@ using DriverHub.Application.Services;
 using DriverHub.Application.Services.Implementations;
 using DriverHub.Domain.Repositories;
 using DriverHub.Domain.Entities;
-using DriverHub.API.Models.DTOs;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging; // Adicionado para ILogger
 
 namespace DriverHub.Tests
 {
@@ -13,27 +12,22 @@ namespace DriverHub.Tests
     {
         private readonly Mock<IMotoristaRepository> _mockMotoristaRepository;
         private readonly Mock<IPasswordHasher> _mockPasswordHasher;
-        private readonly Mock<IConfiguration> _mockConfiguration;
+        private readonly Mock<ITokenService> _mockTokenService; // Adicionado
+        private readonly Mock<ILogger<AuthService>> _mockLogger; // Adicionado
         private readonly AuthService _authService;
 
         public AuthServiceTests()
         {
             _mockMotoristaRepository = new Mock<IMotoristaRepository>();
             _mockPasswordHasher = new Mock<IPasswordHasher>();
-            _mockConfiguration = new Mock<IConfiguration>();
+            _mockTokenService = new Mock<ITokenService>(); // Inicializado
+            _mockLogger = new Mock<ILogger<AuthService>>(); // Inicializado
 
-            // Mock IConfiguration
-            var inMemorySettings = new Dictionary<string, string?> {
-                {"Jwt:Key", "this_is_a_much_longer_and_more_secure_secret_key_for_jwt"}
-            };
-
-            IConfiguration configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(inMemorySettings)
-                .Build();
-
-            _mockConfiguration.Setup(c => c["Jwt:Key"]).Returns(configuration["Jwt:Key"]);
-
-            _authService = new AuthService(_mockMotoristaRepository.Object, _mockPasswordHasher.Object, _mockConfiguration.Object);
+            _authService = new AuthService(
+                _mockMotoristaRepository.Object,
+                _mockPasswordHasher.Object,
+                _mockTokenService.Object, // Passado para o construtor
+                _mockLogger.Object); // Passado para o construtor
         }
 
         [Fact]
@@ -49,19 +43,12 @@ namespace DriverHub.Tests
             _mockMotoristaRepository.Setup(repo => repo.GetByEmailAsync(It.IsAny<string>()))
                                    .ReturnsAsync((Motorista)null!);
 
-            var registerRequest = new RegisterRequest
-            {
-                Email = "test@example.com",
-                Password = "password123",
-                Nome = "Test User"
-            };
-
             // Act
-            await _authService.RegisterAsync(registerRequest.Email, registerRequest.Password, registerRequest.Nome);
+            await _authService.RegisterAsync("test@example.com", "password123", "Test User");
 
             // Assert
-            _mockPasswordHasher.Verify(ph => ph.HashPassword(registerRequest.Password), Times.Once);
-            _mockMotoristaRepository.Verify(repo => repo.AddAsync(It.Is<Motorista>(m => m.Email == registerRequest.Email && m.SenhaHash == "hashedPassword")), Times.Once);
+            _mockPasswordHasher.Verify(ph => ph.HashPassword("password123"), Times.Once);
+            _mockMotoristaRepository.Verify(repo => repo.AddAsync(It.Is<Motorista>(m => m.Email == "test@example.com" && m.SenhaHash == "hashedPassword")), Times.Once);
         }
 
         [Fact]
@@ -71,15 +58,8 @@ namespace DriverHub.Tests
             _mockMotoristaRepository.Setup(repo => repo.GetByEmailAsync(It.IsAny<string>()))
                                    .ReturnsAsync(new Motorista());
 
-            var registerRequest = new RegisterRequest
-            {
-                Email = "existing@example.com",
-                Password = "password123",
-                Nome = "Existing User"
-            };
-
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => _authService.RegisterAsync(registerRequest.Email, registerRequest.Password, registerRequest.Nome));
+            await Assert.ThrowsAsync<ArgumentException>(() => _authService.RegisterAsync("existing@example.com", "password123", "Existing User"));
             _mockPasswordHasher.Verify(ph => ph.HashPassword(It.IsAny<string>()), Times.Never);
             _mockMotoristaRepository.Verify(repo => repo.AddAsync(It.IsAny<Motorista>()), Times.Never);
         }
@@ -91,12 +71,14 @@ namespace DriverHub.Tests
             var motorista = new Motorista { Email = "test@example.com", SenhaHash = "hashedPassword", Sal = "salt" };
             _mockMotoristaRepository.Setup(repo => repo.GetByEmailAsync("test@example.com")).ReturnsAsync(motorista);
             _mockPasswordHasher.Setup(ph => ph.VerifyPassword("password123", "hashedPassword", "salt")).Returns(true);
+            _mockTokenService.Setup(ts => ts.GenerateToken(It.IsAny<Motorista>())).Returns("mocked_jwt_token"); // Mock para GenerateToken
 
             // Act
             var token = await _authService.LoginAsync("test@example.com", "password123");
 
             // Assert
             Assert.NotNull(token);
+            Assert.Equal("mocked_jwt_token", token);
         }
     }
 }

@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.AspNetCore;
+using DriverHub.API.Middleware;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,11 +27,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IMotoristaRepository, MotoristaRepository>();
 
 // Register services
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService>(x => 
     new AuthService(
         x.GetRequiredService<IMotoristaRepository>(), 
         x.GetRequiredService<IPasswordHasher>(),
-        x.GetRequiredService<IConfiguration>()));
+        x.GetRequiredService<ITokenService>(),
+        x.GetRequiredService<ILogger<AuthService>>()));
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 // Add JWT Authentication
@@ -62,6 +68,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSerilogRequestLogging();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

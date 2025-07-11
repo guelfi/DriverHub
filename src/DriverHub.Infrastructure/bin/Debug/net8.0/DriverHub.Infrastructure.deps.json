@@ -11,7 +11,8 @@
           "DriverHub.Application": "1.0.0",
           "DriverHub.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.7",
-          "Microsoft.EntityFrameworkCore.Relational": "9.0.7"
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.7",
+          "Microsoft.Extensions.Logging": "9.0.7"
         },
         "runtime": {
           "DriverHub.Infrastructure.dll": {}
@@ -220,6 +221,7 @@
         "dependencies": {
           "DriverHub.Domain": "1.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.7",
+          "Microsoft.Extensions.Logging": "9.0.7",
           "System.IdentityModel.Tokens.Jwt": "7.6.2"
         },
         "runtime": {
