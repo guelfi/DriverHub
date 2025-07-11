@@ -135,21 +135,27 @@ O sistema deve realizar e apresentar os seguintes cálculos automáticos, com to
 - **Ferramentas AI:** `Gemini CLI (Google)`, `Google AI Studio`, `Google Firebase Studio` (para integração AI e exploração de analytics/automações).
 - **Auxiliares:** `Node.js (CLI tooling)`, `OpenAI CLI`, `Azure Data Studio` (opcional para DB).
 
-## 5. Solicitações para a Geração Inicial do Projeto
+## 5. Solicitações para a Geração/Continuação do Projeto (Estado Atual)
 
-Com base nas funcionalidades e arquitetura definidas, solicito à IA:
+Com base nas funcionalidades e arquitetura definidas, e considerando o progresso atual, solicito à IA:
 
-1.  **Estrutura inicial do projeto .NET 8** (`DriverHub.sln` e pastas `src/Api`, `src/Application`, `src/Domain`, `src/Infrastructure`).
-2.  Módulo de **autenticação JWT com suporte a roles** (Motorista, Admin) e base para login social (Google).
-3.  **Modelos de entidades para as tabelas principais:**
-    - `Motorista` (com campos para autenticação e **parâmetros fixos** como Aluguel Semanal, Dias Trabalhados por Semana, Autonomia do Veículo).
-    - `LancamentoDiario` (incluindo campos para Data, Km Rodados, Faturamento Bruto Total, Valor Médio Etanol do Dia, Horas Trabalhadas).
-    - `PlataformaCorrida` (associada ao `LancamentoDiario`, com campos para Plataforma, Quantidade de Corridas, Faturamento Bruto por Plataforma).
-    - `DespesaPessoal` (para o motorista, com Categorização, Data, Valor e Descrição).
-4.  **CRUD completo para `LancamentosDiarios` e `DespesasPessoais`**.
-5.  **Definição das queries ou lógica inicial para os Relatórios Agregados** do dashboard do administrador (sem expor dados sensíveis).
-6.  **Dockerfile para o backend e `podman-compose.yml`** para desenvolvimento e produção (configurando PostgreSQL e o serviço da API).
-7.  Implementação inicial das **interfaces e classes de domínio/aplicação** para refletir a arquitetura DDD/Clean Architecture, incorporando a lógica dos cálculos de desempenho.
-8.  **Esboço de estrutura para o frontend React Native** com os principais arquivos de página/componentes e configuração básica de navegação, **integrável via API RESTful com o backend .NET**. Incluir exemplos de dados mockados para demonstração inicial do frontend.
+1.  **Estrutura de Projetos .NET 8:** A solução `DriverHub.sln` já está configurada com os projetos `src/DriverHub.API`, `src/DriverHub.Application`, `src/DriverHub.Domain` e `src/DriverHub.Infrastructure`, seguindo a Clean Architecture.
+2.  **Módulo de Autenticação JWT e Autorização por Roles:** O sistema já possui um módulo de autenticação JWT funcional, com suporte a roles (`Motorista`, `Admin`). A injeção de dependência para `IAuthService`, `IPasswordHasher` e `ITokenService` está configurada.
+3.  **Modelos de Entidades Base:** As entidades `Motorista` e `Viagem` já estão definidas no projeto `DriverHub.Domain`. O modelo `Motorista` inclui campos para autenticação e parâmetros fixos (Aluguel Semanal, Dias Trabalhados por Semana, Autonomia do Veículo).
+4.  **Repositório de Motorista:** A interface `IMotoristaRepository` e sua implementação `MotoristaRepository` (utilizando Entity Framework Core com banco de dados em memória para desenvolvimento) estão configuradas para operações CRUD básicas em `Motorista`.
+5.  **Tratamento de Exceções Global:** Um middleware de tratamento de exceções (`ExceptionHandlingMiddleware`) está implementado no `DriverHub.API` para capturar e logar exceções não tratadas, retornando respostas padronizadas.
+6.  **Configuração de Logging:** O Serilog está configurado no `Program.cs` para logging centralizado, com injeção de `ILogger` nas classes de serviço e repositório.
+7.  **Testes Unitários Iniciais:** Testes unitários para a `AuthService` (`AuthServiceTests.cs`) foram implementados, demonstrando o uso de mocks e a testabilidade da arquitetura.
+8.  **Containerização:** `Dockerfile` para o backend e `podman-compose.yml` (compatível com Docker Compose) estão presentes para facilitar o desenvolvimento e a implantação.
 
-Siga boas práticas de Clean Code, Design Patterns (como Repository Pattern) e segurança (criptografia de dados, proteção contra ataques comuns, conformidade com privacidade). O resultado deve ser um protótipo funcional em React Native que possa ser integrado ao backend ASP.NET Core via API RESTful.
+**Próximos Passos (a serem desenvolvidos):**
+
+9.  **Implementar Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`:** Definir os modelos de entidades e seus respectivos repositórios (CRUD completo).
+10. **Desenvolver a Lógica de Negócio para Cálculos Financeiros:** Implementar os cálculos automáticos de desempenho e custos para motoristas, conforme detalhado na seção "3.1.d) Cálculos Automáticos e Análises de Desempenho".
+11. **Definir e Implementar Queries/Lógica para Relatórios Agregados:** Criar a base para os relatórios do dashboard do administrador, garantindo a privacidade dos dados.
+12. **Esboço e Integração do Frontend React Native:** Desenvolver a estrutura inicial do frontend móvel, incluindo telas essenciais, navegação e integração via API RESTful com o backend .NET.
+13. **Desenvolvimento do Frontend Administrativo:** Iniciar a implementação do dashboard web para administradores (Razor Pages ou Blazor Server).
+14. **Integração com Banco de Dados PostgreSQL:** Migrar o banco de dados de memória para PostgreSQL.
+15. **Exploração e Integração de Ferramentas AI:** Iniciar a exploração e integração com Google Gemini CLI, AI Studio e Firebase Studio para funcionalidades avançadas.
+
+Siga boas práticas de Clean Code, Design Patterns (como Repository Pattern) e segurança (criptografia de dados, proteção contra ataques comuns, conformidade com privacidade). O objetivo é continuar a evolução do protótipo funcional.

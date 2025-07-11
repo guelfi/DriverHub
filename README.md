@@ -26,7 +26,7 @@ Ao mesmo tempo, permitirá:
 | Categoria                | Tecnologias e Ferramentas                                  |
 |-------------------------|------------------------------------------------------------|
 | **Back-End** | `ASP.NET Core 8 LTS`, `C#`                                 |
-| **Banco de Dados** | `PostgreSQL`, `Entity Framework Core`                      |
+| **Banco de Dados** | `PostgreSQL`, `Entity Framework Core` (atualmente em memória para desenvolvimento) |
 | **Autenticação** | `JWT (JSON Web Token)`                                     |
 | **Arquitetura** | `DDD`, `Clean Architecture`, `Repository Pattern`          |
 | **Frontend Web** | `Razor Pages` (foco inicial), possível migração para `Blazor Server` |
@@ -35,56 +35,68 @@ Ao mesmo tempo, permitirá:
 | **Google AI & Cloud** | `Gemini CLI (Google)`, `Google AI Studio`, `Google Firebase Studio` |
 | **Editor** | `VS Code` (configurado no macOS Catalina)                  |
 | **Auxiliares** | `OpenAI CLI`, `Azure Data Studio`, `Node.js (CLI tooling)` |
+| **Logging** | `Serilog`                                                  |
 
 ---
 
-### 📦 Estrutura do Projeto (inicial)
+### 📦 Estrutura do Projeto
 
 <pre><code>
 ~/Projetos/DriverHub
 ├── DriverHub.sln
 ├── src/
-│   ├── DriverHub.API/
-│   ├── DriverHub.Application/
-│   ├── DriverHub.Domain/
-│   └── DriverHub.Infrastructure/
+│   ├── DriverHub.API/             # Camada de apresentação (controladores, middleware)
+│   ├── DriverHub.Application/     # Lógica de negócio, serviços de aplicação, DTOs
+│   ├── DriverHub.Domain/          # Entidades de domínio, interfaces de repositório
+│   └── DriverHub.Infrastructure/  # Implementações de repositório, contexto de DB
 ├── docker/
-│   └── docker-compose.yml
+│   └── docker-compose.yml         # Configuração Docker Compose para serviços
+├── tests/
+│   └── DriverHub.Tests/           # Projeto de testes unitários
 └── README.md
 </code></pre>
 
 ---
 
-### 🚀 Funcionalidades (em desenvolvimento)
+### 🚀 Funcionalidades Implementadas (Estado Atual)
 
-- [x] Criação da estrutura de pastas
-- [x] Configuração do ambiente com VS Code e Docker
-- [x] Integração com GitHub
-- [x] Criação da solução .NET com Clean Architecture
-- [x] Efetuar testes dos EndPoint de Cadastro e Login de Motoristas do DriverHub.API
-- [x] Implementar Rotina de Testes Unitários até essa Etapa do Projeto
-- [ ] Implementar JWT ao Projeto visando torna-lo mais seguro 
-- [ ] Conexão com banco de dados PostgreSQL
-- [ ] Criação do painel para motoristas
-- [ ] Criação do painel para administradores
-- [ ] Explorar Gemini CLI e AI Studio para integração AI
-- [ ] Deploy em ambiente VPS (Hostinger)
+- [x] Criação da estrutura de pastas (`DriverHub.sln`, `src/API`, `Application`, `Domain`, `Infrastructure`).
+- [x] Configuração do ambiente com VS Code e Docker.
+- [x] Integração com GitHub.
+- [x] Criação da solução .NET com Clean Architecture.
+- [x] Módulo de Autenticação JWT com suporte a roles (Motorista, Admin).
+- [x] Implementação de `AuthService`, `TokenService` e `PasswordHasher` com injeção de dependência.
+- [x] Definição das entidades `Motorista` e `Viagem` no domínio.
+- [x] Implementação de `IMotoristaRepository` e `MotoristaRepository` (com DB em memória).
+- [x] Tratamento de exceções global via `ExceptionHandlingMiddleware`.
+- [x] Configuração e uso de Serilog para logging centralizado.
+- [x] Testes unitários iniciais para `AuthService` (`AuthServiceTests.cs`).
+
+### 🚧 Próximos Passos
+
+- [ ] Implementar Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`.
+- [ ] Desenvolver a lógica de negócio para cálculos financeiros e análises de desempenho.
+- [ ] Definir e implementar queries/lógica para relatórios agregados do administrador.
+- [ ] Esboçar e integrar o frontend React Native.
+- [ ] Desenvolver o frontend administrativo (Razor Pages ou Blazor Server).
+- [ ] Migrar o banco de dados de memória para PostgreSQL.
+- [ ] Explorar e integrar ferramentas Google AI (Gemini CLI, AI Studio, Firebase Studio).
 
 ---
 
 ### 👨‍💻 Status do Projeto
 
-> 🟡 **Em desenvolvimento ativo (foco em aprendizado prático)** > 🔄 Atualizado continuamente com base na evolução do ambiente local, decisões técnicas e integração com ferramentas Google AI.
+> ✅ **Em desenvolvimento ativo (foco em aprendizado prático e evolução contínua)** > 🔄 Atualizado continuamente com base na evolução do ambiente local, decisões técnicas e integração com ferramentas Google AI.
 
 ---
 
 ### 💡 Ideias Futuras
 
-- Exportação de relatórios em PDF
-- Integração com API da Uber/99
-- Modo offline (Progressive Web App)
-- Notificações para administradores
-- Uso avançado do Google AI Studio e Firebase Studio para automações e analytics
+- Exportação de relatórios em PDF.
+- Integração com API da Uber/99.
+- Modo offline (Progressive Web App).
+- Notificações para administradores.
+- Uso avançado do Google AI Studio e Firebase Studio para automações e analytics.
 
 ---
 
