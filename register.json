@@ -1,5 +1,6 @@
 {
+    "nome": "João",
+    "sobrenome": "Silva",
     "email": "motorista.teste@driverhub.com",
-    "password": "SenhaSegura123!",
-    "nome": "Motorista de Teste"
+    "password": "SenhaSegura123!"
 }

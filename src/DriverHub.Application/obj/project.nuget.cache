@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "0lObYO1xLSA=",
+  "dgSpecHash": "So4gLJxuW1Y=",
   "success": true,
   "projectFilePath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/guelfi/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/microsoft.identitymodel.abstractions/7.6.2/microsoft.identitymodel.abstractions.7.6.2.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/microsoft.identitymodel.jsonwebtokens/7.6.2/microsoft.identitymodel.jsonwebtokens.7.6.2.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/microsoft.identitymodel.logging/7.6.2/microsoft.identitymodel.logging.7.6.2.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/microsoft.identitymodel.tokens/7.6.2/microsoft.identitymodel.tokens.7.6.2.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/system.identitymodel.tokens.jwt/7.6.2/system.identitymodel.tokens.jwt.7.6.2.nupkg.sha512"
+  ],
   "logs": []
 }

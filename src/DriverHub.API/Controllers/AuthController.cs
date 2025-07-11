@@ -2,6 +2,7 @@ using DriverHub.Application.Services;
 using DriverHub.API.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DriverHub.API.Controllers
 {
@@ -22,7 +23,7 @@ namespace DriverHub.API.Controllers
             try
             {
                 await _authService.RegisterAsync(request.Email!, request.Password!, request.Nome!);
-                return Ok();
+                return Ok("Usuário registrado com sucesso.");
             }
             catch (ArgumentException ex)
             {
@@ -39,6 +40,13 @@ namespace DriverHub.API.Controllers
                 return Unauthorized("Credenciais inválidas.");
             }
             return Ok(new { Token = token });
+        }
+
+        [HttpGet("ProtectedData")]
+        [Authorize]
+        public IActionResult ProtectedData()
+        {
+            return Ok("Você acessou um recurso protegido!");
         }
     }
 }

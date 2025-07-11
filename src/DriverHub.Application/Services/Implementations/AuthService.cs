@@ -1,8 +1,13 @@
 using DriverHub.Domain.Entities;
 using DriverHub.Domain.Repositories;
 using DriverHub.Application.Services;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DriverHub.Application.Services.Implementations
 {
@@ -10,11 +15,13 @@ namespace DriverHub.Application.Services.Implementations
     {
         private readonly IMotoristaRepository _motoristaRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(IMotoristaRepository motoristaRepository, IPasswordHasher passwordHasher)
+        public AuthService(IMotoristaRepository motoristaRepository, IPasswordHasher passwordHasher, IConfiguration configuration)
         {
             _motoristaRepository = motoristaRepository;
             _passwordHasher = passwordHasher;
+            _configuration = configuration;
         }
 
         public async Task RegisterAsync(string email, string password, string nome)
@@ -61,7 +68,16 @@ namespace DriverHub.Application.Services.Implementations
                 return null;
             }
 
-            return motorista.Id.ToString(); // This should be a JWT token in a real application
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("email", motorista.Email) }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }
