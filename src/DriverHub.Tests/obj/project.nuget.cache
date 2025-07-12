@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+/22/D6YDwo=",
+  "dgSpecHash": "jlyk4PcIw+0=",
   "success": true,
   "projectFilePath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Tests/DriverHub.Tests.csproj",
   "expectedPackageFiles": [
     "/Users/guelfi/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/coverlet.collector/6.0.0/coverlet.collector.6.0.0.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/efcore.namingconventions/9.0.0/efcore.namingconventions.9.0.0.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/8.0.7/microsoft.aspnetcore.authentication.jwtbearer.8.0.7.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/microsoft.aspnetcore.openapi/8.0.7/microsoft.aspnetcore.openapi.8.0.7.nupkg.sha512",

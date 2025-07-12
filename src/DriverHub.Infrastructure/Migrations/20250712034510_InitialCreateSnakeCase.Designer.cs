@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DriverHub.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250712024019_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250712034510_InitialCreateSnakeCase")]
+    partial class InitialCreateSnakeCase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,105 +29,130 @@ namespace DriverHub.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<decimal>("AluguelSemanalVeiculo")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("aluguel_semanal_veiculo");
 
                     b.Property<decimal>("AutonomiaVeiculoKmPorLitro")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("autonomia_veiculo_km_por_litro");
 
                     b.Property<DateTimeOffset>("DataCadastro")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_cadastro");
 
                     b.Property<int>("DiasTrabalhadosPorSemana")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("dias_trabalhados_por_semana");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("email");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("nome");
 
                     b.Property<string>("NumeroCelular")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("numero_celular");
 
                     b.Property<int>("Role")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
 
                     b.Property<string>("Sal")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("sal");
 
                     b.Property<string>("SenhaHash")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("senha_hash");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("sobrenome");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_motoristas");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_motoristas_email");
 
-                    b.ToTable("Motoristas");
+                    b.ToTable("motoristas", (string)null);
                 });
 
             modelBuilder.Entity("DriverHub.Domain.Entities.Viagem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<decimal>("CustoCombustivel")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("custo_combustivel");
 
                     b.Property<DateTimeOffset>("DataViagem")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_viagem");
 
                     b.Property<string>("Destino")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("destino");
 
                     b.Property<decimal>("DistanciaKm")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("distancia_km");
 
                     b.Property<decimal>("Lucro")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("lucro");
 
                     b.Property<Guid>("MotoristaId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("motorista_id");
 
                     b.Property<string>("Origem")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("origem");
 
                     b.Property<decimal>("ValorRecebido")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("valor_recebido");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_viagens");
 
-                    b.HasIndex("MotoristaId");
+                    b.HasIndex("MotoristaId")
+                        .HasDatabaseName("ix_viagens_motorista_id");
 
-                    b.ToTable("Viagens");
+                    b.ToTable("viagens", (string)null);
                 });
 
             modelBuilder.Entity("DriverHub.Domain.Entities.Viagem", b =>
@@ -136,7 +161,8 @@ namespace DriverHub.Infrastructure.Migrations
                         .WithMany("Viagens")
                         .HasForeignKey("MotoristaId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_viagens_motoristas_motorista_id");
 
                     b.Navigation("Motorista");
                 });

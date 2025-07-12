@@ -32,14 +32,14 @@ A solução `DriverHub.sln` é organizada seguindo os princípios da **Clean Arc
     *   `Services/IPasswordHasher.cs`: Define métodos para hash e verificação de senhas (`HashPassword`, `VerifyPassword`).
     *   `Services/ITokenService.cs`: Define método para geração de tokens JWT (`GenerateToken`).
 *   **Serviços (Implementações)** ⚙️:
-    *   `Services/Implementations/AuthService.cs`: Implementa `IAuthService`, utilizando `IMotoristaRepository`, `IPasswordHasher` e `ITokenService`. Lida com a lógica de registro e login, agora aceitando `sobrenome`.
+    *   `Services/Implementations/AuthService.cs`: Implementa `IAuthService`, utilizando `IMotoristaRepository`, `IPasswordHasher` e `ITokenService`. Lida com a lógica de registro e login, agora aceitando `sobrenome`. 
     *   `Services/Implementations/PasswordHasher.cs`: Implementa `IPasswordHasher` usando `Rfc2898DeriveBytes` para hashing seguro de senhas.
     *   `Services/Implementations/TokenService.cs`: Implementa `ITokenService`, gerando tokens JWT com base nas informações do motorista e uma chave configurada.
 
 ### 2.3. `DriverHub.Infrastructure`
 
 *   **Acesso a Dados** 💾:
-    *   `Data/ApplicationDbContext.cs`: `DbContext` do Entity Framework Core, configurado com `DbSet` para `Motoristas` e `Viagens`. `OnModelCreating` define mapeamentos de entidades, chaves, índices (e-mail único para `Motorista`) e relacionamentos (cascata para `Viagem`). Será configurado para usar **PostgreSQL**.
+    *   `Data/ApplicationDbContext.cs`: `DbContext` do Entity Framework Core, configurado com `DbSet` para `Motoristas` e `Viagens`. `OnModelCreating` define mapeamentos de entidades, chaves, índices (e-mail único para `Motorista`) e relacionamentos (cascata para `Viagem`). Configurado para usar **PostgreSQL** com convenção `snake_case`.
 *   **Repositórios (Implementações)** 🗄️:
     *   `Repositories/MotoristaRepository.cs`: Implementa `IMotoristaRepository`, utilizando `ApplicationDbContext` para realizar operações CRUD assíncronas em `Motorista`. Inclui logging.
 
@@ -50,11 +50,11 @@ A solução `DriverHub.sln` é organizada seguindo os princípios da **Clean Arc
 *   **Middleware** 🛡️:
     *   `Middleware/ExceptionHandlingMiddleware.cs`: Middleware global para tratamento de exceções. Captura exceções não tratadas, loga-as e retorna uma resposta JSON padronizada de erro.
 *   **Configuração** 🛠️:
-    *   `Program.cs`: Ponto de entrada da aplicação. Configura o **Serilog** para logging, registra o `ApplicationDbContext` (em memória), injeta dependências para repositórios e serviços (incluindo `AuthService`, `PasswordHasher`, `TokenService`, `IMotoristaRepository`), configura a autenticação **JWT Bearer** e adiciona **Swagger/OpenAPI**. O middleware de tratamento de exceções é adicionado ao pipeline de requisições. **CORS** configurado para permitir todas as origens (para desenvolvimento).
+    *   `Program.cs`: Ponto de entrada da aplicação. Configura o **Serilog** para logging, registra o `ApplicationDbContext` (agora com PostgreSQL e `snake_case`), injeta dependências para repositórios e serviços (incluindo `AuthService`, `PasswordHasher`, `TokenService`, `IMotoristaRepository`), configura a autenticação **JWT Bearer** e adiciona **Swagger/OpenAPI**. O middleware de tratamento de exceções é adicionado ao pipeline de requisições. **CORS** configurado para permitir todas as origens (para desenvolvimento).
 
 ### 2.5. `DriverHub.Tests`
 
-*   Projeto de testes unitários que referencia `DriverHub.Application`, `DriverHub.Infrastructure` e `DriverHub.API`. Utiliza `xUnit` e `Moq` para testes. Testes de `AuthService` atualizados para incluir o parâmetro `sobrenome`.
+*   Projeto de testes unitários que referencia `DriverHub.Application`, `DriverHub.Infrastructure` e `DriverHub.API`. Utiliza `xUnit` e `Moq` para testes. Testes de `AuthService` atualizados para incluir o parâmetro `sobrenome`. 
 
 ### 2.6. `DriverHub.MobileApp` (Frontend Mobile) 📱
 
@@ -73,9 +73,10 @@ A análise confirma que a estrutura atual do projeto e as funcionalidades implem
 
 ## 4. ➡️ Próximos Passos (Conforme `Prompt.md`)
 
-Os próximos passos para o desenvolvimento incluem:
+**Etapa Concluída:**
+*   **Integração com Banco de Dados PostgreSQL:** O projeto agora utiliza PostgreSQL para persistência de dados, com tabelas e colunas configuradas para `snake_case`. A persistência dos dados de `Motorista` foi implementada e verificada.
 
-*   **Prioridade: Integrar com Banco de Dados PostgreSQL** (incluindo as entidades `Motorista` e `Viagem` na primeira migração).
+**Próximos Passos:**
 *   Implementar Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`.
 *   Desenvolver a Lógica de Negócio para Cálculos Financeiros.
 *   Definir e Implementar Queries/Lógica para Relatórios Agregados.
