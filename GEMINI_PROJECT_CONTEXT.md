@@ -36,7 +36,7 @@ A solução `DriverHub.sln` é organizada seguindo os princípios da Clean Archi
 
 ### 2.3. `DriverHub.Infrastructure`
 *   **Acesso a Dados**:
-    *   `Data/ApplicationDbContext.cs`: `DbContext` do Entity Framework Core, configurado com `DbSet` para `Motoristas` e `Viagens`. `OnModelCreating` define mapeamentos de entidades, chaves, índices (e-mail único para `Motorista`) e relacionamentos (cascata para `Viagem`). Atualmente configurado para usar banco de dados em memória.
+    *   `Data/ApplicationDbContext.cs`: `DbContext` do Entity Framework Core, configurado com `DbSet` para `Motoristas` e `Viagens`. `OnModelCreating` define mapeamentos de entidades, chaves, índices (e-mail único para `Motorista`) e relacionamentos (cascata para `Viagem`). Será configurado para usar PostgreSQL.
 *   **Repositórios (Implementações)**:
     *   `Repositories/MotoristaRepository.cs`: Implementa `IMotoristaRepository`, utilizando `ApplicationDbContext` para realizar operações CRUD assíncronas em `Motorista`. Inclui logging.
 

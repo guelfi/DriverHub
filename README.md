@@ -26,7 +26,7 @@ Ao mesmo tempo, permitirá:
 | Categoria                | Tecnologias e Ferramentas                                  |
 |-------------------------|------------------------------------------------------------|
 | **Back-End** | `ASP.NET Core 8 LTS`, `C#`                                 |
-| **Banco de Dados** | `PostgreSQL`, `Entity Framework Core` (atualmente em memória para desenvolvimento) |
+| **Banco de Dados** | `PostgreSQL`, `Entity Framework Core` |
 | **Autenticação** | `JWT (JSON Web Token)`                                     |
 | **Arquitetura** | `DDD`, `Clean Architecture`, `Repository Pattern`          |
 | **Frontend Web** | `Razor Pages` (foco inicial), possível migração para `Blazor Server` |
@@ -74,12 +74,12 @@ Ao mesmo tempo, permitirá:
 
 ### 🚧 Próximos Passos
 
+- [ ] **Prioridade: Migrar o banco de dados de memória para PostgreSQL** (incluindo as entidades `Motorista` e `Viagem`).
 - [ ] Implementar Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`.
 - [ ] Desenvolver a lógica de negócio para cálculos financeiros e análises de desempenho.
 - [ ] Definir e implementar queries/lógica para relatórios agregados do administrador.
 - [ ] Continuar o esboço e integração do frontend React Native (desenvolver as demais telas e funcionalidades).
 - [ ] Desenvolver o frontend administrativo (Razor Pages ou Blazor Server).
-- [ ] Migrar o banco de dados de memória para PostgreSQL.
 - [ ] Explorar e integrar ferramentas Google AI (Gemini CLI, AI Studio, Firebase Studio).
 
 ---
