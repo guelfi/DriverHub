@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "0f3c25eb-f04d-459e-ad2a-873dcbbde7d1",
+		"name": "DriverHub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22934239"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"João\",\n    \"sobrenome\": \"Silva\",\n    \"email\": \"motorista.teste@driverhub.com\",\n    \"password\": \"SenhaSegura123!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5217/api/Auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5217",
+					"path": [
+						"api",
+						"Auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"motorista.teste@driverhub.com\",\n    \"password\": \"SenhaSegura123!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5217/api/Auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5217",
+					"path": [
+						"api",
+						"Auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
