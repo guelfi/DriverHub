@@ -68,12 +68,12 @@ A análise confirma que a estrutura atual do projeto e as funcionalidades implem
 ## 4. Próximos Passos (Conforme `Prompt.md`)
 
 Os próximos passos para o desenvolvimento incluem:
+*   **Prioridade: Integrar com Banco de Dados PostgreSQL** (incluindo as entidades `Motorista` e `Viagem` na primeira migração).
 *   Implementar Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`.
 *   Desenvolver a Lógica de Negócio para Cálculos Financeiros.
 *   Definir e Implementar Queries/Lógica para Relatórios Agregados.
 *   Esboçar e Integrar o Frontend React Native (continuar o desenvolvimento).
 *   Desenvolver o Frontend Administrativo.
-*   Integrar com Banco de Dados PostgreSQL.
 *   Explorar e Integrar Ferramentas Google AI.
 
 Este documento será atualizado conforme o projeto evolui.
