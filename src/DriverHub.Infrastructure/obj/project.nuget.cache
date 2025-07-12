@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1H+3IuAVgjw=",
+  "dgSpecHash": "jzauztCDom4=",
   "success": true,
   "projectFilePath": "/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/DriverHub.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,8 @@
     "/Users/guelfi/.nuget/packages/microsoft.identitymodel.jsonwebtokens/7.6.2/microsoft.identitymodel.jsonwebtokens.7.6.2.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/microsoft.identitymodel.logging/7.6.2/microsoft.identitymodel.logging.7.6.2.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/microsoft.identitymodel.tokens/7.6.2/microsoft.identitymodel.tokens.7.6.2.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/npgsql/9.0.3/npgsql.9.0.3.nupkg.sha512",
+    "/Users/guelfi/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.4/npgsql.entityframeworkcore.postgresql.9.0.4.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/system.diagnostics.diagnosticsource/9.0.7/system.diagnostics.diagnosticsource.9.0.7.nupkg.sha512",
     "/Users/guelfi/.nuget/packages/system.identitymodel.tokens.jwt/7.6.2/system.identitymodel.tokens.jwt.7.6.2.nupkg.sha512"
   ],

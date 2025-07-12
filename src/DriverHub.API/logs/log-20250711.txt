@@ -98,3 +98,58 @@
 2025-07-11 20:48:07.083 -03:00 [INF] HTTP POST /api/Auth/login responded 200 in 24.9155 ms
 2025-07-11 20:48:07.083 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5217/api/Auth/login - 200 null application/json; charset=utf-8 25.5805ms
 2025-07-11 20:50:58.898 -03:00 [INF] Application is shutting down...
+2025-07-11 23:40:36.396 -03:00 [ERR] An error occurred using the connection to database 'DriverHubDb' on server 'tcp://localhost:5432'.
+2025-07-11 23:45:00.262 -03:00 [ERR] An error occurred using the connection to database 'DriverHubDb' on server 'tcp://localhost:5432'.
+2025-07-11 23:45:03.456 -03:00 [INF] Executed DbCommand (1,698ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE DATABASE "DriverHubDb";
+2025-07-11 23:45:03.760 -03:00 [INF] Executed DbCommand (122ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-07-11 23:45:03.771 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-07-11 23:45:03.795 -03:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-07-11 23:45:03.800 -03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-07-11 23:45:03.815 -03:00 [INF] Applying migration '20250712024019_InitialCreate'.
+2025-07-11 23:45:03.864 -03:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "Motoristas" (
+    "Id" uuid NOT NULL,
+    "Nome" character varying(255) NOT NULL,
+    "Sobrenome" text NOT NULL,
+    "Email" character varying(255) NOT NULL,
+    "SenhaHash" character varying(255) NOT NULL,
+    "Sal" character varying(255) NOT NULL,
+    "NumeroCelular" character varying(20) NOT NULL,
+    "AluguelSemanalVeiculo" numeric(18,2) NOT NULL,
+    "DiasTrabalhadosPorSemana" integer NOT NULL,
+    "AutonomiaVeiculoKmPorLitro" numeric(18,2) NOT NULL,
+    "DataCadastro" timestamp with time zone NOT NULL,
+    "Role" integer NOT NULL,
+    CONSTRAINT "PK_Motoristas" PRIMARY KEY ("Id")
+);
+2025-07-11 23:45:03.870 -03:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "Viagens" (
+    "Id" uuid NOT NULL,
+    "MotoristaId" uuid NOT NULL,
+    "DataViagem" timestamp with time zone NOT NULL,
+    "Origem" character varying(255) NOT NULL,
+    "Destino" character varying(255) NOT NULL,
+    "DistanciaKm" numeric(18,2) NOT NULL,
+    "ValorRecebido" numeric(18,2) NOT NULL,
+    "CustoCombustivel" numeric(18,2) NOT NULL,
+    "Lucro" numeric(18,2) NOT NULL,
+    CONSTRAINT "PK_Viagens" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Viagens_Motoristas_MotoristaId" FOREIGN KEY ("MotoristaId") REFERENCES "Motoristas" ("Id") ON DELETE CASCADE
+);
+2025-07-11 23:45:03.876 -03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX "IX_Motoristas_Email" ON "Motoristas" ("Email");
+2025-07-11 23:45:03.878 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Viagens_MotoristaId" ON "Viagens" ("MotoristaId");
+2025-07-11 23:45:03.879 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20250712024019_InitialCreate', '9.0.7');

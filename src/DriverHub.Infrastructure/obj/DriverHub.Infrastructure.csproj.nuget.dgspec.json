@@ -198,6 +198,10 @@
             "Microsoft.Extensions.Logging": {
               "target": "Package",
               "version": "[9.0.7, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
             }
           },
           "imports": [
