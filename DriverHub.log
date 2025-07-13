@@ -1,0 +1,6 @@
+index.js:1 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+index.js:8 Running application "main" with appParams:
+ {rootTag: '#root', hydrate: undefined} 
+Development-level warnings: ON.
+Performance optimizations: OFF.
+LoginScreen.js:50 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1ZWxmaUBtc24uY29tIiwibmJmIjoxNzUyNDMzNzY3LCJleHAiOjE3NTI0MzczNjcsImlhdCI6MTc1MjQzMzc2N30.fPGPsulq0KDI-YmbdOouQW-YdoCLUcysYuoxtL-kYI4
