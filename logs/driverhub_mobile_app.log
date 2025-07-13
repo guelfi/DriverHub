@@ -7,3 +7,7 @@ Starting project at /Users/guelfi/Projetos/DriverHub/src/DriverHub.MobileApp
 Starting Metro Bundler
 Waiting on http://localhost:5218
 Logs for your project will appear below.
+Web ./index.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundled 1137ms index.js (521 modules)
+Web ./index.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundled 72ms index.js (1 module)

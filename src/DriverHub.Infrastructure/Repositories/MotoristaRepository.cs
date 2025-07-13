@@ -53,5 +53,15 @@ namespace DriverHub.Infrastructure.Repositories
                 _logger.LogInformation("Motorista excluído: {MotoristaId}", id);
             }
         }
+
+        public async Task<Motorista?> GetByRoleAsync(Role role)
+        {
+            return await _context.Motoristas.FirstOrDefaultAsync(m => m.Role == role);
+        }
+
+        public async Task<int> GetMotoristCountAsync()
+        {
+            return await _context.Motoristas.CountAsync();
+        }
     }
 }

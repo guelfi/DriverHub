@@ -11,5 +11,7 @@ namespace DriverHub.Domain.Repositories
         Task AddAsync(Motorista motorista);
         Task UpdateAsync(Motorista motorista);
         Task DeleteAsync(Guid id);
+        Task<Motorista?> GetByRoleAsync(Role role);
+        Task<int> GetMotoristCountAsync();
     }
 }

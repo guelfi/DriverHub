@@ -4,6 +4,7 @@ using DriverHub.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using DriverHub.Domain.Entities; // Adicionar esta linha para o enum Role
 
 namespace DriverHub.API.Controllers
 {
@@ -53,6 +54,28 @@ namespace DriverHub.API.Controllers
             return Ok(new { Token = token, Nome = motorista.Nome, Sobrenome = motorista.Sobrenome });
         }
 
-        
+        [HttpPost("register-admin")]
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterRequest request)
+        {
+            try
+            {
+                var adminExists = await _motoristaRepository.GetByRoleAsync(Role.Admin);
+                if (adminExists != null)
+                {
+                    return Conflict("Já existe um usuário administrador. Não é permitido criar mais de um administrador via este endpoint.");
+                }
+
+                await _authService.RegisterAdminAsync(request.Email!, request.Password!, request.Nome!, request.Sobrenome!);
+                return Ok("Primeiro usuário administrador registrado com sucesso.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
     }
 }

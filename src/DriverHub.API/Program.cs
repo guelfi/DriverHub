@@ -15,6 +15,7 @@ using Serilog.AspNetCore;
 using DriverHub.API.Middleware;
 using Microsoft.Extensions.Logging;
 using Serilog.Sinks.File;
+using DriverHub.Domain.Entities; // Adicionar esta linha para o enum Role
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,5 +105,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Verifica se existe algum usuário Admin na inicialização
+using (var scope = app.Services.CreateScope())
+{
+    var motoristaRepository = scope.ServiceProvider.GetRequiredService<IMotoristaRepository>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+    var adminExists = await motoristaRepository.GetByRoleAsync(Role.Admin);
+
+    if (adminExists == null)
+    {
+        logger.LogWarning("Nenhum usuário administrador encontrado. Por favor, crie o primeiro usuário administrador.");
+        // Em um ambiente de produção, você pode querer parar a aplicação ou entrar em um modo de configuração.
+        // Por enquanto, apenas logaremos um aviso.
+    }
+}
 
 app.Run();

@@ -408,3 +408,92 @@ LIMIT 1
 2025-07-13 16:20:56.576 -03:00 [INF] Application started. Press Ctrl+C to shut down.
 2025-07-13 16:20:56.577 -03:00 [INF] Hosting environment: Development
 2025-07-13 16:20:56.577 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 17:29:29.043 -03:00 [INF] Executed DbCommand (75ms) [Parameters=[@__role_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.role = @__role_0
+LIMIT 1
+2025-07-13 17:29:29.176 -03:00 [WRN] Nenhum usuário administrador encontrado. Por favor, crie o primeiro usuário administrador.
+2025-07-13 17:29:29.195 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 17:29:29.320 -03:00 [INF] Now listening on: http://0.0.0.0:5217
+2025-07-13 17:29:29.320 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 17:29:29.321 -03:00 [INF] Hosting environment: Development
+2025-07-13 17:29:29.321 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 17:29:51.545 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 17:29:51.805 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 260.7159ms
+2025-07-13 17:29:51.950 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 17:29:52.083 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 133.4502ms
+2025-07-13 17:30:46.244 -03:00 [INF] Request starting HTTP/1.1 OPTIONS http://192.168.15.119:5217/api/Auth/login - null null
+2025-07-13 17:30:46.255 -03:00 [INF] CORS policy execution successful.
+2025-07-13 17:30:46.260 -03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 8.9212 ms
+2025-07-13 17:30:46.261 -03:00 [INF] Request finished HTTP/1.1 OPTIONS http://192.168.15.119:5217/api/Auth/login - 204 null null 16.8569ms
+2025-07-13 17:30:46.263 -03:00 [INF] Request starting HTTP/1.1 POST http://192.168.15.119:5217/api/Auth/login - application/json 46
+2025-07-13 17:30:46.266 -03:00 [INF] CORS policy execution successful.
+2025-07-13 17:30:46.267 -03:00 [WRN] Failed to determine the https port for redirect.
+2025-07-13 17:30:46.299 -03:00 [INF] Executing endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 17:30:46.327 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(DriverHub.API.Models.DTOs.LoginRequest) on controller DriverHub.API.Controllers.AuthController (DriverHub.API).
+2025-07-13 17:30:46.413 -03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 17:30:46.591 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 17:30:46.604 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-07-13 17:30:46.627 -03:00 [INF] Executed action DriverHub.API.Controllers.AuthController.Login (DriverHub.API) in 296.5105ms
+2025-07-13 17:30:46.628 -03:00 [INF] Executed endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 17:30:46.629 -03:00 [INF] HTTP POST /api/Auth/login responded 200 in 363.9226 ms
+2025-07-13 17:30:46.661 -03:00 [INF] Request finished HTTP/1.1 POST http://192.168.15.119:5217/api/Auth/login - 200 null application/json; charset=utf-8 397.77ms
+2025-07-13 17:31:08.231 -03:00 [INF] Request starting HTTP/1.1 OPTIONS http://192.168.15.119:5217/api/Auth/login - null 0
+2025-07-13 17:31:08.233 -03:00 [INF] CORS policy execution successful.
+2025-07-13 17:31:08.233 -03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 0.9553 ms
+2025-07-13 17:31:08.233 -03:00 [INF] Request finished HTTP/1.1 OPTIONS http://192.168.15.119:5217/api/Auth/login - 204 null null 1.953ms
+2025-07-13 17:31:08.247 -03:00 [INF] Request starting HTTP/1.1 POST http://192.168.15.119:5217/api/Auth/login - application/json 46
+2025-07-13 17:31:08.247 -03:00 [INF] CORS policy execution successful.
+2025-07-13 17:31:08.249 -03:00 [INF] Executing endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 17:31:08.249 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(DriverHub.API.Models.DTOs.LoginRequest) on controller DriverHub.API.Controllers.AuthController (DriverHub.API).
+2025-07-13 17:31:08.323 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 17:31:08.348 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 17:31:08.349 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-07-13 17:31:08.350 -03:00 [INF] Executed action DriverHub.API.Controllers.AuthController.Login (DriverHub.API) in 100.0438ms
+2025-07-13 17:31:08.350 -03:00 [INF] Executed endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 17:31:08.350 -03:00 [INF] HTTP POST /api/Auth/login responded 200 in 102.9285 ms
+2025-07-13 17:31:08.350 -03:00 [INF] Request finished HTTP/1.1 POST http://192.168.15.119:5217/api/Auth/login - 200 null application/json; charset=utf-8 103.7202ms
+2025-07-13 19:25:03.061 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 19:25:03.076 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 14.4381ms
+2025-07-13 19:25:03.283 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 19:25:03.292 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 9.4604ms
+2025-07-13 19:30:18.612 -03:00 [INF] Request starting HTTP/1.1 OPTIONS http://192.168.15.119:5217/api/Auth/login - null null
+2025-07-13 19:30:18.613 -03:00 [INF] CORS policy execution successful.
+2025-07-13 19:30:18.613 -03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 0.2202 ms
+2025-07-13 19:30:18.613 -03:00 [INF] Request finished HTTP/1.1 OPTIONS http://192.168.15.119:5217/api/Auth/login - 204 null null 0.9272ms
+2025-07-13 19:30:18.616 -03:00 [INF] Request starting HTTP/1.1 POST http://192.168.15.119:5217/api/Auth/login - application/json 46
+2025-07-13 19:30:18.616 -03:00 [INF] CORS policy execution successful.
+2025-07-13 19:30:18.619 -03:00 [INF] Executing endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 19:30:18.619 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(DriverHub.API.Models.DTOs.LoginRequest) on controller DriverHub.API.Controllers.AuthController (DriverHub.API).
+2025-07-13 19:30:18.635 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 19:30:18.657 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 19:30:18.657 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-07-13 19:30:18.658 -03:00 [INF] Executed action DriverHub.API.Controllers.AuthController.Login (DriverHub.API) in 38.4239ms
+2025-07-13 19:30:18.658 -03:00 [INF] Executed endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 19:30:18.658 -03:00 [INF] HTTP POST /api/Auth/login responded 200 in 41.7162 ms
+2025-07-13 19:30:18.658 -03:00 [INF] Request finished HTTP/1.1 POST http://192.168.15.119:5217/api/Auth/login - 200 null application/json; charset=utf-8 42.2944ms
