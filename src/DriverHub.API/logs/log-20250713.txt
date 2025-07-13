@@ -403,3 +403,8 @@ LIMIT 1
 2025-07-13 16:14:40.009 -03:00 [INF] Executed endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
 2025-07-13 16:14:40.009 -03:00 [INF] HTTP POST /api/Auth/login responded 200 in 25.7344 ms
 2025-07-13 16:14:40.010 -03:00 [INF] Request finished HTTP/1.1 POST http://192.168.15.119:5217/api/Auth/login - 200 null application/json; charset=utf-8 26.155ms
+2025-07-13 16:20:56.335 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 16:20:56.572 -03:00 [INF] Now listening on: http://0.0.0.0:5217
+2025-07-13 16:20:56.576 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 16:20:56.577 -03:00 [INF] Hosting environment: Development
+2025-07-13 16:20:56.577 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
