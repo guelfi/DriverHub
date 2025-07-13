@@ -1,0 +1,11 @@
+
+> driverhub.mobileapp@1.0.0 start
+> expo start --port 5218 --non-interactive
+
+  --non-interactive is not supported, use $CI=1 instead
+Starting project at /Users/guelfi/Projetos/DriverHub/src/DriverHub.MobileApp
+Starting Metro Bundler
+Waiting on http://localhost:5218
+Logs for your project will appear below.
+Web ./index.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundled 995ms index.js (495 modules)

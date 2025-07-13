@@ -116,3 +116,154 @@ LIMIT 1
 2025-07-13 00:14:34.404 -03:00 [INF] Executed endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
 2025-07-13 00:14:34.404 -03:00 [INF] HTTP POST /api/Auth/login responded 200 in 24.4367 ms
 2025-07-13 00:14:34.404 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5217/api/Auth/login - 200 null application/json; charset=utf-8 25.0378ms
+2025-07-13 00:21:21.039 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5217/api/Auth/login - application/json 60
+2025-07-13 00:21:21.039 -03:00 [INF] Executing endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 00:21:21.039 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(DriverHub.API.Models.DTOs.LoginRequest) on controller DriverHub.API.Controllers.AuthController (DriverHub.API).
+2025-07-13 00:21:21.095 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 00:21:21.116 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m.id, m.aluguel_semanal_veiculo, m.autonomia_veiculo_km_por_litro, m.data_cadastro, m.dias_trabalhados_por_semana, m.email, m.nome, m.numero_celular, m.role, m.sal, m.senha_hash, m.sobrenome
+FROM motoristas AS m
+WHERE m.email = @__email_0
+LIMIT 1
+2025-07-13 00:21:21.117 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-07-13 00:21:21.117 -03:00 [INF] Executed action DriverHub.API.Controllers.AuthController.Login (DriverHub.API) in 77.6761ms
+2025-07-13 00:21:21.117 -03:00 [INF] Executed endpoint 'DriverHub.API.Controllers.AuthController.Login (DriverHub.API)'
+2025-07-13 00:21:21.117 -03:00 [INF] HTTP POST /api/Auth/login responded 200 in 78.2446 ms
+2025-07-13 00:21:21.118 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5217/api/Auth/login - 200 null application/json; charset=utf-8 78.7326ms
+2025-07-13 00:21:58.589 -03:00 [INF] Application is shutting down...
+2025-07-13 11:51:55.594 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 11:51:56.667 -03:00 [INF] Now listening on: http://localhost:5217
+2025-07-13 11:51:56.672 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 11:51:56.672 -03:00 [INF] Hosting environment: Development
+2025-07-13 11:51:56.673 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 11:53:06.414 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 11:53:07.020 -03:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5217: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2025-07-13 11:53:47.914 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 11:53:48.551 -03:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5217: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2025-07-13 11:54:46.492 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 11:54:47.038 -03:00 [INF] Now listening on: http://localhost:5217
+2025-07-13 11:54:47.044 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 11:54:47.045 -03:00 [INF] Hosting environment: Development
+2025-07-13 11:54:47.046 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 11:55:59.668 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 11:56:00.232 -03:00 [INF] Now listening on: http://localhost:5217
+2025-07-13 11:56:00.238 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 11:56:00.239 -03:00 [INF] Hosting environment: Development
+2025-07-13 11:56:00.239 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 11:57:25.525 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger - null null
+2025-07-13 11:57:25.590 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger - 301 0 null 67.3847ms
+2025-07-13 11:57:25.599 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 11:57:25.700 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 102.1573ms
+2025-07-13 11:57:25.745 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-bundle.js - null null
+2025-07-13 11:57:25.740 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui.css - null null
+2025-07-13 11:57:25.753 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-standalone-preset.js - null null
+2025-07-13 11:57:25.831 -03:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-07-13 11:57:25.833 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui.css - 200 143943 text/css 92.483ms
+2025-07-13 11:57:25.867 -03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-07-13 11:57:25.867 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-bundle.js - 200 1096145 text/javascript 122.3938ms
+2025-07-13 11:57:25.885 -03:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-07-13 11:57:25.887 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-standalone-preset.js - 200 339486 text/javascript 133.927ms
+2025-07-13 11:57:26.138 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 11:57:26.180 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/favicon-32x32.png - null null
+2025-07-13 11:57:26.182 -03:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-07-13 11:57:26.182 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/favicon-32x32.png - 200 628 image/png 2.4263ms
+2025-07-13 11:57:26.329 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 191.318ms
+2025-07-13 13:12:04.553 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 13:12:06.159 -03:00 [INF] Now listening on: http://localhost:5217
+2025-07-13 13:12:06.164 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 13:12:06.165 -03:00 [INF] Hosting environment: Development
+2025-07-13 13:12:06.165 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 13:12:11.770 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 13:12:11.963 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 194.0592ms
+2025-07-13 13:12:11.991 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-bundle.js - null null
+2025-07-13 13:12:12.238 -03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-07-13 13:12:12.241 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-bundle.js - 200 1096145 text/javascript 250.1468ms
+2025-07-13 13:12:12.486 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 13:12:12.707 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 220.9707ms
+2025-07-13 13:13:22.312 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 13:13:22.313 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 1.0366ms
+2025-07-13 13:13:22.419 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 13:13:22.430 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 10.4517ms
+2025-07-13 15:08:41.429 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 15:08:42.268 -03:00 [INF] Now listening on: http://localhost:5217
+2025-07-13 15:08:42.272 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 15:08:42.273 -03:00 [INF] Hosting environment: Development
+2025-07-13 15:08:42.273 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 15:11:05.150 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 15:11:05.308 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 160.3205ms
+2025-07-13 15:11:05.352 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-standalone-preset.js - null null
+2025-07-13 15:11:05.360 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-bundle.js - null null
+2025-07-13 15:11:05.470 -03:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-07-13 15:11:05.482 -03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-07-13 15:11:05.482 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-bundle.js - 200 1096145 text/javascript 122.6298ms
+2025-07-13 15:11:05.482 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/swagger-ui-standalone-preset.js - 200 339486 text/javascript 131.8347ms
+2025-07-13 15:11:05.740 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 15:11:05.942 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 202.7973ms
+2025-07-13 15:18:33.505 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 15:18:33.810 -03:00 [INF] Now listening on: http://localhost:5217
+2025-07-13 15:18:33.814 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 15:18:33.816 -03:00 [INF] Hosting environment: Development
+2025-07-13 15:18:33.816 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 15:18:54.062 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 15:18:54.206 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 146.3362ms
+2025-07-13 15:18:54.583 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 15:18:54.906 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 324.8735ms
+2025-07-13 15:35:14.026 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/api/Auth/ProtectedData - null null
+2025-07-13 15:35:14.075 -03:00 [WRN] Failed to determine the https port for redirect.
+2025-07-13 15:35:14.243 -03:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-07-13 15:35:14.249 -03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-07-13 15:35:14.252 -03:00 [INF] HTTP GET /api/Auth/ProtectedData responded 401 in 180.3548 ms
+2025-07-13 15:35:14.253 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/api/Auth/ProtectedData - 401 0 null 227.4107ms

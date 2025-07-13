@@ -1,13 +1,18 @@
 #!/bin/bash
 
-API_LOG="/tmp/driverhub_api.log"
-MOBILE_APP_LOG="/tmp/driverhub_mobile_app.log"
+LOGS_DIR="$(pwd)/logs"
+API_LOG="$LOGS_DIR/driverhub_api.log"
+MOBILE_APP_LOG="$LOGS_DIR/driverhub_mobile_app.log"
+API_PID_FILE="$LOGS_DIR/driverhub_api_pid.txt"
+
+# Cria o diretório de logs se não existir
+mkdir -p "$LOGS_DIR"
 
 start_servers() {
     echo "Iniciando a API DriverHub em segundo plano..."
     nohup bash -c "cd src/DriverHub.API && dotnet run" > "$API_LOG" 2>&1 &
     API_PID=$!
-    echo $API_PID > /tmp/driverhub_api_pid.txt
+    echo $API_PID > "$API_PID_FILE"
     echo "API DriverHub iniciada com PID: $API_PID"
 
     echo "Iniciando o aplicativo móvel DriverHub em segundo plano..."
@@ -15,7 +20,6 @@ start_servers() {
     sleep 5 # Dá um tempo para o Expo iniciar e abrir a porta
     MOBILE_APP_PID=$(lsof -t -i :5218)
     if [ -n "$MOBILE_APP_PID" ]; then
-        echo $MOBILE_APP_PID > /tmp/driverhub_mobile_pid.txt
         echo "Aplicativo móvel DriverHub iniciado com PID: $MOBILE_APP_PID"
     else
         echo "Falha ao obter o PID do aplicativo móvel. Verifique o log em $MOBILE_APP_LOG"
@@ -29,38 +33,27 @@ start_servers() {
     check_for_errors
 }
 
-stop_mobile_app_only() {
-    if [ -f /tmp/driverhub_mobile_pid.txt ]; then
-        MOBILE_APP_PID=$(cat /tmp/driverhub_mobile_pid.txt)
-        if ps -p $MOBILE_APP_PID > /dev/null; then
-            kill $MOBILE_APP_PID
-            echo "Aplicativo Móvel DriverHub (PID $MOBILE_APP_PID) encerrado."
-        else
-            echo "Aplicativo Móvel DriverHub não está rodando ou PID inválido."
-        fi
-        rm /tmp/driverhub_mobile_pid.txt
-    else
-        echo "Arquivo PID do Aplicativo Móvel não encontrado."
-    fi
-}
-
 stop_servers() {
     echo "Parando os serviços DriverHub (API e Aplicativo Móvel)..."
 
-    if [ -f /tmp/driverhub_api_pid.txt ]; then
-        API_PID=$(cat /tmp/driverhub_api_pid.txt)
-        if ps -p $API_PID > /dev/null; then
-            kill $API_PID
-            echo "API DriverHub (PID $API_PID) encerrada."
-        else
-            echo "API DriverHub não está rodando ou PID inválido."
-        fi
-        rm /tmp/driverhub_api_pid.txt
+    API_PID=$(lsof -t -i:5217)
+    if [ -n "$API_PID" ]; then
+        kill -9 $API_PID
+        echo "API DriverHub (PID $API_PID) encerrada."
     else
-        echo "Arquivo PID da API não encontrado."
+        echo "Nenhum processo da API encontrado na porta 5217."
     fi
 
-    stop_mobile_app_only
+    MOBILE_APP_PID=$(lsof -t -i:5218)
+    if [ -n "$MOBILE_APP_PID" ]; then
+        kill -9 $MOBILE_APP_PID
+        echo "Aplicativo Móvel DriverHub (PID $MOBILE_APP_PID) encerrado."
+    else
+        echo "Nenhum processo do Aplicativo Móvel encontrado na porta 5218."
+    fi
+
+    # Limpa os arquivos de PID
+    rm -f "$API_PID_FILE"
 
     echo "Serviços parados. Verificando se há processos remanescentes..."
     sleep 2 # Dá um tempo para os processos encerrarem
@@ -106,8 +99,8 @@ status_servers() {
     echo "---------------------------------------------------"
 
     # Verifica a API
-    if [ -f /tmp/driverhub_api_pid.txt ]; then
-        API_PID=$(cat /tmp/driverhub_api_pid.txt)
+    if [ -f "$API_PID_FILE" ]; then
+        API_PID=$(cat "$API_PID_FILE")
         if ps -p $API_PID > /dev/null; then
             if lsof -i :5217 > /dev/null; then
                 echo "API DriverHub: Rodando na porta 5217 (PID $API_PID)"
@@ -122,27 +115,11 @@ status_servers() {
     fi
 
     # Verifica o Aplicativo Móvel
-    if [ -f /tmp/driverhub_mobile_pid.txt ]; then
-        MOBILE_APP_PID=$(cat /tmp/driverhub_mobile_pid.txt)
-        if ps -p $MOBILE_APP_PID > /dev/null; then
-            # Verifica se a porta 5218 está em uso pelo processo do aplicativo móvel
-            MOBILE_PORT=$(lsof -i -P -n -p $MOBILE_APP_PID | grep LISTEN | grep 5218 | awk '{print $9}' | cut -d':' -f2 | head -n 1)
-            if [ -n "$MOBILE_PORT" ]; then
-                echo "Aplicativo Móvel DriverHub: Rodando na porta $MOBILE_PORT (PID $MOBILE_APP_PID)"
-            else
-                echo "Aplicativo Móvel DriverHub: Rodando (PID $MOBILE_APP_PID), mas porta 5218 não detectada diretamente. Verificando se a porta está em uso por outro processo..."
-                MOBILE_PORT_GLOBAL=$(lsof -i -P -n | grep LISTEN | grep 5218 | awk '{print $9}' | cut -d':' -f2 | head -n 1)
-                if [ -n "$MOBILE_PORT_GLOBAL" ]; then
-                    echo "Aplicativo Móvel DriverHub: Porta $MOBILE_PORT_GLOBAL em uso (provavelmente pelo aplicativo móvel)."
-                else
-                    echo "Aplicativo Móvel DriverHub: Rodando (PID $MOBILE_APP_PID), mas porta 5218 não está em uso."
-                fi
-            fi
-        else
-            echo "Aplicativo Móvel DriverHub: Não está rodando (PID $MOBILE_APP_PID não encontrado)."
-        fi
+    MOBILE_APP_PID=$(lsof -t -i :5218)
+    if [ -n "$MOBILE_APP_PID" ]; then
+        echo "Aplicativo Móvel DriverHub: Rodando na porta 5218 (PID $MOBILE_APP_PID)"
     else
-        echo "Aplicativo Móvel DriverHub: Não está rodando (arquivo PID não encontrado)."
+        echo "Aplicativo Móvel DriverHub: Não está rodando (porta 5218 livre)."
     fi
 
     echo ""
@@ -166,11 +143,8 @@ case "$1" in
     status)
         status_servers
         ;;
-    status)
-        status_servers
-        ;;
     expo-start-foreground)
-        stop_mobile_app_only
+        stop_servers
         echo "Iniciando o aplicativo móvel DriverHub em primeiro plano para exibir o QR Code..."
         (cd src/DriverHub.MobileApp && npm start)
         ;;

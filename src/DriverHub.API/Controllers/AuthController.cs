@@ -53,11 +53,6 @@ namespace DriverHub.API.Controllers
             return Ok(new { Token = token, Nome = motorista.Nome, Sobrenome = motorista.Sobrenome });
         }
 
-        [HttpGet("ProtectedData")]
-        [Authorize]
-        public IActionResult ProtectedData()
-        {
-            return Ok("Você acessou um recurso protegido!");
-        }
+        
     }
 }

@@ -32,7 +32,7 @@ A solução `DriverHub.sln` é organizada seguindo os princípios da **Clean Arc
     *   `Services/IPasswordHasher.cs`: Define métodos para hash e verificação de senhas (`HashPassword`, `VerifyPassword`).
     *   `Services/ITokenService.cs`: Define método para geração de tokens JWT (`GenerateToken`).
 *   **Serviços (Implementações)** ⚙️:
-    *   `Services/Implementations/AuthService.cs`: Implementa `IAuthService`, utilizando `IMotoristaRepository`, `IPasswordHasher` e `ITokenService`. Lida com a lógica de registro e login, agora aceitando `sobrenome`. 
+    *   `Services/Implementations/AuthService.cs`: Implementa `IAuthService`, utilizando `IMotoristaRepository`, `IPasswordHasher` e `ITokenService`. Lida com a lógica de registro e login, agora aceitando `sobrenome`.
     *   `Services/Implementations/PasswordHasher.cs`: Implementa `IPasswordHasher` usando `Rfc2898DeriveBytes` para hashing seguro de senhas.
     *   `Services/Implementations/TokenService.cs`: Implementa `ITokenService`, gerando tokens JWT com base nas informações do motorista e uma chave configurada.
 
@@ -86,6 +86,53 @@ A análise confirma que a estrutura atual do projeto e as funcionalidades implem
 
 ## 5. 🛠️ Ferramentas de Desenvolvimento
 
-*   **`manage_dev_servers.sh`**: Script unificado para gerenciar os serviços de desenvolvimento (API e Aplicativo Móvel). Suporta os comandos `start` (inicia os serviços em segundo plano e exibe IPs/portas), `stop` (encerra os serviços) e `status` (verifica o status atual e exibe IPs/portas).
+*   **`servershub.sh`**: Script unificado para gerenciar os serviços de desenvolvimento (API e Aplicativo Móvel). Suporta os comandos `start` (inicia os serviços em segundo plano e exibe IPs/portas), `stop` (encerra os serviços) e `status` (verifica o status atual e exibe IPs/portas).
+    *   **Atualização Recente (13/07/2025):** Corrigida a detecção da porta do aplicativo móvel na função `status_servers` para `5218` (anteriormente `8081`). A lógica de parada de serviços na função `stop_servers` também foi unificada para usar a porta correta (`5218`) para o aplicativo móvel.
+    *   **Melhorias na Detecção do Aplicativo Móvel (13/07/2025):** O script foi aprimorado para detectar corretamente o status do aplicativo móvel na porta 5218, removendo a dependência de um arquivo PID e verificando diretamente a porta em uso. Os arquivos de contexto `context.md` e `context_for_manual_test.md` foram unificados e migrados para `GEMINI.md`.
 
 Este documento será atualizado conforme o projeto evolui. 🔄
+
+---
+
+## Contexto para Testes Manuais (Adicionado em 13 de julho de 2025)
+
+Este arquivo resume as alterações feitas no script `servershub.sh` para melhorar a detecção do status do aplicativo móvel.
+
+### Alterações Realizadas:
+
+O script `servershub.sh` foi modificado para:
+
+1.  Remover a dependência de um arquivo PID (`MOBILE_PID_FILE`) para o aplicativo móvel, que não estava sendo gerado de forma consistente pelo `npm start` do Expo.
+2.  Ajustar a função `start_servers` para não tentar salvar o PID do aplicativo móvel em um arquivo.
+3.  Ajustar a função `status_servers` para verificar o status do aplicativo móvel diretamente pela porta 5218, usando `lsof`.
+4.  Remover a limpeza do arquivo PID do aplicativo móvel na função `stop_servers`.
+
+### Como Verificar o Status dos Serviços:
+
+Para verificar o status atual dos serviços (API e Aplicativo Móvel), execute o seguinte comando no terminal, a partir do diretório raiz do projeto:
+
+```bash
+bash servershub.sh status
+```
+
+**Resultado Esperado:**
+
+Você deverá ver uma saída similar a esta, indicando que ambos os serviços estão rodando (se estiverem ativos):
+
+```
+Verificando o status dos serviços...
+---------------------------------------------------
+API DriverHub: Rodando na porta 5217 (PID XXXX)
+Aplicativo Móvel DriverHub: Rodando na porta 5218 (PID YYYY)
+
+Obtendo o endereço IP do seu notebook...
+Endereço IP do seu notebook: ZZZ.ZZZ.ZZZ.ZZZ
+
+Para testes no celular (conectado à mesma rede Wi-Fi):
+Acesse no navegador do celular: http://ZZZ.ZZZ.ZZZ.ZZZ:5218
+---------------------------------------------------
+```
+
+Onde `XXXX` e `YYYY` serão os PIDs dos processos e `ZZZ.ZZZ.ZZZ.ZZZ` será o endereço IP do seu notebook.
+
+Após seus testes manuais, você pode me informar para continuarmos com o desenvolvimento do projeto.
