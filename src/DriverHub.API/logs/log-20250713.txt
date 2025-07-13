@@ -267,3 +267,12 @@ DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
 2025-07-13 15:35:14.249 -03:00 [INF] AuthenticationScheme: Bearer was challenged.
 2025-07-13 15:35:14.252 -03:00 [INF] HTTP GET /api/Auth/ProtectedData responded 401 in 180.3548 ms
 2025-07-13 15:35:14.253 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/api/Auth/ProtectedData - 401 0 null 227.4107ms
+2025-07-13 15:55:52.017 -03:00 [INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-07-13 15:55:52.547 -03:00 [INF] Now listening on: http://localhost:5217
+2025-07-13 15:55:52.552 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-13 15:55:52.553 -03:00 [INF] Hosting environment: Development
+2025-07-13 15:55:52.553 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-13 15:56:15.410 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+2025-07-13 15:56:15.561 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 154.0974ms
+2025-07-13 15:56:15.721 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+2025-07-13 15:56:15.891 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 170.5052ms

@@ -1,17 +1,10 @@
 Compilando...
-[15:18:33 INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
-[15:18:33 INF] Now listening on: http://localhost:5217
-[15:18:33 INF] Application started. Press Ctrl+C to shut down.
-[15:18:33 INF] Hosting environment: Development
-[15:18:33 INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
-[15:18:54 INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
-[15:18:54 INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 146.3362ms
-[15:18:54 INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
-[15:18:54 INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 324.8735ms
-[15:35:14 INF] Request starting HTTP/1.1 GET http://localhost:5217/api/Auth/ProtectedData - null null
-[15:35:14 WRN] Failed to determine the https port for redirect.
-[15:35:14 INF] Authorization failed. These requirements were not met:
-DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
-[15:35:14 INF] AuthenticationScheme: Bearer was challenged.
-[15:35:14 INF] HTTP GET /api/Auth/ProtectedData responded 401 in 180.3548 ms
-[15:35:14 INF] Request finished HTTP/1.1 GET http://localhost:5217/api/Auth/ProtectedData - 401 0 null 227.4107ms
+[15:55:52 INF] User profile is available. Using '/Users/guelfi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+[15:55:52 INF] Now listening on: http://localhost:5217
+[15:55:52 INF] Application started. Press Ctrl+C to shut down.
+[15:55:52 INF] Hosting environment: Development
+[15:55:52 INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+[15:56:15 INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/index.html - null null
+[15:56:15 INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/index.html - 200 null text/html;charset=utf-8 154.0974ms
+[15:56:15 INF] Request starting HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - null null
+[15:56:15 INF] Request finished HTTP/1.1 GET http://localhost:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 170.5052ms

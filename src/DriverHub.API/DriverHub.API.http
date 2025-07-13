@@ -1,6 +1,3 @@
 @DriverHub.API_HostAddress = http://localhost:5217
 
-GET {{DriverHub.API_HostAddress}}/weatherforecast/
-Accept: application/json
 
-###
