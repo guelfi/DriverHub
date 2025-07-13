@@ -1,7 +1,7 @@
 <h1 align="center">🚗 DriverHub</h1>
 
 <p align="center">
-  <strong>Micro SaaS</strong> para motoristas de aplicativos como Uber, 99 e similares.  
+  <strong>Micro SaaS DriverHub</strong> para motoristas de aplicativos como Uber, 99 e similares.  
   Este projeto também serve como um <strong>laboratório de estudo e aprendizado prático</strong> com tecnologias modernas no ecossistema .NET e ferramentas Google AI.
 </p>
 
@@ -80,7 +80,7 @@ Ao mesmo tempo, permitirá:
 - [ ] Definir e implementar queries/lógica para relatórios agregados do administrador.
 - [ ] Continuar o esboço e integração do frontend React Native (desenvolver as demais telas e funcionalidades).
 - [ ] Desenvolver o frontend administrativo (Razor Pages ou Blazor Server).
-- [ ] Explorar e integrar ferramentas Google AI (Gemini CLI, AI Studio, Firebase Studio).
+- [ ] Explorar e integrar ferramentas Google AI (Gemini CLI).
 
 ---
 

@@ -84,4 +84,8 @@ A análise confirma que a estrutura atual do projeto e as funcionalidades implem
 *   Desenvolver o Frontend Administrativo.
 *   Explorar e Integrar Ferramentas Google AI.
 
+## 5. 🛠️ Ferramentas de Desenvolvimento
+
+*   **`manage_dev_servers.sh`**: Script unificado para gerenciar os serviços de desenvolvimento (API e Aplicativo Móvel). Suporta os comandos `start` (inicia os serviços em segundo plano e exibe IPs/portas), `stop` (encerra os serviços) e `status` (verifica o status atual e exibe IPs/portas).
+
 Este documento será atualizado conforme o projeto evolui. 🔄
