@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nome\": \"João\",\n    \"sobrenome\": \"Silva\",\n    \"email\": \"motorista.teste@driverhub.com\",\n    \"password\": \"SenhaSegura123!\"\n}",
+					"raw": "{\n    \"nome\": \"Marco\",\n    \"sobrenome\": \"Guelfi\",\n    \"email\": \"guelfi@msn.com\",\n    \"password\": \"246588\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,10 +27,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5217/api/Auth/register",
+					"raw": "http://192.168.15.119:5217/api/Auth/register",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"15",
+						"119"
 					],
 					"port": "5217",
 					"path": [
@@ -55,7 +58,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"motorista.teste@driverhub.com\",\n    \"password\": \"SenhaSegura123!\"\n}",
+					"raw": "{\n    \"email\": \"marco@guelfi.com.br\",\n    \"password\": \"246588\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -63,10 +66,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5217/api/Auth/login",
+					"raw": "http://192.168.15.119:5217/api/Auth/login",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"15",
+						"119"
 					],
 					"port": "5217",
 					"path": [

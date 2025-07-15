@@ -19,7 +19,39 @@ You may also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+## Testes
+
+Este projeto utiliza [Jest](https://jestjs.io/) e [React Testing Library](https://testing-library.com/react/) para testes unitários e de integração.
+
+Para executar os testes, utilize o comando:
+
+```bash
+npm test
+```
+
+Este comando iniciará o test runner em modo interativo. Você pode pressionar `a` para executar todos os testes, ou `p` para filtrar por nome de arquivo.
+
+### Escrevendo Testes
+
+Os arquivos de teste devem ter a extensão `.test.js` (ou `.test.jsx`, `.test.ts`, `.test.tsx`) e estar localizados próximos aos componentes ou módulos que estão testando, ou em uma pasta `__tests__`.
+
+**Exemplo de um teste simples (App.test.js):**
+
+```javascript
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+```
+
+Para mais detalhes sobre como escrever testes, consulte a documentação oficial do Create React App sobre [execução de testes](https://facebook.github.io/create-react-app/docs/running-tests).
+
 ### `npm run build`
+
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.

@@ -4,18 +4,11 @@ using DriverHub.Domain.Repositories;
 using DriverHub.Infrastructure.Data;
 using DriverHub.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
-using Serilog.AspNetCore;
 using DriverHub.API.Middleware;
-using Microsoft.Extensions.Logging;
-using Serilog.Sinks.File;
-using DriverHub.Domain.Entities; // Adicionar esta linha para o enum Role
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,9 +20,6 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
     .WriteTo.Debug()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"));
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
 // Configure DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -38,16 +28,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Register repositories
 builder.Services.AddScoped<IMotoristaRepository, MotoristaRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<ILancamentoDiarioRepository, LancamentoDiarioRepository>();
+builder.Services.AddScoped<IDespesaPessoalRepository, DespesaPessoalRepository>();
 
 // Register services
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IAuthService>(x => 
-    new AuthService(
-        x.GetRequiredService<IMotoristaRepository>(), 
-        x.GetRequiredService<IPasswordHasher>(),
-        x.GetRequiredService<ITokenService>(),
-        x.GetRequiredService<ILogger<AuthService>>()));
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IFinancialService, FinancialService>();
 
 // Add JWT Authentication
 var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]!);
@@ -109,17 +98,17 @@ app.MapControllers();
 // Verifica se existe algum usuário Admin na inicialização
 using (var scope = app.Services.CreateScope())
 {
-    var motoristaRepository = scope.ServiceProvider.GetRequiredService<IMotoristaRepository>();
+    var adminRepository = scope.ServiceProvider.GetRequiredService<IAdminRepository>();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-    var adminExists = await motoristaRepository.GetByRoleAsync(Role.Admin);
+    var admins = await adminRepository.GetAllAsync();
 
-    if (adminExists == null)
+    if (!admins.Any())
     {
         logger.LogWarning("Nenhum usuário administrador encontrado. Por favor, crie o primeiro usuário administrador.");
-        // Em um ambiente de produção, você pode querer parar a aplicação ou entrar em um modo de configuração.
-        // Por enquanto, apenas logaremos um aviso.
     }
 }
 
 app.Run();
+
+public partial class Program { }

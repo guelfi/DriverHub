@@ -1,53 +1,77 @@
-using Microsoft.EntityFrameworkCore;
 using DriverHub.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DriverHub.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
         }
 
         public DbSet<Motorista> Motoristas { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Viagem> Viagens { get; set; }
+        public DbSet<LancamentoDiario> LancamentosDiarios { get; set; }
+        public DbSet<DespesaPessoal> DespesasPessoais { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure Motorista entity
+            // Configuração para a entidade Motorista
             modelBuilder.Entity<Motorista>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
+                entity.Property(e => e.Nome).IsRequired();
+                entity.Property(e => e.Sobrenome).IsRequired();
                 entity.HasIndex(e => e.Email).IsUnique();
-                entity.Property(e => e.Nome).IsRequired().HasMaxLength(255);
-                entity.Property(e => e.SenhaHash).IsRequired().HasMaxLength(255);
-                entity.Property(e => e.Sal).IsRequired().HasMaxLength(255);
-                entity.Property(e => e.NumeroCelular).IsRequired().HasMaxLength(20);
-                entity.Property(e => e.AluguelSemanalVeiculo).HasPrecision(18, 2);
-                entity.Property(e => e.AutonomiaVeiculoKmPorLitro).HasPrecision(18, 2);
-                entity.Property(e => e.DataCadastro).IsRequired();
-                entity.Property(e => e.Role).IsRequired();
+                entity.Property(e => e.SenhaHash).IsRequired();
+                entity.Property(e => e.Sal).IsRequired();
+                entity.Property(e => e.NumeroCelular).IsRequired();
             });
 
-            // Configure Viagem entity
+            // Configuração para a nova entidade Admin
+            modelBuilder.Entity<Admin>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Nome).IsRequired();
+                entity.Property(e => e.Sobrenome).IsRequired();
+                entity.HasIndex(e => e.Email).IsUnique();
+                entity.Property(e => e.SenhaHash).IsRequired();
+                entity.Property(e => e.Sal).IsRequired();
+            });
+
+            // Configuração para a entidade Viagem
             modelBuilder.Entity<Viagem>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Origem).IsRequired().HasMaxLength(255);
-                entity.Property(e => e.Destino).IsRequired().HasMaxLength(255);
-                entity.Property(e => e.DistanciaKm).HasPrecision(18, 2);
-                entity.Property(e => e.DataViagem).IsRequired();
-                entity.Property(e => e.ValorRecebido).HasPrecision(18, 2);
-                entity.Property(e => e.CustoCombustivel).HasPrecision(18, 2);
-                entity.Property(e => e.Lucro).HasPrecision(18, 2);
-
+                entity.Property(e => e.Origem).IsRequired();
+                entity.Property(e => e.Destino).IsRequired();
                 entity.HasOne(d => d.Motorista)
-                      .WithMany(p => p.Viagens)
-                      .HasForeignKey(d => d.MotoristaId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                    .WithMany(p => p.Viagens)
+                    .HasForeignKey(d => d.MotoristaId);
+            });
+
+            // Configuração para LancamentoDiario
+            modelBuilder.Entity<LancamentoDiario>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasOne<Motorista>()
+                    .WithMany()
+                    .HasForeignKey(e => e.MotoristaId)
+                    .IsRequired();
+            });
+
+            // Configuração para DespesaPessoal
+            modelBuilder.Entity<DespesaPessoal>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasOne<Motorista>()
+                    .WithMany()
+                    .HasForeignKey(e => e.MotoristaId)
+                    .IsRequired();
             });
         }
     }

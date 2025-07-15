@@ -1,30 +1,26 @@
 #!/bin/bash
 
-# Script para criar o primeiro usuário administrador
+# Script para criar ou listar usuários administradores
 
-API_URL="http://localhost:5217/api/Auth/register-admin"
-
-# Verifica se os argumentos foram fornecidos
-if [ "$#" -ne 4 ]; then
-    echo "Uso: $0 <email> <senha> <nome> <sobrenome>"
-    exit 1
-fi
-
-EMAIL=$1
-PASSWORD=$2
-NOME=$3
-SOBRENOME=$4
-
-echo "Tentando registrar o primeiro usuário administrador..."
-
-RESPONSE=$(curl -s -X POST -H "Content-Type: application/json" -d "{\"email\": \"$EMAIL\", \"password\": \"$PASSWORD\", \"nome\": \"$NOME\", \"sobrenome\": \"$SOBRENOME\"}" $API_URL)
-
-if echo "$RESPONSE" | grep -q "Usuário registrado com sucesso."; then
-    echo "Usuário administrador '$EMAIL' registrado com sucesso!"
-elif echo "$RESPONSE" | grep -q "Já existe um usuário administrador."; then
-    echo "Erro: Já existe um usuário administrador. Não é permitido criar mais de um administrador via este script."
-    echo "Resposta da API: $RESPONSE"
+# Verifica se o primeiro argumento é 'list-admins'
+if [ "$1" == "list-admins" ]; then
+    echo "Tentando listar os usuários administradores..."
+    dotnet run --project src/DriverHub.AdminTool -- list-admins
 else
-    echo "Erro ao registrar o usuário administrador."
-    echo "Resposta da API: $RESPONSE"
+    # Verifica se todos os argumentos necessários para criar um admin foram passados
+    if [ "$#" -ne 4 ]; then
+        echo "Uso para criar admin: $0 <email> <senha> <nome> <sobrenome>"
+        echo "Uso para listar admins: $0 list-admins"
+        exit 1
+    fi
+    
+    EMAIL=$1
+    PASSWORD=$2
+    NOME=$3
+    SOBRENOME=$4
+
+    echo "Tentando registrar o usuário administrador..."
+    dotnet run --project src/DriverHub.AdminTool -- "$EMAIL" "$PASSWORD" "$NOME" "$SOBRENOME"
 fi
+
+echo "Verifique os logs da ferramenta de administração para o resultado da operação."

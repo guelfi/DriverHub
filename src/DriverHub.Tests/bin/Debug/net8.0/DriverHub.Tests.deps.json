@@ -2043,6 +2043,7 @@
           "DriverHub.Domain": "1.0.0",
           "EFCore.NamingConventions": "9.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.7",
+          "Microsoft.EntityFrameworkCore.Design": "9.0.7",
           "Microsoft.EntityFrameworkCore.Relational": "9.0.7",
           "Microsoft.Extensions.Logging": "9.0.7",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4"

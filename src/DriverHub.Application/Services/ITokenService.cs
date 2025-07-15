@@ -1,7 +1,9 @@
+using System;
+
 namespace DriverHub.Application.Services
 {
     public interface ITokenService
     {
-        string GenerateToken(Domain.Entities.Motorista motorista);
+        string GenerateToken(Guid userId, string role);
     }
 }

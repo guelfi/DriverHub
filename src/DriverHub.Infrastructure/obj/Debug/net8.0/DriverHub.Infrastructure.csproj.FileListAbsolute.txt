@@ -16,3 +16,5 @@
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/refint/DriverHub.Infrastructure.dll
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/DriverHub.Infrastructure.pdb
 /Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/ref/DriverHub.Infrastructure.dll
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/bin/Debug/net8.0/DriverHub.Infrastructure.runtimeconfig.json
+/Users/guelfi/Projetos/DriverHub/src/DriverHub.Infrastructure/obj/Debug/net8.0/DriverHub.Infrastructure.genruntimeconfig.cache

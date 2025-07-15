@@ -1,27 +1,30 @@
-using DriverHub.Domain.Repositories;
+using DriverHub.Application.DTOs;
+using DriverHub.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace DriverHub.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")] // Apenas administradores podem acessar este controlador
     public class AdminController : ControllerBase
     {
-        private readonly IMotoristaRepository _motoristaRepository;
+        private readonly IAuthService _authService;
 
-        public AdminController(IMotoristaRepository motoristaRepository)
+        public AdminController(IAuthService authService)
         {
-            _motoristaRepository = motoristaRepository;
+            _authService = authService;
         }
 
-        [HttpGet("motorist-count")]
-        public async Task<IActionResult> GetMotoristCount()
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAdmin([FromBody] LoginDto loginDto)
         {
-            var count = await _motoristaRepository.GetMotoristCountAsync(); // Método a ser implementado
-            return Ok(new { MotoristCount = count });
+            var result = await _authService.LoginAdminAsync(loginDto);
+            if (!result.IsSuccess)
+            {
+                return Unauthorized(new { message = result.Error });
+            }
+            return Ok(result.Value);
         }
     }
 }

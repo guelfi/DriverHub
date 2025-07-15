@@ -54,11 +54,6 @@ namespace DriverHub.Infrastructure.Repositories
             }
         }
 
-        public async Task<Motorista?> GetByRoleAsync(Role role)
-        {
-            return await _context.Motoristas.FirstOrDefaultAsync(m => m.Role == role);
-        }
-
         public async Task<int> GetMotoristCountAsync()
         {
             return await _context.Motoristas.CountAsync();

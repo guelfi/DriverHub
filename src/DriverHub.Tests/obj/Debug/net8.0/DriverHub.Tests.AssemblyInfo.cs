@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DriverHub.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc6449e6164ee42f2a15910af575d8f4febd83d8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25a0c79411a7970cb11308a0356041ca44cf82f3")]
 [assembly: System.Reflection.AssemblyProductAttribute("DriverHub.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DriverHub.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

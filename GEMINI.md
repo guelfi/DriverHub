@@ -31,7 +31,9 @@ A solução `DriverHub.sln` é organizada seguindo os princípios da **Clean Arc
 
 ### 2.4. `DriverHub.API`
 
-*   **Controladores**: `AuthController.cs` (endpoints `/register`, `/login`, `/register-admin`).
+*   **Controladores** 🌐:
+    *   `Controllers/AuthController.cs`: Controlador API que expõe endpoints `/register` e `/login`. Utiliza `IAuthService` para processar as requisições. Agora passa `sobrenome` para `RegisterAsync` e retorna `Nome` e `Sobrenome` na resposta de login. Os endpoints `ProtectedData` e `register-admin` foram removidos. (A criação do primeiro usuário administrador é feita via script CLI, e o gerenciamento de usuários administrativos futuros será implementado em um endpoint protegido por autenticação de administrador).
+
 *   **Middleware**: `ExceptionHandlingMiddleware` para tratamento global de exceções.
 *   **Configuração**: Serilog para logging, PostgreSQL, injeção de dependências, autenticação JWT Bearer, Swagger/OpenAPI, CORS. A API escuta em `http://0.0.0.0:5217`. Na inicialização, verifica a existência de um usuário `Admin` e loga um aviso se nenhum for encontrado. Endpoints `ProtectedData` e `WeatherForecast` foram removidos.
 
@@ -58,12 +60,13 @@ A estrutura atual do projeto e as funcionalidades implementadas estão alinhadas
 
 **Etapas Concluídas Recentemente:**
 *   Integração com Banco de Dados PostgreSQL.
-*   Implementação da verificação de primeiro administrador na API e criação do endpoint `/register-admin`.
+*   Implementação da verificação de primeiro administrador na API.
 *   Criação do projeto `DriverHub.Dashboard`.
+*   Implementação de Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`.
+*   Criação do projeto `DriverHub.AdminTool` para criação e gerenciamento de usuários administrativos via CLI.
 
 **Próximos Passos Focados:**
 *   Desenvolver o Frontend Administrativo (dashboard, autenticação, exibição de dados).
-*   Implementar Entidades e Repositórios para `LancamentoDiario` e `DespesaPessoal`.
 *   Desenvolver a Lógica de Negócio para Cálculos Financeiros.
 *   Definir e Implementar Queries/Lógica para Relatórios Agregados.
 *   Esboçar e Integrar o Frontend React Native (continuar o desenvolvimento).
@@ -72,6 +75,6 @@ A estrutura atual do projeto e as funcionalidades implementadas estão alinhadas
 ## 4. 🛠️ Ferramentas de Desenvolvimento
 
 *   **`servershub.sh`**: Script unificado para gerenciar os serviços de desenvolvimento (API e Aplicativo Móvel). Suporta `start`, `stop` e `status`.
-*   **`create_admin.sh`**: Script CLI para registrar o primeiro usuário administrador na API.
+*   **`create_admin.sh`**: Script CLI para registrar o primeiro usuário administrador. Este script agora executa o `DriverHub.AdminTool` para uma criação segura e isolada, sem a necessidade de parar e reiniciar a API.
 
 Este documento será atualizado conforme o projeto evolui. 🔄

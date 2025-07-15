@@ -3,12 +3,6 @@ using System.Collections.Generic;
 
 namespace DriverHub.Domain.Entities
 {
-    public enum Role
-    {
-        Motorista,
-        Admin
-    }
-
     public class Motorista
     {
         public Guid Id { get; set; }
@@ -22,7 +16,6 @@ namespace DriverHub.Domain.Entities
         public int DiasTrabalhadosPorSemana { get; set; }
         public decimal AutonomiaVeiculoKmPorLitro { get; set; }
         public DateTimeOffset DataCadastro { get; set; }
-        public Role Role { get; set; }
 
         // Relacionamentos (mantido comentado por enquanto)
         public ICollection<Viagem> Viagens { get; set; } = new List<Viagem>();

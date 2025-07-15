@@ -1,117 +1,116 @@
 using DriverHub.Domain.Entities;
 using DriverHub.Domain.Repositories;
 using DriverHub.Application.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
+using DriverHub.Application.DTOs;
+using DriverHub.Application.Common;
 
 namespace DriverHub.Application.Services.Implementations
 {
     public class AuthService : IAuthService
     {
         private readonly IMotoristaRepository _motoristaRepository;
+        private readonly IAdminRepository _adminRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly ITokenService _tokenService;
         private readonly ILogger<AuthService> _logger;
 
-        public AuthService(IMotoristaRepository motoristaRepository, IPasswordHasher passwordHasher, ITokenService tokenService, ILogger<AuthService> logger)
+        public AuthService(
+            IMotoristaRepository motoristaRepository,
+            IAdminRepository adminRepository, 
+            IPasswordHasher passwordHasher, 
+            ITokenService tokenService, 
+            ILogger<AuthService> logger)
         {
             _motoristaRepository = motoristaRepository;
+            _adminRepository = adminRepository;
             _passwordHasher = passwordHasher;
             _tokenService = tokenService;
             _logger = logger;
         }
 
-        public async Task RegisterAsync(string email, string password, string nome, string sobrenome)
+        public async Task<Result<string>> RegisterMotoristaAsync(RegisterDto registerDto)
         {
-            var existingMotorista = await _motoristaRepository.GetByEmailAsync(email);
+            var existingMotorista = await _motoristaRepository.GetByEmailAsync(registerDto.Email);
             if (existingMotorista != null)
             {
-                throw new ArgumentException("Email já está em uso.");
+                return Result<string>.Failure("Email de motorista já está em uso.");
             }
 
-            var hashedPassword = _passwordHasher.HashPassword(password);
-            var parts = hashedPassword.Split(':');
-            var hash = parts[0];
-            var salt = parts[1];
+            var (hash, salt) = _passwordHasher.HashPassword(registerDto.Password);
 
             var motorista = new Motorista
             {
                 Id = Guid.NewGuid(),
-                Nome = nome,
-                Sobrenome = sobrenome,
-                Email = email,
+                Nome = registerDto.Nome,
+                Sobrenome = registerDto.Sobrenome,
+                Email = registerDto.Email,
                 SenhaHash = hash,
                 Sal = salt,
-                NumeroCelular = string.Empty,
-                AluguelSemanalVeiculo = 0,
-                DiasTrabalhadosPorSemana = 0,
-                AutonomiaVeiculoKmPorLitro = 0,
-                DataCadastro = DateTimeOffset.UtcNow,
-                Role = Role.Motorista
+                NumeroCelular = string.Empty, // Pode ser preenchido depois
+                DataCadastro = DateTimeOffset.UtcNow
             };
 
             await _motoristaRepository.AddAsync(motorista);
+            _logger.LogInformation("Motorista {Email} registrado com sucesso.", registerDto.Email);
+            return Result<string>.Success("Motorista registrado com sucesso.");
         }
 
-        public async Task RegisterAdminAsync(string email, string password, string nome, string sobrenome)
+        public async Task<Result<LoginResponseDto>> LoginMotoristaAsync(LoginDto loginDto)
         {
-            var existingAdmin = await _motoristaRepository.GetByRoleAsync(Role.Admin);
+            var motorista = await _motoristaRepository.GetByEmailAsync(loginDto.Email);
+            if (motorista == null || !_passwordHasher.VerifyPassword(loginDto.Password, motorista.SenhaHash, motorista.Sal))
+            {
+                return Result<LoginResponseDto>.Failure("Email ou senha do motorista inválidos.");
+            }
+
+            var token = _tokenService.GenerateToken(motorista.Id, "Motorista");
+            var response = new LoginResponseDto { Token = token, Nome = motorista.Nome, Sobrenome = motorista.Sobrenome };
+            
+            _logger.LogInformation("Motorista {Email} logado com sucesso.", loginDto.Email);
+            return Result<LoginResponseDto>.Success(response);
+        }
+
+        public async Task<Result<string>> RegisterAdminAsync(RegisterDto registerDto)
+        {
+            var existingAdmin = await _adminRepository.GetByEmailAsync(registerDto.Email);
             if (existingAdmin != null)
             {
-                throw new InvalidOperationException("Já existe um usuário administrador. Não é permitido criar mais de um administrador via este método.");
+                return Result<string>.Failure("Email de administrador já está em uso.");
             }
 
-            var existingMotorista = await _motoristaRepository.GetByEmailAsync(email);
-            if (existingMotorista != null)
-            {
-                throw new ArgumentException("Email já está em uso.");
-            }
+            var (hash, salt) = _passwordHasher.HashPassword(registerDto.Password);
 
-            var hashedPassword = _passwordHasher.HashPassword(password);
-            var parts = hashedPassword.Split(':');
-            var hash = parts[0];
-            var salt = parts[1];
-
-            var motorista = new Motorista
+            var admin = new Admin
             {
                 Id = Guid.NewGuid(),
-                Nome = nome,
-                Sobrenome = sobrenome,
-                Email = email,
+                Nome = registerDto.Nome,
+                Sobrenome = registerDto.Sobrenome,
+                Email = registerDto.Email,
                 SenhaHash = hash,
                 Sal = salt,
-                NumeroCelular = string.Empty,
-                AluguelSemanalVeiculo = 0,
-                DiasTrabalhadosPorSemana = 0,
-                AutonomiaVeiculoKmPorLitro = 0,
-                DataCadastro = DateTimeOffset.UtcNow,
-                Role = Role.Admin // Definir a role como Admin
+                DataCadastro = DateTimeOffset.UtcNow
             };
 
-            await _motoristaRepository.AddAsync(motorista);
-            _logger.LogInformation("Primeiro usuário administrador registrado com sucesso: {Email}", email);
+            await _adminRepository.AddAsync(admin);
+            _logger.LogInformation("Administrador {Email} registrado com sucesso.", registerDto.Email);
+            return Result<string>.Success("Administrador registrado com sucesso.");
         }
 
-        public async Task<string?> LoginAsync(string email, string password)
+        public async Task<Result<LoginResponseDto>> LoginAdminAsync(LoginDto loginDto)
         {
-            var motorista = await _motoristaRepository.GetByEmailAsync(email);
-            if (motorista == null)
+            var admin = await _adminRepository.GetByEmailAsync(loginDto.Email);
+            if (admin == null || !_passwordHasher.VerifyPassword(loginDto.Password, admin.SenhaHash, admin.Sal))
             {
-                return null;
+                return Result<LoginResponseDto>.Failure("Email ou senha do administrador inválidos.");
             }
 
-            if (!_passwordHasher.VerifyPassword(password, motorista.SenhaHash, motorista.Sal))
-            {
-                return null;
-            }
+            var token = _tokenService.GenerateToken(admin.Id, "Admin");
+            var response = new LoginResponseDto { Token = token, Nome = admin.Nome, Sobrenome = admin.Sobrenome };
 
-            return _tokenService.GenerateToken(motorista);
+            _logger.LogInformation("Administrador {Email} logado com sucesso.", loginDto.Email);
+            return Result<LoginResponseDto>.Success(response);
         }
     }
 }
