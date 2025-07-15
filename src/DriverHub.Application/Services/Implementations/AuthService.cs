@@ -112,5 +112,11 @@ namespace DriverHub.Application.Services.Implementations
             _logger.LogInformation("Administrador {Email} logado com sucesso.", loginDto.Email);
             return Result<LoginResponseDto>.Success(response);
         }
+
+        public async Task<Result<int>> GetMotoristCountAsync()
+        {
+            var count = await _motoristaRepository.GetMotoristCountAsync();
+            return Result<int>.Success(count);
+        }
     }
 }

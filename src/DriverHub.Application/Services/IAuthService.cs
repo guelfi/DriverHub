@@ -10,5 +10,6 @@ namespace DriverHub.Application.Services
         Task<Result<LoginResponseDto>> LoginMotoristaAsync(LoginDto loginDto);
         Task<Result<string>> RegisterAdminAsync(RegisterDto registerDto);
         Task<Result<LoginResponseDto>> LoginAdminAsync(LoginDto loginDto);
+        Task<Result<int>> GetMotoristCountAsync();
     }
 }

@@ -32,7 +32,7 @@ start_servers() {
     fi
 
     echo "Iniciando o Dashboard DriverHub em segundo plano..."
-    nohup bash -c "cd src/DriverHub.Dashboard && npm run dev -- --port $DASHBOARD_PORT" > "$DASHBOARD_LOG" 2>&1 &
+    nohup bash -c "cd src/DriverHub.Dashboard && npm run dev -- --host --port $DASHBOARD_PORT" > "$DASHBOARD_LOG" 2>&1 &
     DASHBOARD_PID=$!
     echo $DASHBOARD_PID > "$DASHBOARD_PID_FILE"
     echo "Dashboard DriverHub iniciado com PID: $DASHBOARD_PID"

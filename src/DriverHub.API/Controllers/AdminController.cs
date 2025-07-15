@@ -2,6 +2,7 @@ using DriverHub.Application.DTOs;
 using DriverHub.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DriverHub.API.Controllers
 {
@@ -25,6 +26,18 @@ namespace DriverHub.API.Controllers
                 return Unauthorized(new { message = result.Error });
             }
             return Ok(result.Value);
+        }
+
+        [HttpGet("motorist-count")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetMotoristCount()
+        {
+            var result = await _authService.GetMotoristCountAsync();
+            if (!result.IsSuccess)
+            {
+                return StatusCode(500, new { message = result.Error });
+            }
+            return Ok(new { count = result.Value });
         }
     }
 }

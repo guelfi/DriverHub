@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Motoristas from './pages/Motoristas';
 import Relatorios from './pages/Relatorios';
+import DashboardLayout from './components/DashboardLayout'; // Importa o novo layout
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -13,9 +14,18 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
-        <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
-        <Route path="/motoristas" element={isAuthenticated ? <Motoristas /> : <Navigate to="/login" />} />
-        <Route path="/relatorios" element={isAuthenticated ? <Relatorios /> : <Navigate to="/login" />} />
+        
+        {/* Rota pai para o Dashboard com layout */}
+        <Route 
+          path="/dashboard"
+          element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}
+        >
+          <Route index element={<Dashboard />} /> {/* Rota padrão para /dashboard */}
+          <Route path="motoristas" element={<Motoristas />} />
+          <Route path="relatorios" element={<Relatorios />} />
+        </Route>
+
+        {/* Redireciona qualquer outra rota para login ou dashboard */}
         <Route path="*" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
       </Routes>
     </Router>

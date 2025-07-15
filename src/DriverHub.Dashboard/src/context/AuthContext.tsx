@@ -4,7 +4,7 @@ import authService from '../services/AuthService';
 interface AuthContextType {
   isAuthenticated: boolean;
   user: any | null;
-  login: (token: string, user: any) => void;
+  login: (email: string, password: string) => Promise<void>; // Altera a assinatura para refletir a chamada ao serviço
   logout: () => void;
 }
 
@@ -22,10 +22,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const login = (token: string, userData: any) => {
-    localStorage.setItem('adminUser', JSON.stringify({ ...userData, token }));
-    setIsAuthenticated(true);
-    setUser(userData);
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await authService.login(email, password); // Chama o serviço de autenticação
+      localStorage.setItem('adminUser', JSON.stringify(response)); // Armazena a resposta completa
+      setIsAuthenticated(true);
+      setUser(response); // Define o usuário com a resposta da API
+    } catch (error) {
+      console.error("Erro no AuthContext login:", error);
+      throw error; // Propaga o erro para o componente de login
+    }
   };
 
   const logout = () => {
