@@ -58,8 +58,8 @@ namespace DriverHub.Infrastructure.Data
             modelBuilder.Entity<LancamentoDiario>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.HasOne<Motorista>()
-                    .WithMany()
+                entity.HasOne(e => e.Motorista)
+                    .WithMany(m => m.LancamentosDiarios)
                     .HasForeignKey(e => e.MotoristaId)
                     .IsRequired();
             });
@@ -68,8 +68,8 @@ namespace DriverHub.Infrastructure.Data
             modelBuilder.Entity<DespesaPessoal>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.HasOne<Motorista>()
-                    .WithMany()
+                entity.HasOne(e => e.Motorista)
+                    .WithMany(m => m.DespesasPessoais)
                     .HasForeignKey(e => e.MotoristaId)
                     .IsRequired();
             });

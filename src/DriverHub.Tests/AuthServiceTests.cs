@@ -135,7 +135,7 @@ namespace DriverHub.Tests
             Assert.True(result.IsSuccess);
             Assert.Equal("Administrador registrado com sucesso.", result.Value);
             _mockAdminRepository.Verify(repo => repo.AddAsync(It.Is<Admin>(a => a.Email == "admin@example.com" && a.SenhaHash == "hashedPassword")), Times.Once);
-            _mockLogger.Verify(l => l.Log(LogLevel.Information, It.IsAny<EventId>(), It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Administrador admin@example.com registrado com sucesso.")), null, It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once);
+            _mockLogger.Verify(l => l.Log(LogLevel.Information, It.IsAny<EventId>(), It.Is<It.IsAnyType>((v, t) => v.ToString()!.Contains("Administrador admin@example.com registrado com sucesso.")), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
         }
 
         [Fact]
@@ -153,7 +153,7 @@ namespace DriverHub.Tests
             Assert.False(result.IsSuccess);
             Assert.Equal("Email de administrador já está em uso.", result.Error);
             _mockAdminRepository.Verify(repo => repo.AddAsync(It.IsAny<Admin>()), Times.Never);
-            _mockLogger.Verify(l => l.Log(LogLevel.Information, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Never);
+            _mockLogger.Verify(l => l.Log(LogLevel.Information, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception?>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Never);
         }
 
         [Fact]

@@ -17,7 +17,9 @@ namespace DriverHub.Domain.Entities
         public decimal AutonomiaVeiculoKmPorLitro { get; set; }
         public DateTimeOffset DataCadastro { get; set; }
 
-        // Relacionamentos (mantido comentado por enquanto)
+        // Relacionamentos
         public ICollection<Viagem> Viagens { get; set; } = new List<Viagem>();
+        public ICollection<LancamentoDiario> LancamentosDiarios { get; set; } = new List<LancamentoDiario>();
+        public ICollection<DespesaPessoal> DespesasPessoais { get; set; } = new List<DespesaPessoal>();
     }
 }
