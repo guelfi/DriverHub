@@ -3,7 +3,13 @@
 LOGS_DIR="$(pwd)/logs"
 API_LOG="$LOGS_DIR/driverhub_api.log"
 MOBILE_APP_LOG="$LOGS_DIR/driverhub_mobile_app.log"
+DASHBOARD_LOG="$LOGS_DIR/driverhub_dashboard.log"
 API_PID_FILE="$LOGS_DIR/driverhub_api_pid.txt"
+DASHBOARD_PID_FILE="$LOGS_DIR/driverhub_dashboard_pid.txt"
+
+API_PORT=5217
+MOBILE_PORT=5218
+DASHBOARD_PORT=5220
 
 # Cria o diretório de logs se não existir
 mkdir -p "$LOGS_DIR"
@@ -18,16 +24,22 @@ start_servers() {
     echo "Iniciando o aplicativo móvel DriverHub em segundo plano..."
     (cd src/DriverHub.MobileApp && nohup npm start > "$MOBILE_APP_LOG" 2>&1 &)
     sleep 5 # Dá um tempo para o Expo iniciar e abrir a porta
-    MOBILE_APP_PID=$(lsof -t -i :5218)
+    MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
     if [ -n "$MOBILE_APP_PID" ]; then
         echo "Aplicativo móvel DriverHub iniciado com PID: $MOBILE_APP_PID"
     else
         echo "Falha ao obter o PID do aplicativo móvel. Verifique o log em $MOBILE_APP_LOG"
     fi
 
+    echo "Iniciando o Dashboard DriverHub em segundo plano..."
+    nohup bash -c "cd src/DriverHub.Dashboard && npm run dev -- --port $DASHBOARD_PORT" > "$DASHBOARD_LOG" 2>&1 &
+    DASHBOARD_PID=$!
+    echo $DASHBOARD_PID > "$DASHBOARD_PID_FILE"
+    echo "Dashboard DriverHub iniciado com PID: $DASHBOARD_PID"
+
     echo ""
     echo "Aguardando alguns segundos para os serviços inicializarem..."
-    sleep 15 # Dá um tempo para os serviços subirem
+    sleep 20 # Dá um tempo para todos os serviços subirem
 
     status_servers
     check_for_errors
@@ -44,25 +56,34 @@ stop_servers() {
         echo "Nenhum processo da API encontrado na porta 5217."
     fi
 
-    MOBILE_APP_PID=$(lsof -t -i:5218)
+    MOBILE_APP_PID=$(lsof -t -i:$MOBILE_PORT)
     if [ -n "$MOBILE_APP_PID" ]; then
         kill -9 $MOBILE_APP_PID
         echo "Aplicativo Móvel DriverHub (PID $MOBILE_APP_PID) encerrado."
     else
-        echo "Nenhum processo do Aplicativo Móvel encontrado na porta 5218."
+        echo "Nenhum processo do Aplicativo Móvel encontrado na porta $MOBILE_PORT."
+    fi
+
+    DASHBOARD_PID=$(lsof -t -i:$DASHBOARD_PORT)
+    if [ -n "$DASHBOARD_PID" ]; then
+        kill -9 $DASHBOARD_PID
+        echo "Dashboard DriverHub (PID $DASHBOARD_PID) encerrado."
+    else
+        echo "Nenhum processo do Dashboard encontrado na porta $DASHBOARD_PORT."
     fi
 
     # Limpa os arquivos de PID
     rm -f "$API_PID_FILE"
+    rm -f "$DASHBOARD_PID_FILE"
 
     echo "Serviços parados. Verificando se há processos remanescentes..."
     sleep 2 # Dá um tempo para os processos encerrarem
-    lsof -i -P -n | grep LISTEN | grep -E 'dotnet|node'
+    lsof -i -P -n | grep LISTEN | grep -E 'dotnet|node|vite'
 
     if [ $? -eq 0 ]; then
-        echo "Atenção: Alguns processos podem não ter sido encerrados. Verifique manualmente."
-    else
         echo "Todos os serviços DriverHub foram encerrados com sucesso."
+    else
+        echo "Atenção: Alguns processos podem não ter sido encerrados. Verifique manualmente."
     fi
 }
 
@@ -71,6 +92,7 @@ check_for_errors() {
     echo "Verificando logs em busca de erros..."
     API_ERRORS=$(grep -iE "error|fail|exception" "$API_LOG")
     MOBILE_APP_ERRORS=$(grep -iE "error|fail|exception" "$MOBILE_APP_LOG")
+    DASHBOARD_ERRORS=$(grep -iE "error|fail|exception" "$DASHBOARD_LOG")
 
     if [ -n "$API_ERRORS" ]; then
         echo "---------------------------------------------------"
@@ -91,6 +113,16 @@ check_for_errors() {
     else
         echo "Nenhum erro aparente encontrado no log do Aplicativo Móvel DriverHub."
     fi
+
+    if [ -n "$DASHBOARD_ERRORS" ]; then
+        echo "---------------------------------------------------"
+        echo "ERROS ENCONTRADOS NO LOG DO DASHBOARD DriverHub:"
+        echo "---------------------------------------------------"
+        echo "$DASHBOARD_ERRORS"
+        echo "---------------------------------------------------"
+    else
+        echo "Nenhum erro aparente encontrado no log do Dashboard DriverHub."
+    fi
 }
 
 status_servers() {
@@ -102,10 +134,10 @@ status_servers() {
     if [ -f "$API_PID_FILE" ]; then
         API_PID=$(cat "$API_PID_FILE")
         if ps -p $API_PID > /dev/null; then
-            if lsof -i :5217 > /dev/null; then
-                echo "API DriverHub: Rodando na porta 5217 (PID $API_PID)"
+            if lsof -i :$API_PORT > /dev/null; then
+                echo "API DriverHub: Rodando na porta $API_PORT (PID $API_PID)"
             else
-                echo "API DriverHub: Rodando (PID $API_PID), mas a porta 5217 não foi detectada pelo script. Verifique o log para mais detalhes."
+                echo "API DriverHub: Rodando (PID $API_PID), mas a porta $API_PORT não foi detectada pelo script. Verifique o log para mais detalhes."
             fi
         else
             echo "API DriverHub: Não está rodando (PID $API_PID não encontrado)."
@@ -115,11 +147,27 @@ status_servers() {
     fi
 
     # Verifica o Aplicativo Móvel
-    MOBILE_APP_PID=$(lsof -t -i :5218)
+    MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
     if [ -n "$MOBILE_APP_PID" ]; then
-        echo "Aplicativo Móvel DriverHub: Rodando na porta 5218 (PID $MOBILE_APP_PID)"
+        echo "Aplicativo Móvel DriverHub: Rodando na porta $MOBILE_PORT (PID $MOBILE_APP_PID)"
     else
-        echo "Aplicativo Móvel DriverHub: Não está rodando (porta 5218 livre)."
+        echo "Aplicativo Móvel DriverHub: Não está rodando (porta $MOBILE_PORT livre)."
+    fi
+
+    # Verifica o Dashboard
+    if [ -f "$DASHBOARD_PID_FILE" ]; then
+        DASHBOARD_PID=$(cat "$DASHBOARD_PID_FILE")
+        if ps -p $DASHBOARD_PID > /dev/null; then
+            if lsof -i :$DASHBOARD_PORT > /dev/null; then
+                echo "Dashboard DriverHub: Rodando na porta $DASHBOARD_PORT (PID $DASHBOARD_PID)"
+            else
+                echo "Dashboard DriverHub: Rodando (PID $DASHBOARD_PID), mas a porta $DASHBOARD_PORT não foi detectada pelo script. Verifique o log para mais detalhes."
+            fi
+        else
+            echo "Dashboard DriverHub: Não está rodando (PID $DASHBOARD_PID não encontrado)."
+        fi
+    else
+        echo "Dashboard DriverHub: Não está rodando (arquivo PID não encontrado)."
     fi
 
     echo ""
@@ -129,7 +177,8 @@ status_servers() {
 
     echo ""
     echo "Para testes no celular (conectado à mesma rede Wi-Fi):"
-    echo "Acesse no navegador do celular: http://$LOCAL_IP:${MOBILE_PORT:-5218}"
+    echo "Acesse no navegador do celular: http://$LOCAL_IP:$MOBILE_PORT"
+    echo "Para acessar o Dashboard: http://$LOCAL_IP:$DASHBOARD_PORT"
     echo "---------------------------------------------------"
 }
 

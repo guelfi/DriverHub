@@ -324,3 +324,17 @@ FROM admins AS a
 2025-07-15 10:41:42.821 -03:00 [INF] Application started. Press Ctrl+C to shut down.
 2025-07-15 10:41:42.822 -03:00 [INF] Hosting environment: Development
 2025-07-15 10:41:42.822 -03:00 [INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+2025-07-15 11:20:41.215 -03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5217/api/Auth/login-admin - null null
+2025-07-15 11:20:41.259 -03:00 [INF] CORS policy execution successful.
+2025-07-15 11:20:41.264 -03:00 [INF] HTTP OPTIONS /api/Auth/login-admin responded 204 in 7.3802 ms
+2025-07-15 11:20:41.272 -03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5217/api/Auth/login-admin - 204 null null 57.9035ms
+2025-07-15 11:20:41.278 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5217/api/Auth/login-admin - application/json 51
+2025-07-15 11:20:41.281 -03:00 [INF] CORS policy execution successful.
+2025-07-15 11:20:41.282 -03:00 [WRN] Failed to determine the https port for redirect.
+2025-07-15 11:20:41.378 -03:00 [INF] HTTP POST /api/Auth/login-admin responded 404 in 96.8980 ms
+2025-07-15 11:20:41.379 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5217/api/Auth/login-admin - 404 0 null 101.8848ms
+2025-07-15 11:20:41.382 -03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost:5217/api/Auth/login-admin, Response status code: 404
+2025-07-15 12:29:02.284 -03:00 [INF] Request starting HTTP/1.1 GET http://192.168.15.119:5217/swagger/index.html - null null
+2025-07-15 12:29:02.514 -03:00 [INF] Request finished HTTP/1.1 GET http://192.168.15.119:5217/swagger/index.html - 200 null text/html;charset=utf-8 222.5794ms
+2025-07-15 12:29:02.644 -03:00 [INF] Request starting HTTP/1.1 GET http://192.168.15.119:5217/swagger/v1/swagger.json - null null
+2025-07-15 12:29:02.859 -03:00 [INF] Request finished HTTP/1.1 GET http://192.168.15.119:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 215.409ms

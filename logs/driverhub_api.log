@@ -7,3 +7,17 @@ FROM admins AS a
 [10:41:42 INF] Application started. Press Ctrl+C to shut down.
 [10:41:42 INF] Hosting environment: Development
 [10:41:42 INF] Content root path: /Users/guelfi/Projetos/DriverHub/src/DriverHub.API
+[11:20:41 INF] Request starting HTTP/1.1 OPTIONS http://localhost:5217/api/Auth/login-admin - null null
+[11:20:41 INF] CORS policy execution successful.
+[11:20:41 INF] HTTP OPTIONS /api/Auth/login-admin responded 204 in 7.3802 ms
+[11:20:41 INF] Request finished HTTP/1.1 OPTIONS http://localhost:5217/api/Auth/login-admin - 204 null null 57.9035ms
+[11:20:41 INF] Request starting HTTP/1.1 POST http://localhost:5217/api/Auth/login-admin - application/json 51
+[11:20:41 INF] CORS policy execution successful.
+[11:20:41 WRN] Failed to determine the https port for redirect.
+[11:20:41 INF] HTTP POST /api/Auth/login-admin responded 404 in 96.8980 ms
+[11:20:41 INF] Request finished HTTP/1.1 POST http://localhost:5217/api/Auth/login-admin - 404 0 null 101.8848ms
+[11:20:41 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost:5217/api/Auth/login-admin, Response status code: 404
+[12:29:02 INF] Request starting HTTP/1.1 GET http://192.168.15.119:5217/swagger/index.html - null null
+[12:29:02 INF] Request finished HTTP/1.1 GET http://192.168.15.119:5217/swagger/index.html - 200 null text/html;charset=utf-8 222.5794ms
+[12:29:02 INF] Request starting HTTP/1.1 GET http://192.168.15.119:5217/swagger/v1/swagger.json - null null
+[12:29:02 INF] Request finished HTTP/1.1 GET http://192.168.15.119:5217/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 215.409ms
