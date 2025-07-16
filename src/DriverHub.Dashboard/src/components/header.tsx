@@ -23,7 +23,7 @@ export function Header({ userName = "Administrador" }: HeaderProps) {
           <SidebarTrigger className="h-8 w-8" />
           <div className="hidden md:block">
             <h2 className="text-lg font-semibold text-foreground">
-              Sistema de Gestão de Frota
+              Sistema Gestão de Ganhos
             </h2>
           </div>
         </div>

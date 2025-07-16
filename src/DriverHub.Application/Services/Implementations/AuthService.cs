@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DriverHub.Application.DTOs;
 using DriverHub.Application.Common;
 using System.Collections.Generic;
-using DriverHub.Domain.Entities;
 
 namespace DriverHub.Application.Services.Implementations
 {
@@ -121,10 +120,10 @@ namespace DriverHub.Application.Services.Implementations
             return Result<int>.Success(count);
         }
 
-        public async Task<Result<IEnumerable<Motorista>>> GetAllMotoristasAsync()
+        public async Task<Result<PaginatedResult<Motorista>>> GetAllMotoristasAsync(int pageNumber, int pageSize)
         {
-            var motoristas = await _motoristaRepository.GetAllAsync();
-            return Result<IEnumerable<Motorista>>.Success(motoristas);
+            var (motoristas, totalCount) = await _motoristaRepository.GetAllAsync(pageNumber, pageSize);
+            return Result<PaginatedResult<Motorista>>.Success(new PaginatedResult<Motorista>(motoristas, totalCount, pageNumber, pageSize));
         }
     }
 }

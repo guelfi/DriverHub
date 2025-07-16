@@ -35,14 +35,17 @@ const PaginationItem = React.forwardRef<
 PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
-  isActive?: boolean
+  isActive?: boolean;
+  disabled?: boolean; // Adiciona a propriedade disabled
 } & Pick<ButtonProps, "size"> &
-  React.ComponentProps<"a">
+  React.ComponentProps<"a">;
 
 const PaginationLink = ({
   className,
   isActive,
   size = "icon",
+  disabled, // Recebe a propriedade disabled
+  onClick,
   ...props
 }: PaginationLinkProps) => (
   <a
@@ -52,11 +55,18 @@ const PaginationLink = ({
         variant: isActive ? "outline" : "ghost",
         size,
       }),
-      className
+      className,
+      disabled && "pointer-events-none opacity-50" // Aplica estilos de desativação
     )}
+    onClick={(e) => {
+      if (disabled) {
+        e.preventDefault();
+      }
+      onClick?.(e);
+    }}
     {...props}
   />
-)
+);
 PaginationLink.displayName = "PaginationLink"
 
 const PaginationPrevious = ({
@@ -70,7 +80,7 @@ const PaginationPrevious = ({
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
-    <span>Previous</span>
+    <span>Anterior</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = "PaginationPrevious"
@@ -85,7 +95,7 @@ const PaginationNext = ({
     className={cn("gap-1 pr-2.5", className)}
     {...props}
   >
-    <span>Next</span>
+    <span>Próximo</span>
     <ChevronRight className="h-4 w-4" />
   </PaginationLink>
 )

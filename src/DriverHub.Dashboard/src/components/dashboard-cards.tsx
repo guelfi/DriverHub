@@ -1,5 +1,8 @@
 import { Users, Car, TrendingUp, Activity } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 interface DashboardCard {
   title: string
@@ -10,42 +13,67 @@ interface DashboardCard {
   changeType?: "positive" | "negative" | "neutral"
 }
 
-const dashboardData: DashboardCard[] = [
-  {
-    title: "Motoristas Cadastrados",
-    value: 245,
-    description: "Total de motoristas ativos",
-    icon: Users,
-    change: "+12%",
-    changeType: "positive"
-  },
-  {
-    title: "Veículos Ativos",
-    value: 128,
-    description: "Veículos em operação",
-    icon: Car,
-    change: "+5%",
-    changeType: "positive"
-  },
-  {
-    title: "Viagens do Mês",
-    value: "1.247",
-    description: "Viagens realizadas este mês",
-    icon: TrendingUp,
-    change: "+18%",
-    changeType: "positive"
-  },
-  {
-    title: "Status Geral",
-    value: "98.5%",
-    description: "Disponibilidade da frota",
-    icon: Activity,
-    change: "-1.2%",
-    changeType: "negative"
-  }
-]
-
 export function DashboardCards() {
+  const { token } = useAuth();
+  const [motoristCount, setMotoristCount] = useState<number | string>("...");
+
+  useEffect(() => {
+    const fetchMotoristCount = async () => {
+      if (!token) {
+        setMotoristCount("N/A");
+        return;
+      }
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/Admin/motorist-count`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMotoristCount(response.data.count);
+      } catch (error) {
+        console.error("Erro ao buscar contagem de motoristas:", error);
+        setMotoristCount("N/A"); // Define como N/A em caso de erro
+      }
+    };
+
+    fetchMotoristCount();
+  }, [token]);
+
+  const dashboardData: DashboardCard[] = [
+    {
+      title: "Motoristas Cadastrados",
+      value: motoristCount,
+      description: "Total de motoristas ativos",
+      icon: Users,
+      change: "+12%",
+      changeType: "positive"
+    },
+    {
+      title: "Veículos Ativos",
+      value: 128,
+      description: "Veículos em operação",
+      icon: Car,
+      change: "+5%",
+      changeType: "positive"
+    },
+    {
+      title: "Viagens do Mês",
+      value: "1.247",
+      description: "Viagens realizadas este mês",
+      icon: TrendingUp,
+      change: "+18%",
+      changeType: "positive"
+    },
+    {
+      title: "Status Geral",
+      value: "98.5%",
+      description: "Disponibilidade da frota",
+      icon: Activity,
+      change: "-1.2%",
+      changeType: "negative"
+    }
+  ]
+
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
       {dashboardData.map((card, index) => (

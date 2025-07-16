@@ -42,14 +42,14 @@ namespace DriverHub.API.Controllers
 
         [HttpGet("motoristas")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllMotoristas()
+        public async Task<IActionResult> GetAllMotoristas([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var result = await _authService.GetAllMotoristasAsync();
+            var result = await _authService.GetAllMotoristasAsync(pageNumber, pageSize);
             if (!result.IsSuccess)
             {
                 return StatusCode(500, new { message = result.Error });
             }
-            return Ok(result.Value);
+            return Ok(new { items = result.Value?.Items, totalCount = result.Value?.TotalCount });
         }
     }
 }

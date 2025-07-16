@@ -4,4 +4,8 @@ Starting Metro Bundler
 Waiting on http://localhost:5218
 Logs for your project will appear below.
 Web ./index.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
-Web Bundled 2725ms index.js (522 modules)
+Web Bundled 1393ms index.js (521 modules)
+Web ./index.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundled 23ms index.js (1 module)
+Web ./index.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundled 29ms index.js (1 module)

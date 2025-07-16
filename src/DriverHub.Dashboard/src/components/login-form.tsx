@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useToast } from "@/hooks/use-toast"
 
 interface LoginFormProps {
-  onLogin: (email: string, password: string) => void
+  onLogin: (email: string, password: string) => Promise<void>
 }
 
 export function LoginForm({ onLogin }: LoginFormProps) {
@@ -15,31 +14,21 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (!email || !password) {
-      toast({
-        title: "Campos obrigatórios",
-        description: "Por favor, preencha todos os campos.",
-        variant: "destructive",
-      })
+      // O toast de erro será tratado pelo componente pai (Login.tsx)
       return
     }
 
     setIsLoading(true)
-    
-    // Simulate login delay
-    setTimeout(() => {
-      onLogin(email, password)
-      setIsLoading(false)
-      toast({
-        title: "Login realizado!",
-        description: "Bem-vindo ao dashboard.",
-      })
-    }, 1000)
+    try {
+      await onLogin(email, password);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

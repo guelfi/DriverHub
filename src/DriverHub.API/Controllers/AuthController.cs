@@ -37,5 +37,16 @@ namespace DriverHub.API.Controllers
             }
             return Ok(result.Value);
         }
+
+        [HttpPost("login-admin")]
+        public async Task<IActionResult> LoginAdmin([FromBody] LoginDto loginDto)
+        {
+            var result = await _authService.LoginAdminAsync(loginDto);
+            if (!result.IsSuccess)
+            {
+                return Unauthorized(new { message = result.Error });
+            }
+            return Ok(result.Value);
+        }
     }
 }

@@ -66,7 +66,7 @@ export function AppSidebar() {
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow">
                 <Car className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="font-semibold text-sidebar-foreground text-lg">FleetManager</span>
+              <span className="font-semibold text-sidebar-foreground text-lg">DriverHub</span>
             </>
           )}
           {collapsed && (

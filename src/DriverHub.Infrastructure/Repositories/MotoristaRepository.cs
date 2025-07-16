@@ -5,8 +5,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
+using System.Collections.Generic;
 using DriverHub.Infrastructure.Data;
+using DriverHub.Application.Common;
 
 namespace DriverHub.Infrastructure.Repositories
 {
@@ -59,9 +60,14 @@ namespace DriverHub.Infrastructure.Repositories
             return await _context.Motoristas.CountAsync();
         }
 
-        public async Task<IEnumerable<Motorista>> GetAllAsync()
+        public async Task<(IEnumerable<Motorista> Items, int TotalCount)> GetAllAsync(int pageNumber, int pageSize)
         {
-            return await _context.Motoristas.ToListAsync();
+            var totalCount = await _context.Motoristas.CountAsync();
+            var motoristas = await _context.Motoristas
+                                        .Skip((pageNumber - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToListAsync();
+            return (motoristas, totalCount);
         }
     }
 }

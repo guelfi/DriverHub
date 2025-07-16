@@ -13,6 +13,6 @@ namespace DriverHub.Domain.Repositories
         Task UpdateAsync(Motorista motorista);
         Task DeleteAsync(Guid id);
         Task<int> GetMotoristCountAsync();
-        Task<IEnumerable<Motorista>> GetAllAsync();
+        Task<(IEnumerable<Motorista> Items, int TotalCount)> GetAllAsync(int pageNumber, int pageSize);
     }
 }
