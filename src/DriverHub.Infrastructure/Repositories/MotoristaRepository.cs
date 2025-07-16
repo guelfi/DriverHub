@@ -58,5 +58,10 @@ namespace DriverHub.Infrastructure.Repositories
         {
             return await _context.Motoristas.CountAsync();
         }
+
+        public async Task<IEnumerable<Motorista>> GetAllAsync()
+        {
+            return await _context.Motoristas.ToListAsync();
+        }
     }
 }

@@ -39,5 +39,17 @@ namespace DriverHub.API.Controllers
             }
             return Ok(new { count = result.Value });
         }
+
+        [HttpGet("motoristas")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllMotoristas()
+        {
+            var result = await _authService.GetAllMotoristasAsync();
+            if (!result.IsSuccess)
+            {
+                return StatusCode(500, new { message = result.Error });
+            }
+            return Ok(result.Value);
+        }
     }
 }

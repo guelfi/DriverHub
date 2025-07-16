@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using DriverHub.Application.DTOs;
 using DriverHub.Application.Common;
+using System.Collections.Generic;
+using DriverHub.Domain.Entities;
 
 namespace DriverHub.Application.Services.Implementations
 {
@@ -117,6 +119,12 @@ namespace DriverHub.Application.Services.Implementations
         {
             var count = await _motoristaRepository.GetMotoristCountAsync();
             return Result<int>.Success(count);
+        }
+
+        public async Task<Result<IEnumerable<Motorista>>> GetAllMotoristasAsync()
+        {
+            var motoristas = await _motoristaRepository.GetAllAsync();
+            return Result<IEnumerable<Motorista>>.Success(motoristas);
         }
     }
 }

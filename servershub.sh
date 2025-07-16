@@ -22,7 +22,7 @@ start_servers() {
     echo "API DriverHub iniciada com PID: $API_PID"
 
     echo "Iniciando o aplicativo móvel DriverHub em segundo plano..."
-    (cd src/DriverHub.MobileApp && nohup npm start > "$MOBILE_APP_LOG" 2>&1 &)
+    (cd src/DriverHub.MobileApp && nohup npx expo start --port $MOBILE_PORT --non-interactive > "$MOBILE_APP_LOG" 2>&1 &)
     sleep 5 # Dá um tempo para o Expo iniciar e abrir a porta
     MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
     if [ -n "$MOBILE_APP_PID" ]; then

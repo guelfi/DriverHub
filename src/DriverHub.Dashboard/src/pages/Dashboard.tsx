@@ -1,81 +1,90 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { User, DollarSign } from "lucide-react";
-import axios from "axios";
-import { useAuth } from "@/context/AuthContext";
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5217/api';
+import { DashboardCards } from "@/components/dashboard-cards"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function Dashboard() {
-  const { user } = useAuth();
-  const [motoristCount, setMotoristCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchMotoristCount = async () => {
-      try {
-        const token = user?.token; // Obter o token do usuário logado
-        if (!token) {
-          console.error("Token de autenticação não encontrado.");
-          return;
-        }
-        const response = await axios.get(`${API_URL}/Admin/motorist-count`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setMotoristCount(response.data.count);
-      } catch (error) {
-        console.error("Erro ao buscar contagem de motoristas:", error);
-        setMotoristCount(null); // Em caso de erro, define como null
-      }
-    };
-
-    if (user) { // Só busca a contagem se houver um usuário logado
-      fetchMotoristCount();
-    }
-  }, [user]); // Executa quando o usuário muda
-
   return (
-    <div className="flex-1 p-6">
-      {/* Cards de informações */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Card className="rounded-2xl shadow p-4 bg-white dark:bg-gray-800">
+    <div className="space-y-8">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+        <p className="text-muted-foreground mt-2">
+          Visão geral do sistema de gerenciamento de frota
+        </p>
+      </div>
+
+      {/* Cards principais */}
+      <DashboardCards />
+
+      {/* Cards adicionais */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="bg-gradient-card border-border/50 shadow-elevation-md">
+          <CardHeader>
+            <CardTitle className="text-lg">Atividades Recentes</CardTitle>
+            <CardDescription>
+              Últimas atividades do sistema
+            </CardDescription>
+          </CardHeader>
           <CardContent>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400">Motoristas Cadastrados</h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{motoristCount !== null ? motoristCount : "Carregando..."}</p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <div className="w-2 h-2 bg-success rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Novo motorista cadastrado</p>
+                  <p className="text-xs text-muted-foreground">João Silva - há 2 horas</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Viagem concluída</p>
+                  <p className="text-xs text-muted-foreground">Veículo ABC-1234 - há 1 hora</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <div className="w-2 h-2 bg-warning rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Manutenção agendada</p>
+                  <p className="text-xs text-muted-foreground">Veículo DEF-5678 - há 3 horas</p>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
-        <Card className="rounded-2xl shadow p-4 bg-white dark:bg-gray-800">
+
+        <Card className="bg-gradient-card border-border/50 shadow-elevation-md">
+          <CardHeader>
+            <CardTitle className="text-lg">Próximas Tarefas</CardTitle>
+            <CardDescription>
+              Ações que precisam de atenção
+            </CardDescription>
+          </CardHeader>
           <CardContent>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400">Viagens Realizadas (Mês)</h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">150</p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-2xl shadow p-4 bg-white dark:bg-gray-800">
-          <CardContent>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400">Receita Total (Mês)</h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white"><DollarSign className="inline-block h-5 w-5 mr-1" />5.200,00</p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-2xl shadow p-4 bg-white dark:bg-gray-800">
-          <CardContent>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400">Despesas (Mês)</h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white"><DollarSign className="inline-block h-5 w-5 mr-1" />1.800,00</p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-2xl shadow p-4 bg-white dark:bg-gray-800">
-          <CardContent>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400">Motoristas Ativos Hoje</h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">35</p>
-          </CardContent>
-        </Card>
-        <Card className="rounded-2xl shadow p-4 bg-white dark:bg-gray-800">
-          <CardContent>
-            <h3 className="text-sm text-gray-500 dark:text-gray-400">Média KM/Litro</h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">12.5</p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-warning/10 border border-warning/20 rounded-lg">
+                <div className="w-2 h-2 bg-warning rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Renovar CNH de 3 motoristas</p>
+                  <p className="text-xs text-muted-foreground">Vence em 15 dias</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                <div className="w-2 h-2 bg-destructive rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Manutenção preventiva</p>
+                  <p className="text-xs text-muted-foreground">2 veículos aguardando</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Relatório mensal</p>
+                  <p className="text-xs text-muted-foreground">Gerar até sexta-feira</p>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  );
+  )
 }

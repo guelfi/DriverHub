@@ -27,7 +27,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://192.168.15.119:5217/api/Auth/register",
+					"raw": "http://127.0.0.1:5217/api/Auth/register",
 					"protocol": "http",
 					"host": [
 						"192",
@@ -66,7 +66,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://192.168.15.119:5217/api/Auth/login",
+					"raw": "http://127.0.0.1:5217/api/Auth/login",
 					"protocol": "http",
 					"host": [
 						"192",
