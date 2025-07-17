@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.0.136:5217/api/Auth'; // TODO: Configure this based on environment
+const API_URL = 'http://192.168.15.119:5217/api/Auth'; // TODO: Configure this based on environment
 
 const getErrorMessage = (error) => {
   if (error.response) {

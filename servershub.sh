@@ -11,10 +11,47 @@ API_PORT=5217
 MOBILE_PORT=5218
 DASHBOARD_PORT=5220
 
+# Arquivos de configuração
+DASHBOARD_ENV_FILE="src/DriverHub.Dashboard/.env.development"
+MOBILE_APP_SERVICE_FILE="src/DriverHub.MobileApp/src/services/AuthService.js"
+
 # Cria o diretório de logs se não existir
 mkdir -p "$LOGS_DIR"
 
+update_ip_configs() {
+    echo "Detectando o endereço IP da rede local..."
+    LOCAL_IP=$(ifconfig | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | head -n 1)
+
+    if [ -z "$LOCAL_IP" ]; then
+        echo "ERRO: Não foi possível detectar o endereço IP local. Verifique sua conexão de rede."
+        exit 1
+    fi
+
+    echo "IP detectado: $LOCAL_IP. Atualizando arquivos de configuração..."
+
+    # Atualiza o .env do Dashboard
+    if [ -f "$DASHBOARD_ENV_FILE" ]; then
+        sed -i.bak "s#^VITE_API_URL=.*#VITE_API_URL=http://$LOCAL_IP:$API_PORT/api#" "$DASHBOARD_ENV_FILE"
+        rm "${DASHBOARD_ENV_FILE}.bak"
+        echo "-> Configuração do Dashboard atualizada."
+    else
+        echo "AVISO: Arquivo de configuração do Dashboard não encontrado em $DASHBOARD_ENV_FILE"
+    fi
+
+    # Atualiza o serviço do App Móvel
+    if [ -f "$MOBILE_APP_SERVICE_FILE" ]; then
+        sed -i.bak "s#^const API_URL = .*;#const API_URL = 'http://$LOCAL_IP:$API_PORT/api/Auth';#" "$MOBILE_APP_SERVICE_FILE"
+        rm "${MOBILE_APP_SERVICE_FILE}.bak"
+        echo "-> Configuração do App Móvel atualizada."
+    else
+        echo "AVISO: Arquivo de configuração do App Móvel não encontrado em $MOBILE_APP_SERVICE_FILE"
+    fi
+    echo ""
+}
+
 start_servers() {
+    update_ip_configs
+
     echo "Iniciando a API DriverHub em segundo plano..."
     nohup bash -c "cd src/DriverHub.API && dotnet run" > "$API_LOG" 2>&1 &
     API_PID=$!
@@ -22,7 +59,7 @@ start_servers() {
     echo "API DriverHub iniciada com PID: $API_PID"
 
     echo "Iniciando o aplicativo móvel DriverHub em segundo plano..."
-    (cd src/DriverHub.MobileApp && nohup npx expo start --port $MOBILE_PORT --non-interactive > "$MOBILE_APP_LOG" 2>&1 &)
+    (cd src/DriverHub.MobileApp && nohup env CI=1 npx expo start --port $MOBILE_PORT > "$MOBILE_APP_LOG" 2>&1 &)
     sleep 5 # Dá um tempo para o Expo iniciar e abrir a porta
     MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
     if [ -n "$MOBILE_APP_PID" ]; then
@@ -194,6 +231,7 @@ case "$1" in
         ;;
     expo-start-foreground)
         stop_servers
+        update_ip_configs
         echo "Iniciando o aplicativo móvel DriverHub em primeiro plano para exibir o QR Code..."
         (cd src/DriverHub.MobileApp && npm start)
         ;;
