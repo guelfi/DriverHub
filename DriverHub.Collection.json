@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "a8a0b0a0-8b1a-4b1a-9b1a-0a0a0a0a0a0a",
+		"name": "DriverHub API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register Motorista",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var timestamp = new Date().getTime();",
+							"var randomEmail = \"motorista_\" + timestamp + \"@example.com\";",
+							"var randomPassword = \"Senha@\" + timestamp;",
+							"pm.environment.set(\"motoristaEmail\", randomEmail);",
+							"pm.environment.set(\"motoristaPassword\", randomPassword);",
+							"var requestBody = JSON.parse(pm.request.body.raw);",
+							"requestBody.email = randomEmail;",
+							"requestBody.senha = randomPassword;",
+							"pm.request.body.raw = JSON.stringify(requestBody);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response contains success message\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"Motorista registrado com sucesso.\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"NomeTeste\",\n    \"sobrenome\": \"SobrenomeTeste\",\n    \"email\": \"{{motoristaEmail}}\",\n    \"senha\": \"{{motoristaPassword}}\",\n    \"numeroCelular\": \"11999999999\",\n    \"aluguelSemanalVeiculo\": 500.50,\n    \"diasTrabalhadosPorSemana\": 5,\n    \"autonomiaVeiculoKmPorLitro\": 10.5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Motorista",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var requestBody = JSON.parse(pm.request.body.raw);",
+							"requestBody.email = pm.environment.get(\"motoristaEmail\");",
+							"requestBody.senha = pm.environment.get(\"motoristaPassword\");",
+							"pm.request.body.raw = JSON.stringify(requestBody);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Login successful and token received\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.token).to.be.a('string');",
+							"    pm.environment.set(\"motoristaToken\", jsonData.token);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{motoristaEmail}}\",\n    \"senha\": \"{{motoristaPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Admin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var requestBody = JSON.parse(pm.request.body.raw);",
+							"requestBody.email = pm.environment.get(\"adminEmail\");",
+							"requestBody.senha = pm.environment.get(\"adminPassword\");",
+							"pm.request.body.raw = JSON.stringify(requestBody);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Login successful and token received\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.token).to.be.a('string');",
+							"    pm.environment.set(\"adminToken\", jsonData.token);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{adminEmail}}\",\n    \"senha\": \"{{adminPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/login-admin",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login-admin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
