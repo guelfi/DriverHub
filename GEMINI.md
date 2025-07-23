@@ -62,7 +62,7 @@ A estrutura atual do projeto e as funcionalidades implementadas estão alinhadas
 *   Criação do projeto `DriverHub.AdminTool` para criação e gerenciamento de usuários administrativos via CLI.
 
 **Próximos Passos Focados:**
-*   Desenvolver o Frontend Administrativo (dashboard, autenticação, exibição de dados).
+*   Re-estilização da interface do DriverHub.MobileApp.
 *   Desenvolver a Lógica de Negócio para Cálculos Financeiros.
 *   Definir e Implementar Queries/Lógica para Relatórios Agregados.
 *   Esboçar e Integrar o Frontend React Native (continuar o desenvolvimento).
@@ -80,6 +80,6 @@ Este documento será atualizado conforme o projeto evolui. 🔄
 - O usuário prefere realizar o git push manualmente e deve ser lembrado de fazê-lo em pontos de verificação importantes do projeto.
 - O usuário está trabalhando no projeto DriverHub.
 - O projeto DriverHub foi iniciado em 2025-07-06.
-- A última grande tarefa concluída foi a implementação da paginação de motoristas no Dashboard e várias melhorias no Mobile App.
-- O usuário acabou de fazer o commit dessas alterações e fará o push manualmente.
+- A última grande tarefa foi o merge da branch `feature/admin-dashboard-setup` para a `main`. A branch de feature foi arquivada como `feature/admin-dashboard-setup-archive` e enviada ao repositório remoto para preservar o histórico.
+- O usuário fará o push da branch `main` manualmente quando necessário.
 

@@ -59,13 +59,22 @@ start_servers() {
     echo "API DriverHub iniciada com PID: $API_PID"
 
     echo "Iniciando o aplicativo móvel DriverHub em segundo plano..."
-    (cd src/DriverHub.MobileApp && nohup env CI=1 npx expo start --port $MOBILE_PORT > "$MOBILE_APP_LOG" 2>&1 &)
-    sleep 5 # Dá um tempo para o Expo iniciar e abrir a porta
-    MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
+    (cd src/DriverHub.MobileApp && nohup env CI=1 npm start -- --port $MOBILE_PORT > "$MOBILE_APP_LOG" 2>&1 &)
+    
+    echo "Aguardando o aplicativo móvel iniciar na porta $MOBILE_PORT..."
+    MOBILE_APP_PID=""
+    for i in {1..15}; do # Tenta por 30 segundos (15 tentativas * 2s)
+        MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
+        if [ -n "$MOBILE_APP_PID" ]; then
+            break
+        fi
+        sleep 2
+    done
+
     if [ -n "$MOBILE_APP_PID" ]; then
         echo "Aplicativo móvel DriverHub iniciado com PID: $MOBILE_APP_PID"
     else
-        echo "Falha ao obter o PID do aplicativo móvel. Verifique o log em $MOBILE_APP_LOG"
+        echo "Falha ao obter o PID do aplicativo móvel após 30 segundos. Verifique o log em $MOBILE_APP_LOG"
     fi
 
     echo "Iniciando o Dashboard DriverHub em segundo plano..."
