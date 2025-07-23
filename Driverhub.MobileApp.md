@@ -9,4 +9,3 @@ Despesas - utilizado para o motorista lançar todas as despesas do dia: almoço,
 Relatorios - onde o motorista irá obter informações sobre seu desempenho
 
 Mover o botão sair que já existe para depois da opção relatorio apenas fazendo com que ele tenha a mesma disposição e alinhamento dos novos botões criados
-
