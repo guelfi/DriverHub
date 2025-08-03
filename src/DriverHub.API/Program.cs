@@ -39,7 +39,12 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IFinancialService, FinancialService>();
 
 // Add JWT Authentication
-var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]!);
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new InvalidOperationException("JWT Key is not configured. Please set the 'Jwt:Key' in appsettings.json.");
+}
+var key = Encoding.ASCII.GetBytes(jwtKey);
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -54,7 +59,10 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = false,
-        ValidateAudience = false
+        ValidateAudience = false,
+        // Adicionar validação de tempo de expiração
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero // Não permite desvio de relógio
     };
 });
 

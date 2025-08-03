@@ -10,6 +10,7 @@ import {
   LogOut 
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
+import { useAuth } from "../context/AuthContext";
 
 import {
   Sidebar,
@@ -39,6 +40,7 @@ export function AppSidebar() {
   const location = useLocation()
   const currentPath = location.pathname
   const collapsed = state === "collapsed"
+  const { logout } = useAuth(); // Movido para o nível superior do componente
 
   const isActive = (path: string) => currentPath === path
   const isExpanded = items.some((i) => isActive(i.url))
@@ -48,31 +50,25 @@ export function AppSidebar() {
       ? "bg-sidebar-accent text-sidebar-primary font-medium shadow-elevation-sm" 
       : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
 
-  const handleLogout = () => {
-    // Implementar logout
-    window.location.href = "/"
+    const handleLogout = () => {
+    console.log("Botão Sair do Sidebar clicado!");
+    logout(); // Agora chama a função logout diretamente
+    window.location.href = "/login"; // Redireciona para a página de login após o logout
   }
 
   return (
     <Sidebar
-      className={`${collapsed ? "w-14" : "w-60"} bg-sidebar border-sidebar-border shadow-elevation-md transition-all duration-300`}
+      className={`${collapsed ? "w-[90px]" : "w-60"} bg-sidebar border-sidebar-border shadow-elevation-md transition-all duration-300`}
       collapsible="icon"
     >
       <SidebarContent className="p-4">
         {/* Logo/Header */}
         <div className="mb-8 flex items-center gap-3">
+          <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow">
+            <Car className="w-5 h-5 text-primary-foreground" />
+          </div>
           {!collapsed && (
-            <>
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow">
-                <Car className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <span className="font-semibold text-sidebar-foreground text-lg">DriverHub</span>
-            </>
-          )}
-          {collapsed && (
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow mx-auto">
-              <Car className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <span className="font-semibold text-sidebar-foreground text-lg">DriverHub</span>
           )}
         </div>
 
@@ -92,7 +88,7 @@ export function AppSidebar() {
                       to={item.url} 
                       end 
                       className={({ isActive }) => 
-                        `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${getNavCls({ isActive })}`
+                        `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${getNavCls({ isActive })} ${collapsed ? 'ml-[-3px]' : ''}`
                       }
                     >
                       <item.icon className="h-5 w-5 flex-shrink-0" />

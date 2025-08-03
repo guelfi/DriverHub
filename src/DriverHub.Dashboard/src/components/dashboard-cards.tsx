@@ -16,11 +16,17 @@ interface DashboardCard {
 export function DashboardCards() {
   const { token } = useAuth();
   const [motoristCount, setMotoristCount] = useState<number | string>("...");
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    console.log("DashboardCards: Token atual:", token ? "Presente" : "Ausente");
     const fetchMotoristCount = async () => {
+      setIsLoading(true);
+      setHasError(false);
       if (!token) {
         setMotoristCount("N/A");
+        setIsLoading(false);
         return;
       }
       try {
@@ -32,7 +38,10 @@ export function DashboardCards() {
         setMotoristCount(response.data.count);
       } catch (error) {
         console.error("Erro ao buscar contagem de motoristas:", error);
-        setMotoristCount("N/A"); // Define como N/A em caso de erro
+        setMotoristCount("Erro");
+        setHasError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -42,7 +51,7 @@ export function DashboardCards() {
   const dashboardData: DashboardCard[] = [
     {
       title: "Motoristas Cadastrados",
-      value: motoristCount,
+      value: isLoading ? "Carregando..." : (hasError ? "Erro" : motoristCount),
       description: "Total de motoristas ativos",
       icon: Users,
       change: "+12%",

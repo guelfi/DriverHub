@@ -17,7 +17,12 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
-  const { token } = useAuth();
+  const { token, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Carregando autenticação...</div>; // Ou um spinner/componente de carregamento
+  }
+
   return token ? children : <Navigate to="/login" />;
 };
 
