@@ -24,7 +24,7 @@ namespace DriverHub.API.Controllers
             {
                 return BadRequest(result.Error);
             }
-            return Ok(result.Value);
+            return Ok(new { motoristaId = result.Value });
         }
 
         [HttpPost("login")]

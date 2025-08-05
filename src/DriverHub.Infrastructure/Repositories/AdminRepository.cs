@@ -32,5 +32,15 @@ namespace DriverHub.Infrastructure.Repositories
         {
             return await _context.Admins.ToListAsync();
         }
+
+        public async Task DeleteByEmailAsync(string email)
+        {
+            var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Email == email);
+            if (admin != null)
+            {
+                _context.Admins.Remove(admin);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

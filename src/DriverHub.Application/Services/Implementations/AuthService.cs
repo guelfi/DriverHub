@@ -55,7 +55,7 @@ namespace DriverHub.Application.Services.Implementations
 
             await _motoristaRepository.AddAsync(motorista);
             _logger.LogInformation("Motorista {Email} registrado com sucesso.", registerDto.Email);
-            return Result<string>.Success("Motorista registrado com sucesso.");
+            return Result<string>.Success(motorista.Id.ToString());
         }
 
         public async Task<Result<LoginResponseDto>> LoginMotoristaAsync(LoginDto loginDto)
@@ -102,8 +102,17 @@ namespace DriverHub.Application.Services.Implementations
         public async Task<Result<LoginResponseDto>> LoginAdminAsync(LoginDto loginDto)
         {
             var admin = await _adminRepository.GetByEmailAsync(loginDto.Email);
-            if (admin == null || !_passwordHasher.VerifyPassword(loginDto.Password, admin.SenhaHash, admin.Sal))
+            if (admin == null)
             {
+                _logger.LogWarning("Tentativa de login de administrador falhou: Email {Email} não encontrado.", loginDto.Email);
+                return Result<LoginResponseDto>.Failure("Email ou senha do administrador inválidos.");
+            }
+
+            _logger.LogInformation("Admin encontrado: Email={Email}, StoredHash={StoredHash}, StoredSalt={StoredSalt}", admin.Email, admin.SenhaHash, admin.Sal);
+
+            if (!_passwordHasher.VerifyPassword(loginDto.Password, admin.SenhaHash, admin.Sal))
+            {
+                _logger.LogWarning("Tentativa de login de administrador falhou: Senha incorreta para o email {Email}.", loginDto.Email);
                 return Result<LoginResponseDto>.Failure("Email ou senha do administrador inválidos.");
             }
 

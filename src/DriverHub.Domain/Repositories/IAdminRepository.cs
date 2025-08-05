@@ -10,5 +10,6 @@ namespace DriverHub.Domain.Repositories
         Task<Admin?> GetByEmailAsync(string email);
         Task AddAsync(Admin admin);
         Task<IEnumerable<Admin>> GetAllAsync();
+        Task DeleteByEmailAsync(string email);
     }
 }

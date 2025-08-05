@@ -52,6 +52,7 @@ namespace DriverHub.AdminTool
                 Sobrenome = sobrenome
             };
 
+            logger.LogInformation("Registrando admin com email: {Email}, senha (raw): {Password}", email, password);
             var result = await authService.RegisterAdminAsync(registerDto);
 
             if (result.IsSuccess)
