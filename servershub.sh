@@ -1,235 +1,145 @@
 #!/bin/bash
 
+# --- Configurações ---
 LOGS_DIR="$(pwd)/logs"
 API_LOG="$LOGS_DIR/driverhub_api.log"
-MOBILE_APP_LOG="$LOGS_DIR/driverhub_mobile_app.log"
-DASHBOARD_LOG="$LOGS_DIR/driverhub_dashboard.log"
+PWA_LOG="$LOGS_DIR/driverhub_pwa.log"
+
 API_PID_FILE="$LOGS_DIR/driverhub_api_pid.txt"
-DASHBOARD_PID_FILE="$LOGS_DIR/driverhub_dashboard_pid.txt"
+PWA_PID_FILE="$LOGS_DIR/driverhub_pwa_pid.txt"
 
 API_PORT=5217
-MOBILE_PORT=5218
-DASHBOARD_PORT=5220
+PWA_PORT=3000
 
-# Arquivos de configuração
-DASHBOARD_ENV_FILE="src/DriverHub.Dashboard/.env.development"
-MOBILE_APP_SERVICE_FILE="src/DriverHub.MobileApp/src/services/AuthService.js"
+PWA_SERVICE_FILE="src/driverhub.frontendweb/src/services/AuthService.ts"
 
-# Cria o diretório de logs se não existir
+# --- Funções ---
+
+# Garante que o diretório de logs exista
 mkdir -p "$LOGS_DIR"
 
+# Atualiza os IPs nos arquivos de configuração
 update_ip_configs() {
     echo "Detectando o endereço IP da rede local..."
     LOCAL_IP=$(ifconfig | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | head -n 1)
 
     if [ -z "$LOCAL_IP" ]; then
-        echo "ERRO: Não foi possível detectar o endereço IP local. Verifique sua conexão de rede."
+        echo "ERRO: Não foi possível detectar o endereço IP local."
         exit 1
     fi
 
     echo "IP detectado: $LOCAL_IP. Atualizando arquivos de configuração..."
 
-    # Atualiza o .env do Dashboard
-    if [ -f "$DASHBOARD_ENV_FILE" ]; then
-        sed -i.bak "s#^VITE_API_URL=.*#VITE_API_URL=http://$LOCAL_IP:$API_PORT/api#" "$DASHBOARD_ENV_FILE"
-        rm "${DASHBOARD_ENV_FILE}.bak"
-        echo "-> Configuração do Dashboard atualizada."
+    if [ -f "$PWA_SERVICE_FILE" ]; then
+        sed -i.bak "s#^const API_URL = .*#const API_URL = 'http://$LOCAL_IP:$API_PORT/api/auth'#" "$PWA_SERVICE_FILE"
+        rm "${PWA_SERVICE_FILE}.bak"
+        echo "-> Configuração do PWA atualizada."
     else
-        echo "AVISO: Arquivo de configuração do Dashboard não encontrado em $DASHBOARD_ENV_FILE"
-    fi
-
-    # Atualiza o serviço do App Móvel
-    if [ -f "$MOBILE_APP_SERVICE_FILE" ]; then
-        sed -i.bak "s#^const API_URL = .*;#const API_URL = 'http://$LOCAL_IP:$API_PORT/api/Auth';#" "$MOBILE_APP_SERVICE_FILE"
-        rm "${MOBILE_APP_SERVICE_FILE}.bak"
-        echo "-> Configuração do App Móvel atualizada."
-    else
-        echo "AVISO: Arquivo de configuração do App Móvel não encontrado em $MOBILE_APP_SERVICE_FILE"
+        echo "AVISO: Arquivo de configuração do PWA não encontrado: $PWA_SERVICE_FILE"
     fi
     echo ""
 }
 
+# Inicia os servidores
 start_servers() {
     update_ip_configs
 
     echo "Iniciando a API DriverHub em segundo plano..."
     nohup bash -c "cd src/DriverHub.API && dotnet run" > "$API_LOG" 2>&1 &
-    API_PID=$!
-    echo $API_PID > "$API_PID_FILE"
-    echo "API DriverHub iniciada com PID: $API_PID"
+    echo $! > "$API_PID_FILE"
+    echo "API DriverHub iniciada com PID: $(cat $API_PID_FILE)"
 
-    echo "Iniciando o aplicativo móvel DriverHub em segundo plano..."
-    (cd src/DriverHub.MobileApp && nohup env CI=1 npm start -- --port $MOBILE_PORT > "$MOBILE_APP_LOG" 2>&1 &)
-    
-    echo "Aguardando o aplicativo móvel iniciar na porta $MOBILE_PORT..."
-    MOBILE_APP_PID=""
-    for i in {1..15}; do # Tenta por 30 segundos (15 tentativas * 2s)
-        MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
-        if [ -n "$MOBILE_APP_PID" ]; then
-            break
-        fi
-        sleep 2
-    done
-
-    if [ -n "$MOBILE_APP_PID" ]; then
-        echo "Aplicativo móvel DriverHub iniciado com PID: $MOBILE_APP_PID"
-    else
-        echo "Falha ao obter o PID do aplicativo móvel após 30 segundos. Verifique o log em $MOBILE_APP_LOG"
-    fi
-
-    echo "Iniciando o Dashboard DriverHub em segundo plano..."
-    nohup bash -c "cd src/DriverHub.Dashboard && npm run dev -- --host --port $DASHBOARD_PORT" > "$DASHBOARD_LOG" 2>&1 &
-    DASHBOARD_PID=$!
-    echo $DASHBOARD_PID > "$DASHBOARD_PID_FILE"
-    echo "Dashboard DriverHub iniciado com PID: $DASHBOARD_PID"
+    echo "Iniciando o PWA DriverHub em segundo plano..."
+    nohup bash -c "cd src/driverhub.frontendweb && PORT=$PWA_PORT npm start" > "$PWA_LOG" 2>&1 &
+    echo $! > "$PWA_PID_FILE"
+    echo "PWA DriverHub iniciado com PID: $(cat $PWA_PID_FILE)"
 
     echo ""
-    echo "Aguardando alguns segundos para os serviços inicializarem..."
-    sleep 20 # Dá um tempo para todos os serviços subirem
+    echo "Aguardando 15 segundos para os serviços inicializarem..."
+    sleep 15
 
     status_servers
     check_for_errors
 }
 
+# Para os servidores
 stop_servers() {
-    echo "Parando os serviços DriverHub (API e Aplicativo Móvel)..."
+    echo "Parando os serviços DriverHub (API e PWA)..."
 
-    API_PID=$(lsof -t -i:5217)
-    if [ -n "$API_PID" ]; then
-        kill -9 $API_PID
-        echo "API DriverHub (PID $API_PID) encerrada."
+    # Para a API pela porta
+    API_PID_PORT=$(lsof -t -i:$API_PORT)
+    if [ -n "$API_PID_PORT" ]; then
+        kill -9 $API_PID_PORT
+        echo "API DriverHub (PID $API_PID_PORT) encerrada."
     else
-        echo "Nenhum processo da API encontrado na porta 5217."
+        echo "Nenhum processo da API encontrado na porta $API_PORT."
     fi
 
-    MOBILE_APP_PID=$(lsof -t -i:$MOBILE_PORT)
-    if [ -n "$MOBILE_APP_PID" ]; then
-        kill -9 $MOBILE_APP_PID
-        echo "Aplicativo Móvel DriverHub (PID $MOBILE_APP_PID) encerrado."
+    # Para o PWA pela porta
+    PWA_PID_PORT=$(lsof -t -i:$PWA_PORT)
+    if [ -n "$PWA_PID_PORT" ]; then
+        kill -9 $PWA_PID_PORT
+        echo "PWA DriverHub (PID $PWA_PID_PORT) encerrado."
     else
-        echo "Nenhum processo do Aplicativo Móvel encontrado na porta $MOBILE_PORT."
-    fi
-
-    DASHBOARD_PID=$(lsof -t -i:$DASHBOARD_PORT)
-    if [ -n "$DASHBOARD_PID" ]; then
-        kill -9 $DASHBOARD_PID
-        echo "Dashboard DriverHub (PID $DASHBOARD_PID) encerrado."
-    else
-        echo "Nenhum processo do Dashboard encontrado na porta $DASHBOARD_PORT."
+        echo "Nenhum processo do PWA encontrado na porta $PWA_PORT."
     fi
 
     # Limpa os arquivos de PID
-    rm -f "$API_PID_FILE"
-    rm -f "$DASHBOARD_PID_FILE"
-
-    echo "Serviços parados. Verificando se há processos remanescentes..."
-    sleep 2 # Dá um tempo para os processos encerrarem
-    lsof -i -P -n | grep LISTEN | grep -E 'dotnet|node|vite'
-
-    if [ $? -eq 0 ]; then
-        echo "Todos os serviços DriverHub foram encerrados com sucesso."
-    else
-        echo "Atenção: Alguns processos podem não ter sido encerrados. Verifique manualmente."
-    fi
+    rm -f "$API_PID_FILE" "$PWA_PID_FILE"
+    echo "Serviços parados."
 }
 
+# Verifica erros nos logs
 check_for_errors() {
     echo ""
     echo "Verificando logs em busca de erros..."
-    API_ERRORS=$(grep -iE "error|fail|exception" "$API_LOG")
-    MOBILE_APP_ERRORS=$(grep -iE "error|fail|exception" "$MOBILE_APP_LOG")
-    DASHBOARD_ERRORS=$(grep -iE "error|fail|exception" "$DASHBOARD_LOG")
-
-    if [ -n "$API_ERRORS" ]; then
+    
+    if [ -f "$API_LOG" ] && [ -n "$(grep -iE 'error|fail|exception' "$API_LOG")" ]; then
         echo "---------------------------------------------------"
-        echo "ERROS ENCONTRADOS NO LOG DA API DriverHub:"
-        echo "---------------------------------------------------"
-        echo "$API_ERRORS"
+        echo "ERROS ENCONTRADOS NO LOG DA API:"
+        grep -iE 'error|fail|exception' "$API_LOG"
         echo "---------------------------------------------------"
     else
-        echo "Nenhum erro aparente encontrado no log da API DriverHub."
+        echo "Nenhum erro aparente encontrado no log da API."
     fi
 
-    if [ -n "$MOBILE_APP_ERRORS" ]; then
+    if [ -f "$PWA_LOG" ] && [ -n "$(grep -iE 'error|fail|exception' "$PWA_LOG")" ]; then
         echo "---------------------------------------------------"
-        echo "ERROS ENCONTRADOS NO LOG DO APLICATIVO MÓVEL DriverHub:"
-        echo "---------------------------------------------------"
-        echo "$MOBILE_APP_ERRORS"
-        echo "---------------------------------------------------"
-    else
-        echo "Nenhum erro aparente encontrado no log do Aplicativo Móvel DriverHub."
-    fi
-
-    if [ -n "$DASHBOARD_ERRORS" ]; then
-        echo "---------------------------------------------------"
-        echo "ERROS ENCONTRADOS NO LOG DO DASHBOARD DriverHub:"
-        echo "---------------------------------------------------"
-        echo "$DASHBOARD_ERRORS"
+        echo "ERROS ENCONTRADOS NO LOG DO PWA:"
+        grep -iE 'error|fail|exception' "$PWA_LOG"
         echo "---------------------------------------------------"
     else
-        echo "Nenhum erro aparente encontrado no log do Dashboard DriverHub."
+        echo "Nenhum erro aparente encontrado no log do PWA."
     fi
 }
 
+# Verifica o status dos servidores
 status_servers() {
     echo ""
-    echo "Verificando o status dos serviços..."
-    echo "---------------------------------------------------"
-
+    echo "--- Status dos Serviços DriverHub ---"
+    
     # Verifica a API
-    if [ -f "$API_PID_FILE" ]; then
-        API_PID=$(cat "$API_PID_FILE")
-        if ps -p $API_PID > /dev/null; then
-            if lsof -i :$API_PORT > /dev/null; then
-                echo "API DriverHub: Rodando na porta $API_PORT (PID $API_PID)"
-            else
-                echo "API DriverHub: Rodando (PID $API_PID), mas a porta $API_PORT não foi detectada pelo script. Verifique o log para mais detalhes."
-            fi
-        else
-            echo "API DriverHub: Não está rodando (PID $API_PID não encontrado)."
-        fi
+    if lsof -t -i:$API_PORT > /dev/null; then
+        echo "API DriverHub: Rodando (http://localhost:$API_PORT)"
     else
-        echo "API DriverHub: Não está rodando (arquivo PID não encontrado)."
+        echo "API DriverHub: Parada"
     fi
 
-    # Verifica o Aplicativo Móvel
-    MOBILE_APP_PID=$(lsof -t -i :$MOBILE_PORT)
-    if [ -n "$MOBILE_APP_PID" ]; then
-        echo "Aplicativo Móvel DriverHub: Rodando na porta $MOBILE_PORT (PID $MOBILE_APP_PID)"
+    # Verifica o PWA
+    if lsof -t -i:$PWA_PORT > /dev/null; then
+        echo "PWA DriverHub: Rodando (http://localhost:$PWA_PORT)"
     else
-        echo "Aplicativo Móvel DriverHub: Não está rodando (porta $MOBILE_PORT livre)."
+        echo "PWA DriverHub: Parado"
     fi
 
-    # Verifica o Dashboard
-    if [ -f "$DASHBOARD_PID_FILE" ]; then
-        DASHBOARD_PID=$(cat "$DASHBOARD_PID_FILE")
-        if ps -p $DASHBOARD_PID > /dev/null; then
-            if lsof -i :$DASHBOARD_PORT > /dev/null; then
-                echo "Dashboard DriverHub: Rodando na porta $DASHBOARD_PORT (PID $DASHBOARD_PID)"
-            else
-                echo "Dashboard DriverHub: Rodando (PID $DASHBOARD_PID), mas a porta $DASHBOARD_PORT não foi detectada pelo script. Verifique o log para mais detalhes."
-            fi
-        else
-            echo "Dashboard DriverHub: Não está rodando (PID $DASHBOARD_PID não encontrado)."
-        fi
-    else
-        echo "Dashboard DriverHub: Não está rodando (arquivo PID não encontrado)."
-    fi
-
-    echo ""
-    echo "Obtendo o endereço IP do seu notebook..."
-    LOCAL_IP=$(ifconfig | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | head -n 1)
-    echo "Endereço IP do seu notebook: $LOCAL_IP"
-
-    echo ""
-    echo "Para testes no celular (conectado à mesma rede Wi-Fi):"
-    echo "Acesse no navegador do celular: http://$LOCAL_IP:$MOBILE_PORT"
-    echo "Para acessar o Dashboard: http://$LOCAL_IP:$DASHBOARD_PORT"
-    echo "---------------------------------------------------"
+    echo "-------------------------------------"
 }
 
+# --- Lógica Principal ---
 case "$1" in
     start)
+        stop_servers
+        echo ""
         start_servers
         ;;
     stop)
@@ -238,14 +148,8 @@ case "$1" in
     status)
         status_servers
         ;;
-    expo-start-foreground)
-        stop_servers
-        update_ip_configs
-        echo "Iniciando o aplicativo móvel DriverHub em primeiro plano para exibir o QR Code..."
-        (cd src/DriverHub.MobileApp && npm start)
-        ;;
     *)
-        echo "Uso: $0 {start|stop|status|expo-start-foreground}"
+        echo "Uso: $0 {start|stop|status}"
         exit 1
         ;;
 esac
