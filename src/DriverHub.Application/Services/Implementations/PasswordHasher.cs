@@ -34,6 +34,10 @@ namespace DriverHub.Application.Services.Implementations
             using (var algorithm = new Rfc2898DeriveBytes(password, saltBytes, Iterations, HashAlgorithmName.SHA256))
             {
                 var inputHash = algorithm.GetBytes(KeySize);
+                _logger.LogInformation("Senha recebida (VerifyPassword): {PasswordPrefix}", password.Substring(0, Math.Min(password.Length, 5)));
+                _logger.LogInformation("Hash gerado (inputHash): {InputHash}", Convert.ToBase64String(inputHash));
+                _logger.LogInformation("Hash armazenado (hashBytes): {StoredHash}", Convert.ToBase64String(hashBytes));
+
                 return CryptographicOperations.FixedTimeEquals(inputHash, hashBytes);
             }
         }

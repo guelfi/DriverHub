@@ -16,7 +16,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const storedToken = localStorage.getItem('adminToken');
     if (storedToken) {
-      setToken(storedToken);
+      try {
+        const decodedUser = jwtDecode(storedToken);
+        console.log("Token decodificado (useEffect):", decodedUser);
+        setToken(storedToken);
+        setUser(decodedUser);
+      } catch (error) {
+        console.error("Erro ao decodificar token (useEffect):", error);
+        localStorage.removeItem('token'); // Limpa token inválido
+      }
     }
     setIsLoading(false); // Termina o carregamento após verificar o localStorage
   }, []);

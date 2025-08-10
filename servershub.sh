@@ -3,15 +3,18 @@
 # --- Configurações ---
 LOGS_DIR="$(pwd)/logs"
 API_LOG="$LOGS_DIR/driverhub_api.log"
-PWA_LOG="$LOGS_DIR/driverhub_pwa.log"
+#PWA_LOG="$LOGS_DIR/driverhub_pwa.log"
+DASHBOARD_LOG="$LOGS_DIR/driverhub_dashboard.log"
 
 API_PID_FILE="$LOGS_DIR/driverhub_api_pid.txt"
-PWA_PID_FILE="$LOGS_DIR/driverhub_pwa_pid.txt"
+#PWA_PID_FILE="$LOGS_DIR/driverhub_pwa_pid.txt"
+DASHBOARD_PID_FILE="$LOGS_DIR/driverhub_dashboard_pid.txt"
 
 API_PORT=5217
-PWA_PORT=3000
+DASHBOARD_PORT=5218
+#PWA_PORT=5220
 
-PWA_SERVICE_FILE="src/driverhub.frontendweb/src/services/AuthService.ts"
+#PWA_SERVICE_FILE="src/DriverHub.FrontendWeb/src/services/AuthService.ts"
 
 # --- Funções ---
 
@@ -30,13 +33,13 @@ update_ip_configs() {
 
     echo "IP detectado: $LOCAL_IP. Atualizando arquivos de configuração..."
 
-    if [ -f "$PWA_SERVICE_FILE" ]; then
-        sed -i.bak "s#^const API_URL = .*#const API_URL = 'http://$LOCAL_IP:$API_PORT/api/auth'#" "$PWA_SERVICE_FILE"
-        rm "${PWA_SERVICE_FILE}.bak"
-        echo "-> Configuração do PWA atualizada."
-    else
-        echo "AVISO: Arquivo de configuração do PWA não encontrado: $PWA_SERVICE_FILE"
-    fi
+    #if [ -f "$PWA_SERVICE_FILE" ]; then
+    #    sed -i.bak "s#^const API_URL = .*#const API_URL = 'http://$LOCAL_IP:$API_PORT/api/auth'#" "$PWA_SERVICE_FILE"
+    #    rm "${PWA_SERVICE_FILE}.bak"
+    #    echo "-> Configuração do PWA atualizada."
+    #else
+    #    echo "AVISO: Arquivo de configuração do PWA não encontrado: $PWA_SERVICE_FILE"
+    #fi
     echo ""
 }
 
@@ -49,14 +52,19 @@ start_servers() {
     echo $! > "$API_PID_FILE"
     echo "API DriverHub iniciada com PID: $(cat $API_PID_FILE)"
 
-    echo "Iniciando o PWA DriverHub em segundo plano..."
-    nohup bash -c "cd src/driverhub.frontendweb && PORT=$PWA_PORT npm start" > "$PWA_LOG" 2>&1 &
-    echo $! > "$PWA_PID_FILE"
-    echo "PWA DriverHub iniciado com PID: $(cat $PWA_PID_FILE)"
+    echo "Iniciando o Dashboard DriverHub em segundo plano..."
+    nohup bash -c "cd src/DriverHub.Dashboard && npm run dev -- --port $DASHBOARD_PORT" > "$DASHBOARD_LOG" 2>&1 &
+    echo $! > "$DASHBOARD_PID_FILE"
+    echo "Dashboard DriverHub iniciado com PID: $(cat $DASHBOARD_PID_FILE)"
+
+    #echo "Iniciando o PWA DriverHub em segundo plano..."
+    #nohup bash -c "cd src/DriverHub.FrontendWeb && PORT=$PWA_PORT npm start" > "$PWA_LOG" 2>&1 &
+    #echo $! > "$PWA_PID_FILE"
+    #echo "PWA DriverHub iniciado com PID: $(cat $PWA_PID_FILE)"
 
     echo ""
-    echo "Aguardando 15 segundos para os serviços inicializarem..."
-    sleep 15
+    echo "Aguardando 30 segundos para os serviços inicializarem..."
+    sleep 30
 
     status_servers
     check_for_errors
@@ -64,7 +72,7 @@ start_servers() {
 
 # Para os servidores
 stop_servers() {
-    echo "Parando os serviços DriverHub (API e PWA)..."
+    echo "Parando os serviços DriverHub (API, PWA e Dashboard)..."
 
     # Para a API pela porta
     API_PID_PORT=$(lsof -t -i:$API_PORT)
@@ -76,16 +84,25 @@ stop_servers() {
     fi
 
     # Para o PWA pela porta
-    PWA_PID_PORT=$(lsof -t -i:$PWA_PORT)
-    if [ -n "$PWA_PID_PORT" ]; then
-        kill -9 $PWA_PID_PORT
-        echo "PWA DriverHub (PID $PWA_PID_PORT) encerrado."
+    #PWA_PID_PORT=$(lsof -t -i:$PWA_PORT)
+    #if [ -n "$PWA_PID_PORT" ]; then
+    #    kill -9 $PWA_PID_PORT
+    #    echo "PWA DriverHub (PID $PWA_PID_PORT) encerrado."
+    #else
+    #    echo "Nenhum processo do PWA encontrado na porta $PWA_PORT."
+    #fi
+
+    # Para o Dashboard pela porta
+    DASHBOARD_PID_PORT=$(lsof -t -i:$DASHBOARD_PORT)
+    if [ -n "$DASHBOARD_PID_PORT" ]; then
+        kill -9 $DASHBOARD_PID_PORT
+        echo "Dashboard DriverHub (PID $DASHBOARD_PID_PORT) encerrado."
     else
-        echo "Nenhum processo do PWA encontrado na porta $PWA_PORT."
+        echo "Nenhum processo do Dashboard encontrado na porta $DASHBOARD_PORT."
     fi
 
     # Limpa os arquivos de PID
-    rm -f "$API_PID_FILE" "$PWA_PID_FILE"
+    rm -f "$API_PID_FILE" "$DASHBOARD_PID_FILE"
     echo "Serviços parados."
 }
 
@@ -103,13 +120,22 @@ check_for_errors() {
         echo "Nenhum erro aparente encontrado no log da API."
     fi
 
-    if [ -f "$PWA_LOG" ] && [ -n "$(grep -iE 'error|fail|exception' "$PWA_LOG")" ]; then
+    #if [ -f "$PWA_LOG" ] && [ -n "$(grep -iE 'error|fail|exception' "$PWA_LOG")" ]; then
+    #    echo "---------------------------------------------------"
+    #    echo "ERROS ENCONTRADOS NO LOG DO PWA:"
+    #    grep -iE 'error|fail|exception' "$PWA_LOG"
+    #    echo "---------------------------------------------------"
+    #else
+    #    echo "Nenhum erro aparente encontrado no log do PWA."
+    #fi
+
+    if [ -f "$DASHBOARD_LOG" ] && [ -n "$(grep -iE 'error|fail|exception' "$DASHBOARD_LOG")" ]; then
         echo "---------------------------------------------------"
-        echo "ERROS ENCONTRADOS NO LOG DO PWA:"
-        grep -iE 'error|fail|exception' "$PWA_LOG"
+        echo "ERROS ENCONTRADOS NO LOG DO DASHBOARD:"
+        grep -iE 'error|fail|exception' "$DASHBOARD_LOG"
         echo "---------------------------------------------------"
     else
-        echo "Nenhum erro aparente encontrado no log do PWA."
+        echo "Nenhum erro aparente encontrado no log do Dashboard."
     fi
 }
 
@@ -126,10 +152,17 @@ status_servers() {
     fi
 
     # Verifica o PWA
-    if lsof -t -i:$PWA_PORT > /dev/null; then
-        echo "PWA DriverHub: Rodando (http://localhost:$PWA_PORT)"
+    #if lsof -t -i:$PWA_PORT > /dev/null; then
+    #    echo "PWA DriverHub: Rodando (http://localhost:$PWA_PORT)"
+    #else
+    #    echo "PWA DriverHub: Parado"
+    #fi
+
+    # Verifica o Dashboard
+    if lsof -t -i:$DASHBOARD_PORT > /dev/null; then
+        echo "Dashboard DriverHub: Rodando (http://localhost:$DASHBOARD_PORT)"
     else
-        echo "PWA DriverHub: Parado"
+        echo "Dashboard DriverHub: Parado"
     fi
 
     echo "-------------------------------------"

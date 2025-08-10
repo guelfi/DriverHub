@@ -25,7 +25,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
 
     setIsLoading(true)
     try {
-      await onLogin(email, password);
+          onLogin(email.trim(), password.trim())
     } finally {
       setIsLoading(false);
     }
@@ -46,7 +46,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
       </CardHeader>
       
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium">
               Email

@@ -109,6 +109,8 @@ namespace DriverHub.Application.Services.Implementations
             }
 
             _logger.LogInformation("Admin encontrado: Email={Email}, StoredHash={StoredHash}, StoredSalt={StoredSalt}", admin.Email, admin.SenhaHash, admin.Sal);
+            _logger.LogInformation("Verificando senha para {Email}. Senha recebida (primeiros 5 chars): {PasswordPrefix}", loginDto.Email, loginDto.Password.Substring(0, Math.Min(loginDto.Password.Length, 5)));
+            _logger.LogInformation("Hash armazenado: {StoredHash}, Salt armazenado: {StoredSalt}", admin.SenhaHash, admin.Sal);
 
             if (!_passwordHasher.VerifyPassword(loginDto.Password, admin.SenhaHash, admin.Sal))
             {
