@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog" // Importar Dialog components
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -21,10 +22,12 @@ export default function Drivers() {
   const { token } = useAuth();
   const [motoristas, setMotoristas] = useState<Motorista[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(6); // Pode ser ajustado
+  const [itemsPerPage, setItemsPerPage] = useState(5); // 5 motoristas por página
   const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedMotorista, setSelectedMotorista] = useState<Motorista | null>(null); // Novo estado para o motorista selecionado
+  const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false); // Novo estado para controlar a abertura do diálogo
 
   const fetchMotoristas = async (page: number, limit: number) => {
     if (!token) {
@@ -60,6 +63,11 @@ export default function Drivers() {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  const handleRowClick = (motorista: Motorista) => {
+    setSelectedMotorista(motorista);
+    setIsDetailsDialogOpen(true);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -69,10 +77,7 @@ export default function Drivers() {
             Gerencie os motoristas da sua frota
           </p>
         </div>
-        <Button className="bg-gradient-primary shadow-elevation-sm hover:shadow-glow">
-          <Plus className="w-4 h-4 mr-2" />
-          Novo Motorista
-        </Button>
+        {/* Botão "Novo Motorista" removido conforme requisito */}
       </div>
 
       <div className="flex gap-4">
@@ -144,7 +149,7 @@ export default function Drivers() {
                 </TableHeader>
                 <TableBody>
                   {motoristas.map((motorista) => (
-                    <TableRow key={motorista.id}>
+                    <TableRow key={motorista.id} onClick={() => handleRowClick(motorista)} className="cursor-pointer hover:bg-muted/50">
                       <TableCell>{motorista.nome}</TableCell>
                       <TableCell>{motorista.sobrenome}</TableCell>
                       <TableCell>{motorista.email}</TableCell>
@@ -158,6 +163,38 @@ export default function Drivers() {
           )}
         </CardContent>
       </Card>
+
+      {/* Diálogo de Detalhes do Motorista */}
+      <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Detalhes do Motorista</DialogTitle>
+            <DialogDescription>
+              Informações detalhadas do motorista selecionado.
+            </DialogDescription>
+          </DialogHeader>
+          {selectedMotorista && (
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <p className="text-right font-medium">Nome:</p>
+                <p className="col-span-3">{selectedMotorista.nome} {selectedMotorista.sobrenome}</p>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <p className="text-right font-medium">Email:</p>
+                <p className="col-span-3">{selectedMotorista.email}</p>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <p className="text-right font-medium">Celular:</p>
+                <p className="col-span-3">{selectedMotorista.numeroCelular}</p>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <p className="text-right font-medium">Cadastro:</p>
+                <p className="col-span-3">{new Date(selectedMotorista.dataCadastro).toLocaleDateString()}</p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

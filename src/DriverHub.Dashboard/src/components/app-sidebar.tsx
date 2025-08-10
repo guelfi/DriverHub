@@ -72,11 +72,7 @@ export function AppSidebar() {
         </div>
 
         <SidebarGroup>
-          {!collapsed && (
-            <SidebarGroupLabel className="text-sidebar-foreground/70 font-medium mb-4">
-              Menu Principal
-            </SidebarGroupLabel>
-          )}
+          {/* Removido o "Menu Principal" conforme solicitado */}
 
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
