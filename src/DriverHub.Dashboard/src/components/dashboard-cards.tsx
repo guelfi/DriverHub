@@ -72,19 +72,11 @@ export function DashboardCards() {
       icon: TrendingUp,
       change: "+18%",
       changeType: "positive"
-    },
-    {
-      title: "Status Geral",
-      value: "98.5%",
-      description: "Disponibilidade da frota",
-      icon: Activity,
-      change: "-1.2%",
-      changeType: "negative"
     }
   ]
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {dashboardData.map((card, index) => (
         <Card 
           key={card.title} 
