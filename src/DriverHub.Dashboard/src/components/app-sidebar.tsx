@@ -31,7 +31,6 @@ const items = [
   { title: "Motoristas", url: "/drivers", icon: Users },
   { title: "Veículos", url: "/vehicles", icon: Car },
   { title: "Relatórios", url: "/reports", icon: BarChart3 },
-  { title: "Documentos", url: "/documents", icon: FileText },
   { title: "Notificações", url: "/notifications", icon: Bell },
 ]
 

@@ -7,9 +7,9 @@ export default function Vehicles() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <div>
+        <div className="flex items-baseline gap-2">
           <h1 className="text-3xl font-bold text-foreground">Veículos</h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-muted-foreground text-sm">
             Gerencie os veículos da sua frota
           </p>
         </div>

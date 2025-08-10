@@ -63,9 +63,9 @@ export default function Drivers() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <div>
+        <div className="flex items-baseline gap-2">
           <h1 className="text-3xl font-bold text-foreground">Motoristas</h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-muted-foreground text-sm">
             Gerencie os motoristas da sua frota
           </p>
         </div>

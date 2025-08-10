@@ -1,4 +1,4 @@
-import { User, ChevronDown, LogOut } from "lucide-react"
+import { User, ChevronDown, LogOut, Settings as SettingsIcon } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar"
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HeaderProps {
@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 export function Header({ userName = "Administrador" }: HeaderProps) {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
   const { isMobile, openMobile } = useSidebar();
   const isMobileDevice = useIsMobile();
@@ -55,22 +55,18 @@ export function Header({ userName = "Administrador" }: HeaderProps) {
                 <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center">
                   <User className="w-4 h-4 text-primary-foreground" />
                 </div>
-                <span className="hidden md:inline text-sm font-medium">{userName}</span>
+                <span className="hidden md:inline text-sm font-medium">{user?.name || userName}</span>
                 <ChevronDown className="w-4 h-4 text-muted-foreground" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 bg-card border-border shadow-elevation-md">
-              <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.email || "Minha Conta"}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                Perfil
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Configurações
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Suporte
+              <DropdownMenuItem asChild>
+                <NavLink to="/settings/profile" className="flex items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  Perfil: {user?.name} {user?.lastName}
+                </NavLink>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive" onClick={handleLogout}>

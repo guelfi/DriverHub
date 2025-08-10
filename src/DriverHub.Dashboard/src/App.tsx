@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from "@/providers/theme-provider"; // Import ThemeProvider
 
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -13,6 +14,8 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Vehicles from "./pages/Vehicles";
 import NotFound from "./pages/NotFound";
+import ProfileSettings from "./pages/ProfileSettings";
+import Notifications from "./pages/Notifications";
 
 const queryClient = new QueryClient();
 
@@ -28,26 +31,30 @@ const PrivateRoute = ({ children }: { children: JSX.Element }) => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<PrivateRoute><Index /></PrivateRoute>}>
-              <Route index element={<Dashboard />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="drivers" element={<Drivers />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="vehicles" element={<Vehicles />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
-      </TooltipProvider>
-    </AuthProvider>
+    <ThemeProvider> {/* Wrap with ThemeProvider */}
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Router>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<PrivateRoute><Index /></PrivateRoute>}>
+                <Route index element={<Dashboard />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="drivers" element={<Drivers />} />
+                <Route path="reports" element={<Reports />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="settings/profile" element={<ProfileSettings />} />
+                <Route path="vehicles" element={<Vehicles />} />
+                <Route path="notifications" element={<Notifications />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </TooltipProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

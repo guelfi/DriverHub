@@ -3,18 +3,16 @@
 # --- Configurações ---
 LOGS_DIR="$(pwd)/logs"
 API_LOG="$LOGS_DIR/driverhub_api.log"
-#PWA_LOG="$LOGS_DIR/driverhub_pwa.log"
+FRONTENDWEB_LOG="$LOGS_DIR/driverhub_frontendweb.log"
 DASHBOARD_LOG="$LOGS_DIR/driverhub_dashboard.log"
 
 API_PID_FILE="$LOGS_DIR/driverhub_api_pid.txt"
-#PWA_PID_FILE="$LOGS_DIR/driverhub_pwa_pid.txt"
+FRONTENDWEB_PID_FILE="$LOGS_DIR/driverhub_frontendweb_pid.txt"
 DASHBOARD_PID_FILE="$LOGS_DIR/driverhub_dashboard_pid.txt"
 
 API_PORT=5217
 DASHBOARD_PORT=5218
-#PWA_PORT=5220
-
-#PWA_SERVICE_FILE="src/DriverHub.FrontendWeb/src/services/AuthService.ts"
+FRONTENDWEB_PORT=5220
 
 # --- Funções ---
 
@@ -57,10 +55,10 @@ start_servers() {
     echo $! > "$DASHBOARD_PID_FILE"
     echo "Dashboard DriverHub iniciado com PID: $(cat $DASHBOARD_PID_FILE)"
 
-    #echo "Iniciando o PWA DriverHub em segundo plano..."
-    #nohup bash -c "cd src/DriverHub.FrontendWeb && PORT=$PWA_PORT npm start" > "$PWA_LOG" 2>&1 &
-    #echo $! > "$PWA_PID_FILE"
-    #echo "PWA DriverHub iniciado com PID: $(cat $PWA_PID_FILE)"
+    echo "Iniciando o FrontendWeb DriverHub em segundo plano..."
+    nohup bash -c "cd src/DriverHub.FrontendWeb && npm run dev -- --port $FRONTENDWEB_PORT" > "$FRONTENDWEB_LOG" 2>&1 &
+    echo $! > "$FRONTENDWEB_PID_FILE"
+    echo "FrontendWeb DriverHub iniciado com PID: $(cat $FRONTENDWEB_PID_FILE)"
 
     echo ""
     echo "Aguardando 30 segundos para os serviços inicializarem..."
@@ -83,15 +81,6 @@ stop_servers() {
         echo "Nenhum processo da API encontrado na porta $API_PORT."
     fi
 
-    # Para o PWA pela porta
-    #PWA_PID_PORT=$(lsof -t -i:$PWA_PORT)
-    #if [ -n "$PWA_PID_PORT" ]; then
-    #    kill -9 $PWA_PID_PORT
-    #    echo "PWA DriverHub (PID $PWA_PID_PORT) encerrado."
-    #else
-    #    echo "Nenhum processo do PWA encontrado na porta $PWA_PORT."
-    #fi
-
     # Para o Dashboard pela porta
     DASHBOARD_PID_PORT=$(lsof -t -i:$DASHBOARD_PORT)
     if [ -n "$DASHBOARD_PID_PORT" ]; then
@@ -101,8 +90,17 @@ stop_servers() {
         echo "Nenhum processo do Dashboard encontrado na porta $DASHBOARD_PORT."
     fi
 
+    # Para o FrontendWeb pela porta
+    FRONTENDWEB_PID_PORT=$(lsof -t -i:$FRONTENDWEB_PORT)
+    if [ -n "$FRONTENDWEB_PID_PORT" ]; then
+        kill -9 $FRONTENDWEB_PID_PORT
+        echo "FrontendWeb DriverHub (PID $FRONTENDWEB_PID_PORT) encerrado."
+    else
+        echo "Nenhum processo do FrontendWeb encontrado na porta $FRONTENDWEB_PORT."
+    fi
+
     # Limpa os arquivos de PID
-    rm -f "$API_PID_FILE" "$DASHBOARD_PID_FILE"
+    rm -f "$API_PID_FILE" "$DASHBOARD_PID_FILE" "$FRONTENDWEB_PID_FILE"
     echo "Serviços parados."
 }
 
@@ -137,6 +135,15 @@ check_for_errors() {
     else
         echo "Nenhum erro aparente encontrado no log do Dashboard."
     fi
+
+    if [ -f "$FRONTENDWEB_LOG" ] && [ -n "$(grep -iE 'error|fail|exception' "$FRONTENDWEB_LOG")" ]; then
+        echo "---------------------------------------------------"
+        echo "ERROS ENCONTRADOS NO LOG DO FrontendWeb:"
+        grep -iE 'error|fail|exception' "$FRONTENDWEB_LOG"
+        echo "---------------------------------------------------"
+    else
+        echo "Nenhum erro aparente encontrado no log do FrontendWeb."
+    fi
 }
 
 # Verifica o status dos servidores
@@ -151,18 +158,18 @@ status_servers() {
         echo "API DriverHub: Parada"
     fi
 
-    # Verifica o PWA
-    #if lsof -t -i:$PWA_PORT > /dev/null; then
-    #    echo "PWA DriverHub: Rodando (http://localhost:$PWA_PORT)"
-    #else
-    #    echo "PWA DriverHub: Parado"
-    #fi
-
     # Verifica o Dashboard
     if lsof -t -i:$DASHBOARD_PORT > /dev/null; then
         echo "Dashboard DriverHub: Rodando (http://localhost:$DASHBOARD_PORT)"
     else
         echo "Dashboard DriverHub: Parado"
+    fi
+
+    # Verifica o FrontendWeb
+    if lsof -t -i:$FRONTENDWEB_PORT > /dev/null; then
+        echo "FrontendWeb DriverHub: Rodando (http://localhost:$FRONTENDWEB_PORT)"
+    else
+        echo "FrontendWeb DriverHub: Parado"
     fi
 
     echo "-------------------------------------"

@@ -84,28 +84,25 @@ export function DashboardCards() {
   ]
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {dashboardData.map((card, index) => (
         <Card 
           key={card.title} 
           className="bg-gradient-card border-border/50 shadow-elevation-md hover:shadow-elevation-lg transition-all duration-300 hover:-translate-y-1"
         >
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              {card.title}
-            </CardTitle>
-            <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow">
-              <card.icon className="h-5 w-5 text-primary-foreground" />
+          <CardHeader className="pb-2">
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-xs font-medium text-muted-foreground text-left">
+                {card.title}
+              </CardTitle>
+              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow">
+                <card.icon className="h-4 w-4 text-primary-foreground" />
+              </div>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-foreground mb-1">
-              {card.value}
-            </div>
-            <div className="flex items-center gap-2">
-              <p className="text-xs text-muted-foreground">
-                {card.description}
-              </p>
+          <CardContent className="py-2">
+            <div className="text-2xl font-bold text-foreground flex items-baseline justify-between">
+              <span className="text-left">{card.value}</span>
               {card.change && (
                 <span 
                   className={`text-xs font-medium px-2 py-1 rounded-full ${
@@ -119,6 +116,11 @@ export function DashboardCards() {
                   {card.change}
                 </span>
               )}
+            </div>
+            <div className="flex items-center justify-center mt-1">
+              <p className="text-xs text-muted-foreground whitespace-nowrap overflow-hidden text-ellipsis text-center">
+                {card.description}
+              </p>
             </div>
           </CardContent>
         </Card>
