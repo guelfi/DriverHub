@@ -172,7 +172,7 @@ export default function Vehicles() {
 
       {/* Diálogo de Detalhes do Veículo */}
       <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>Detalhes do Veículo</DialogTitle>
             <DialogDescription>
