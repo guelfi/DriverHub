@@ -1,6 +1,6 @@
 import React from 'react';
 import { Seo } from "@/components/Seo";
-import Header from "@/components/Header"; // Importar o componente Header
+import HomeScreenCards from "@/components/HomeScreenCards";
 
 const HomeScreen = () => {
   return (
@@ -10,11 +10,11 @@ const HomeScreen = () => {
         description="Tela inicial do DriverHub após o login."
         canonical={window.location.origin + "/home"}
       />
-      <div className="min-h-screen flex flex-col"> {/* Container principal para ocupar a tela toda */}
-        <Header /> {/* Incluir o componente Header */}
-        <main className="flex flex-col items-center justify-center flex-grow bg-background"> {/* Ocupa o restante do espaço */}
-          <h1 className="text-4xl font-bold">Bem-vindo à HomeScreen!</h1>
-        </main>
+      {/* MainLayout will handle Header and overall layout */}
+      <div className="flex flex-col items-center flex-grow pt-[70px]"> {/* Changed pt-[50px] to pt-[70px] */}
+        {/* Removed Header */}
+        {/* Removed "Início bem-vindo de volta, motorista" text */}
+        <HomeScreenCards />
       </div>
     </>
   );

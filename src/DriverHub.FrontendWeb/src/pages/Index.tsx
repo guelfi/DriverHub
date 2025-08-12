@@ -52,6 +52,7 @@ const Index = () => {
 
     if (email === mockEmail && password === mockPassword) {
       toast.success("Login efetuado com sucesso ✨"); // Manter o toast de sucesso
+      localStorage.setItem('authToken', 'mock-token'); // Set a mock token for authentication
       navigate("/home"); // Navega para a HomeScreen após o login bem-sucedido
     } else {
       // setErrorMessage("Credenciais inválidas.<br />Tente novamente."); // Removido, pois a mensagem é fixa
@@ -107,13 +108,13 @@ const Index = () => {
           />
 
           <div className="w-full max-w-md">
-            <header className="mb-6 flex items-center justify-between">
+            <header className="mb-6 flex flex-col items-center">
               <h1 className="sr-only">Login - Escolha de tema</h1>
-              <div className="text-left">
-                <p className="text-sm text-muted-foreground">Bem-vindo de volta</p>
-                <p className="font-semibold text-xl">Acesse sua conta</p>
+              <div className="text-center">
+                <p className="text-lg text-muted-foreground">Bem-vindo de volta</p>
+                <p className="font-bold text-2xl">Acesse sua conta</p>
               </div>
-              <ThemeToggle />
+              {/* <ThemeToggle /> Removed */}
             </header>
 
             <Card className="shadow-elevated">
@@ -170,10 +171,7 @@ const Index = () => {
                     Não tem cadastro? <a href="/new-motora" className="text-primary hover:underline">clique aqui</a>
                   </p>
 
-                  <p className="text-center text-sm text-muted-foreground">
-                    Dica: alterne entre claro/escuro pelo seletor acima
-                  </p>
-                </form>
+                  </form>
               </CardContent>
             </Card>
           </div>
