@@ -137,9 +137,6 @@ app.UseCors("AllowAllOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
 
-using DriverHub.Domain.Entities; // Adicionado para Admin
-using DriverHub.Application.Services; // Adicionado para IPasswordHasher
-
 app.MapControllers();
 
 // Verifica se existe algum usuário Admin na inicialização
