@@ -9,6 +9,10 @@ RUN npm install -g npm@10
 # Copy package files
 COPY package*.json ./
 
+# Definir variável de ambiente para build
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 # Instalar dependências
 RUN rm -f package-lock.json && \
     npm install --no-audit --no-fund

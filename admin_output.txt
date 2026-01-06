@@ -1,0 +1,14 @@
+/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/Common/Result.cs(31,30): warning CS0108: 'Result.Failure(string)' hides inherited member 'Result<object>.Failure(string)'. Use the new keyword if hiding was intended. [/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj]
+/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/DTOs/ProfileDto.cs(5,19): warning CS8618: Non-nullable property 'Nome' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj]
+/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/DTOs/ProfileDto.cs(6,19): warning CS8618: Non-nullable property 'Sobrenome' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj]
+/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/DTOs/ProfileDto.cs(7,19): warning CS8618: Non-nullable property 'Email' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/mnt/c/Users/SP-MGUELFI/Projetos/DriverHub/src/DriverHub.Application/DriverHub.Application.csproj]
+info: DriverHub.AdminTool.Program[0]
+      Registrando admin com email: guelfi@msn.com, senha (raw): @5ST73EA4x
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (163ms) [Parameters=[@__email_0='?'], CommandType='Text', CommandTimeout='30']
+      SELECT a.id, a.data_cadastro, a.email, a.nome, a.sal, a.senha_hash, a.sobrenome
+      FROM admins AS a
+      WHERE a.email = @__email_0
+      LIMIT 1
+fail: DriverHub.AdminTool.Program[0]
+      Erro ao registrar o usuário administrador: Email de administrador já está em uso.
