@@ -8,7 +8,8 @@ import {
   FileText,
   Bell
 } from "lucide-react"
-import { NavLink, useLocation } from "react-router-dom"
+import { NavLink, useLocation, useNavigate } from "react-router-dom"
+import { useAuth } from "@/context/AuthContext"
 
 import {
   Sidebar,
@@ -34,6 +35,8 @@ const items = [
 
 export function AppSidebar() {
   const { state } = useSidebar()
+  const { logout } = useAuth()
+  const navigate = useNavigate()
   const location = useLocation()
   const currentPath = location.pathname
   const collapsed = state === "collapsed"
