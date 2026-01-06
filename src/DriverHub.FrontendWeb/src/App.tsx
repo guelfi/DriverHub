@@ -16,13 +16,20 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 const queryClient = new QueryClient();
 
+const getBasename = () => {
+  const path = window.location.pathname;
+  if (path.startsWith('/driverhub-admin')) return '/driverhub-admin';
+  if (path.startsWith('/driverhub')) return '/driverhub';
+  return '/';
+};
+
 const App = () => (
   <ThemeProvider defaultTheme="light">
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter basename="/driverhub">
+        <BrowserRouter basename={getBasename()}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Index />} />
