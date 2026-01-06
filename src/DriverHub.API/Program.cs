@@ -117,16 +117,13 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 // Configure PathBase for Nginx Proxy
-app.UsePathBase("/driverhub-api");
+// app.UsePathBase("/driverhub-api");
 
 // Enable Swagger in all environments
-app.UseSwagger(c =>
-{
-    c.RouteTemplate = "swagger/{documentName}/swagger.json";
-});
+app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("swagger/v1/swagger.json", "DriverHub API V1");
+    c.SwaggerEndpoint("/driverhub-api/swagger/v1/swagger.json", "DriverHub API V1");
 });
 
 app.UseSerilogRequestLogging();
