@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5217/api';
+const API_URL = import.meta.env.VITE_API_URL || '/driverhub-api/api';
 
 const login = async (email: string, password: string) => {
   console.log("Enviando para API:", { email, password });
