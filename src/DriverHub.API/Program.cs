@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using DriverHub.API.Middleware;
+using DriverHub.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
