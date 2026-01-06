@@ -120,13 +120,11 @@ var app = builder.Build();
 app.UsePathBase("/driverhub-api");
 
 // Enable Swagger in all environments
-app.UseSwagger(c =>
-{
-    c.RouteTemplate = "swagger/{documentName}/swagger.json";
-});
+app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/driverhub-api/swagger/v1/swagger.json", "DriverHub API V1");
+    c.RoutePrefix = "swagger";
 });
 
 app.UseSerilogRequestLogging();
