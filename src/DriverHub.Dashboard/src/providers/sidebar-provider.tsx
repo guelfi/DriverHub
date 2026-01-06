@@ -136,4 +136,4 @@ export const SidebarProvider = React.memo(React.forwardRef<
     )
   }
 )
-SidebarProvider.displayName = "SidebarProvider"
+SidebarProvider.displayName = "SidebarProvider";
