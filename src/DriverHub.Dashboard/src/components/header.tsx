@@ -26,7 +26,7 @@ export function Header({ userName = "Administrador" }: HeaderProps) {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -48,7 +48,7 @@ export function Header({ userName = "Administrador" }: HeaderProps) {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2 h-10">

@@ -47,7 +47,7 @@ const Index = () => {
     e.preventDefault();
 
     // Credenciais mockadas para teste
-    const mockEmail = "motora@motora.com";
+    const mockEmail = "motora@driverhub.com";
     const mockPassword = "246588";
 
     if (email === mockEmail && password === mockPassword) {
@@ -71,22 +71,22 @@ const Index = () => {
       <Header /> {/* Incluir o componente Header */}
 
       {showErrorCard && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-              <Card className="p-6 bg-red-600 text-white shadow-lg rounded-lg text-center">
-                <CardTitle className="text-xl font-bold mb-2">Erro de Login</CardTitle>
-                <CardContent>
-                  <p className="text-lg">Credenciais inválidas.</p>
-                  <p className="text-lg">Tente novamente.</p>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <Card className="p-6 bg-red-600 text-white shadow-lg rounded-lg text-center">
+            <CardTitle className="text-xl font-bold mb-2">Erro de Login</CardTitle>
+            <CardContent>
+              <p className="text-lg">Credenciais inválidas.</p>
+              <p className="text-lg">Tente novamente.</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
-          <main
-            className="min-h-screen grid md:grid-cols-2"
-            onMouseMove={onMouseMove}
-            aria-label="Tela de login com seleção de tema"
-          >
+      <main
+        className="min-h-screen grid md:grid-cols-2"
+        onMouseMove={onMouseMove}
+        aria-label="Tela de login com seleção de tema"
+      >
         <aside className="hidden md:block relative overflow-hidden">
           <img
             src={heroImg}
@@ -171,7 +171,7 @@ const Index = () => {
                     Não tem cadastro? <a href="/new-motora" className="text-primary hover:underline">clique aqui</a>
                   </p>
 
-                  </form>
+                </form>
               </CardContent>
             </Card>
           </div>

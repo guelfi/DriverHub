@@ -26,7 +26,7 @@ const PrivateRoute = ({ children }: { children: JSX.Element }) => {
     return <div>Carregando autenticação...</div>; // Ou um spinner/componente de carregamento
   }
 
-  return token ? children : <Navigate to="/login" />;
+  return token ? children : <Navigate to="/login" replace />;
 };
 
 const App = () => (
@@ -36,7 +36,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <Router>
+          <Router basename="/driverhub-admin">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<PrivateRoute><Index /></PrivateRoute>}>
