@@ -150,25 +150,29 @@ using (var scope = app.Services.CreateScope())
 
     var admins = await adminRepository.GetAllAsync();
 
-    if (!admins.Any())
+    if (!admins.Any(a => a.Email == "admin@driverhub.com"))
     {
-        logger.LogWarning("Nenhum usuário administrador encontrado. Criando admin padrão...");
+        logger.LogWarning("Criando admin de fallback (admin@driverhub.com)...");
         
-        var (hash, salt) = passwordHasher.HashPassword("@5ST73EA4x");
+        // Senha mais simples para teste
+        var senhaRaw = "Admin123!";
+        var (hash, salt) = passwordHasher.HashPassword(senhaRaw);
         
+        logger.LogInformation("DEBUG HASH GERADO NO SEED: Senha={Senha}, Hash={Hash}, Salt={Salt}", senhaRaw, hash, salt);
+
         var admin = new Admin
         {
             Id = Guid.NewGuid(),
             Nome = "Admin",
-            Sobrenome = "Padrão",
-            Email = "guelfi@msn.com",
+            Sobrenome = "Fallback",
+            Email = "admin@driverhub.com",
             SenhaHash = hash,
             Sal = salt,
             DataCadastro = DateTimeOffset.UtcNow
         };
 
         await adminRepository.AddAsync(admin);
-        logger.LogInformation("Usuário administrador padrão criado com sucesso: guelfi@msn.com");
+        logger.LogInformation("Admin fallback criado: admin@driverhub.com / Admin123!");
     }
 }
 
