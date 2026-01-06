@@ -4,7 +4,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/driverhub-admin/',
+  base: './',
   plugins: [react()],
   resolve: {
     alias: {
