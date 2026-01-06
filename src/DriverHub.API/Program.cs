@@ -136,19 +136,39 @@ app.UseCors("AllowAllOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
 
+using DriverHub.Domain.Entities; // Adicionado para Admin
+using DriverHub.Application.Services; // Adicionado para IPasswordHasher
+
 app.MapControllers();
 
 // Verifica se existe algum usuário Admin na inicialização
 using (var scope = app.Services.CreateScope())
 {
     var adminRepository = scope.ServiceProvider.GetRequiredService<IAdminRepository>();
+    var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
     var admins = await adminRepository.GetAllAsync();
 
     if (!admins.Any())
     {
-        logger.LogWarning("Nenhum usuário administrador encontrado. Por favor, crie o primeiro usuário administrador.");
+        logger.LogWarning("Nenhum usuário administrador encontrado. Criando admin padrão...");
+        
+        var (hash, salt) = passwordHasher.HashPassword("@5ST73EA4x");
+        
+        var admin = new Admin
+        {
+            Id = Guid.NewGuid(),
+            Nome = "Admin",
+            Sobrenome = "Padrão",
+            Email = "guelfi@msn.com",
+            SenhaHash = hash,
+            Sal = salt,
+            DataCadastro = DateTimeOffset.UtcNow
+        };
+
+        await adminRepository.AddAsync(admin);
+        logger.LogInformation("Usuário administrador padrão criado com sucesso: guelfi@msn.com");
     }
 }
 

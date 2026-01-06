@@ -63,8 +63,8 @@ const Index = () => {
   return (
     <>
       <Seo
-        title="Login | Escolha de Tema (Claro/Escuro)"
-        description="Tela de login moderna inspirada no Material UI com alternância entre tema claro e escuro."
+        title="Login | DriverHub"
+        description="Acesse sua conta DriverHub e gerencie suas corridas e ganhos."
         canonical={window.location.origin + "/"}
       />
 
