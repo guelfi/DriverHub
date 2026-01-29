@@ -1,11 +1,18 @@
 # 📊 DRIVERHUB - Status do Projeto
 
-**Última atualização:** 14/01/2026
+**Última atualização:** 29/01/2026
 
 ## ✅ STATUS ATUAL
 
-**Desenvolvimento:** ⚪ Aguardando migração  
-**Produção:** 🟢 Online e funcional
+**Desenvolvimento:** 🟢 Funcional (via start-dev.sh centralizado)  
+**Produção:** 🟢 Online e funcional  
+**Repositório:** 🟢 Sincronizado (local ↔ GitHub)  
+**Último commit:** ba8ce23 (16/01/2026)
+
+### 🐳 Containers OCI
+- driverhub-api: ✅ Up 3 weeks
+- driverhub-frontend: ✅ Up 3 weeks (healthy)
+- driverhub-dashboard: ✅ Up 3 weeks (healthy)
 
 ## 🎯 FASE ATUAL
 
@@ -26,5 +33,5 @@
 
 - 3 componentes: API + Frontend + Dashboard
 - Usa PostgreSQL
-- Credenciais validadas em produção
-- Último na ordem de implementação
+- Branch main
+- Projeto completo e estável
