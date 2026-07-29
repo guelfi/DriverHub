@@ -1,0 +1,67 @@
+services:
+  postgres-driverhub:
+    image: postgres:15-alpine
+    container_name: driverhub-local-db
+    environment:
+      POSTGRES_DB: driverhub
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - driverhub-db-data:/var/lib/postgresql/data
+    networks:
+      - driverhub-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d driverhub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  driverhub-api:
+    build:
+      context: ./src
+      dockerfile: DriverHub.API/Dockerfile
+    container_name: driverhub-local-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres-driverhub;Database=driverhub;Username=postgres;Password=postgres
+    networks:
+      - driverhub-net
+      - projetos-local
+    depends_on:
+      postgres-driverhub:
+        condition: service_healthy
+    restart: unless-stopped
+
+  driverhub-frontend:
+    build:
+      context: ./src/DriverHub.FrontendWeb
+      dockerfile: Dockerfile
+    container_name: driverhub-local-frontend
+    networks:
+      - driverhub-net
+      - projetos-local
+    depends_on:
+      - driverhub-api
+    restart: unless-stopped
+
+  driverhub-dashboard:
+    build:
+      context: ./src/DriverHub.Dashboard
+      dockerfile: Dockerfile
+    container_name: driverhub-local-dashboard
+    networks:
+      - driverhub-net
+      - projetos-local
+    depends_on:
+      - driverhub-api
+    restart: unless-stopped
+
+networks:
+  driverhub-net:
+    driver: bridge
+  projetos-local:
+    external: true
+
+volumes:
+  driverhub-db-data:

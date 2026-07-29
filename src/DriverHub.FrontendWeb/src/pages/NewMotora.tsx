@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Mail, Lock, User, Eye, EyeOff, Car } from "lucide-react"; // Adicionado User, Eye, EyeOff e Car
 import Header from "@/components/Header"; // Importar o componente Header
+import AuthService from "@/services/AuthService";
 
 const NewMotora = () => {
   const navigate = useNavigate(); // Hook para navegação
@@ -19,7 +20,7 @@ const NewMotora = () => {
   const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar senha
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Estado para mostrar/ocultar confirmação de senha
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -27,11 +28,14 @@ const NewMotora = () => {
       return;
     }
 
-    // Lógica de cadastro mockada
-    console.log('Dados de cadastro:', { firstName, lastName, email, password });
-    toast.success("Cadastro efetuado com sucesso! ✨");
-    // Aqui você faria a chamada para a API de cadastro
-    // Após o cadastro, você pode redirecionar o usuário para a tela de login ou home
+    try {
+      await AuthService.register(firstName, lastName, email, password);
+      toast.success("Cadastro efetuado com sucesso! ✨");
+      navigate("/");
+    } catch (error: any) {
+      const message = error?.response?.data ?? "Não foi possível concluir o cadastro.";
+      toast.error(typeof message === "string" ? message : "Não foi possível concluir o cadastro.");
+    }
   };
 
   return (

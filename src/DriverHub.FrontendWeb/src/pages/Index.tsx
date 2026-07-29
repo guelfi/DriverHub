@@ -11,6 +11,7 @@ import { Mail, Lock, Eye, EyeOff, X } from "lucide-react"; // Adicionado Eye, Ey
 import heroImg from "@/assets/login-abstract.jpg";
 import { toast } from "sonner";
 import Header from "@/components/Header"; // Importar o componente Header
+import AuthService from "@/services/AuthService";
 
 const Index = () => {
   const glowRef = useRef<HTMLDivElement>(null);
@@ -43,20 +44,16 @@ const Index = () => {
     el.style.setProperty("--y", `${y}px`);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Credenciais mockadas para teste
-    const mockEmail = "motora@driverhub.com";
-    const mockPassword = "246588";
-
-    if (email === mockEmail && password === mockPassword) {
-      toast.success("Login efetuado com sucesso ✨"); // Manter o toast de sucesso
-      localStorage.setItem('authToken', 'mock-token'); // Set a mock token for authentication
-      navigate("/home"); // Navega para a HomeScreen após o login bem-sucedido
-    } else {
-      // setErrorMessage("Credenciais inválidas.<br />Tente novamente."); // Removido, pois a mensagem é fixa
-      setShowErrorCard(true); // Mostra o card de erro
+    try {
+      const result = await AuthService.login(email, password);
+      toast.success("Login efetuado com sucesso ✨");
+      localStorage.setItem('authToken', result.token);
+      navigate("/home");
+    } catch (error) {
+      setShowErrorCard(true);
     }
   };
 
@@ -168,7 +165,14 @@ const Index = () => {
                   </Button>
 
                   <p className="text-center text-sm text-muted-foreground mt-4">
-                    Não tem cadastro? <a href="/new-motora" className="text-primary hover:underline">clique aqui</a>
+                    Não tem cadastro?{" "}
+                    <button
+                      type="button"
+                      onClick={() => navigate("/new-motora")}
+                      className="text-primary hover:underline"
+                    >
+                      clique aqui
+                    </button>
                   </p>
 
                 </form>
