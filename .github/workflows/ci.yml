@@ -1,0 +1,112 @@
+name: CI - Build & Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  secret-scanning:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-test-api:
+    name: Build & Test API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore solution
+        run: dotnet restore DriverHub.sln
+
+      - name: Build
+        run: dotnet build DriverHub.sln -c Release --no-restore
+
+      - name: Test
+        run: dotnet test DriverHub.sln -c Release --no-build
+
+  build-frontend:
+    name: Build Frontend (Motorista)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/DriverHub.FrontendWeb/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: src/DriverHub.FrontendWeb
+
+      - name: Lint
+        run: npm run lint
+        working-directory: src/DriverHub.FrontendWeb
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+        working-directory: src/DriverHub.FrontendWeb
+
+  build-dashboard:
+    name: Build Dashboard (Admin)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/DriverHub.Dashboard/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: src/DriverHub.Dashboard
+
+      - name: Lint
+        run: npm run lint
+        working-directory: src/DriverHub.Dashboard
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+        working-directory: src/DriverHub.Dashboard
+
+  docker-build:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+    needs: [build-and-test-api, build-frontend, build-dashboard, secret-scanning]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build API Docker image
+        run: docker build -f DriverHub.API/Dockerfile -t driverhub-api:test .
+        working-directory: src
+
+      - name: Build Frontend Docker image
+        run: docker build -t driverhub-frontend:test .
+        working-directory: src/DriverHub.FrontendWeb
+
+      - name: Build Dashboard Docker image
+        run: docker build -t driverhub-dashboard:test .
+        working-directory: src/DriverHub.Dashboard
