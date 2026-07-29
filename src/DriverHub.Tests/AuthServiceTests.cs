@@ -54,7 +54,7 @@ namespace DriverHub.Tests
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Equal("Motorista registrado com sucesso.", result.Value);
+            Assert.True(Guid.TryParse(result.Value, out _));
             _mockPasswordHasher.Verify(ph => ph.HashPassword("password123"), Times.Once);
             _mockMotoristaRepository.Verify(repo => repo.AddAsync(It.Is<Motorista>(m => m.Email == "test@example.com" && m.SenhaHash == "hashedPassword")), Times.Once);
         }
