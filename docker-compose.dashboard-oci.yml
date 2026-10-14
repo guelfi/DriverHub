@@ -1,0 +1,16 @@
+# Retains the existing www project and dashboard container without touching other services.
+services:
+  driverhub-dashboard:
+    build:
+      context: ./src/DriverHub.Dashboard
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /driverhub-api/api
+    container_name: driverhub-dashboard
+    restart: unless-stopped
+    networks:
+      - projetos-net
+networks:
+  projetos-net:
+    external: true
+    name: www_projetos-net

@@ -2,6 +2,9 @@
 FROM node:18-alpine AS builder
 
 WORKDIR /app
+ARG VITE_BASE_PATH=/driverhub/
+ARG VITE_API_URL=/driverhub-api/api
+ENV VITE_BASE_PATH=$VITE_BASE_PATH VITE_API_URL=$VITE_API_URL
 
 # Instalar versão estável do npm para consistência
 RUN npm install -g npm@10
@@ -37,7 +40,7 @@ EXPOSE 80
 
 # Health check para monitoramento automático
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost/ || exit 1
+  CMD wget -q -O /dev/null http://localhost/ || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
