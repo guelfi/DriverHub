@@ -124,7 +124,7 @@ app.UsePathBase("/driverhub-api");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/driverhub-api/swagger/v1/swagger.json", "DriverHub API V1");
+    c.SwaggerEndpoint("./v1/swagger.json", "DriverHub API V1");
     c.RoutePrefix = "swagger";
 });
 

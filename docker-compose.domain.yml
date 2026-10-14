@@ -1,0 +1,6 @@
+services:
+  driverhub-frontend:
+    build:
+      args:
+        VITE_BASE_PATH: /
+        VITE_API_URL: /api
