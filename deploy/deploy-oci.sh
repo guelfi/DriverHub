@@ -22,7 +22,7 @@ for container in driverhub-api driverhub-frontend driverhub-dashboard postgres-d
 done
 sudo -n docker exec postgres-driverhub sh -c 'exec pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc' | sudo -n tee "$backup/database.dump" >/dev/null
 sudo -n cat "$backup/database.dump" | sudo -n docker exec -i postgres-driverhub pg_restore --list >/dev/null
-sudo -n chmod 600 "$backup"/*
+sudo -n find "$backup" -maxdepth 1 -type f -exec chmod 600 {} +
 git checkout --detach "$revision"
 sudo -n docker compose -p driverhub -f docker-compose.yml -f docker-compose.domain.yml up -d --build --no-deps driverhub-api driverhub-frontend
 # Dashboard remains part of www; this file has exactly one service and never recreates the proxy.
