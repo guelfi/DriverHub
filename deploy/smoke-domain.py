@@ -8,7 +8,8 @@ from urllib.parse import urljoin
 base = 'https://driverhub.guelfi.com.br'
 
 def get(path, kind):
-    with urllib.request.urlopen(urljoin(base + '/', path), timeout=15) as response:
+    request = urllib.request.Request(urljoin(base + '/', path), headers={'User-Agent': 'Mozilla/5.0 (compatible; OCI-Deploy-Check/1.0)'})
+    with urllib.request.urlopen(request, timeout=15) as response:
         body = response.read().decode()
         assert response.status == 200, path
         assert kind in response.headers.get('Content-Type', ''), path
